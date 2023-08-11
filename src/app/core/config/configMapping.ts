@@ -14,6 +14,7 @@ import {config as ncf } from '../../views/ncf/config/ncf_config';
 import {config as quiz} from '../../views/ncert-quiz/config/quiz_config';
 import{config as microImprovement} from '../../views/micro-improvements/config/microimprovements_config';
 import {config as nipunBharatConfig } from '../../views/nipun-bharat/config/nipun_bharat_config';
+import{config as prashastConfig} from '../../views/prashast/config/prashast_config';
 
 
 
@@ -33,7 +34,8 @@ export const configFiles = {
   ncf:ncf,
   quiz:quiz,
   microImprovement:microImprovement,
-  nipunBharat:nipunBharatConfig
+  nipunBharat:nipunBharatConfig,
+  prashast:prashastConfig
 };
 
 export const programFolderNames = {
