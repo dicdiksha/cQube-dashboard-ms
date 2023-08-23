@@ -198,7 +198,7 @@ export class WrapperService {
       });
       selectedMetricValue.forEach((axis: any) => {
         if(axis?.value) {
-          tooltip.push(axis.name + ': ' + (isNaN(row[axis.axis]) ? row[axis.axis] : Number(row[axis.axis])).toLocaleString() + valueSuffix)
+          tooltip.push(axis.value + ': ' + (isNaN(row[axis.axis]) ? row[axis.axis] : Number(row[axis.axis])).toLocaleString() + valueSuffix)
         }
       })
       return tooltip
@@ -208,7 +208,10 @@ export class WrapperService {
       if (row[metric.value] !== undefined && row[metric.value] !== null) {
         const value = isNaN(row[metric.value]) ? row[metric.value] : Number(row[metric.value]);
         const formattedValue = value.toLocaleString();
-        
+        if(metric.valuePrefix.indexOf('_') > -1) {
+          // console.log(metric.valuePrefix.split(/[_|\s]/))
+          metric.valuePrefix = metric.valuePrefix.split('_').map(word => word[0]?.toUpperCase() + word?.substring(1).toLowerCase()).join(' ')
+        }
         if (metric.value === selectedMetricValue) {
           tooltip += '<b><i>' + metric.valuePrefix.replace(/\n/g, '</br>') + formattedValue + metric.valueSuffix.replace(/\n/g, '</br>') + '</i></b>';
         } else {

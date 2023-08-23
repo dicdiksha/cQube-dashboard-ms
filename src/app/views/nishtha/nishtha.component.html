@@ -18,10 +18,22 @@
                 *ngIf="selectedTabLabel === 'Implementation Status'"></app-implementation-status-tab>
         </mat-tab>
 
-        <mat-tab label='Courses and Medium Status' *ngIf="tabs.includes('Courses and Medium Status')">
-            <app-course-and-medium-status-tab
-                *ngIf="selectedTabLabel === 'Courses and Medium Status'"></app-course-and-medium-status-tab>
-        </mat-tab>
+        <ng-container *ngIf="!NVSK">
+            <mat-tab label='Courses and Medium Status' *ngIf="tabs.includes('Courses and Medium Status')">
+                <app-course-and-medium-status-tab
+                    *ngIf="selectedTabLabel === 'Courses and Medium Status'"></app-course-and-medium-status-tab>
+            </mat-tab>
+        </ng-container>
+
+        <ng-container *ngIf="NVSK">
+            <mat-tab label='Medium of instruction' *ngIf="tabs.includes('Medium of instruction')">
+                <app-medium-of-instruction-tab
+                    *ngIf="selectedTabLabel === 'Medium of instruction'"></app-medium-of-instruction-tab>
+            </mat-tab>
+            <mat-tab label='Course Wise Status' *ngIf="tabs.includes('Course Wise Status')">
+                <app-course-wise-status-tab *ngIf="selectedTabLabel === 'Course Wise Status'"></app-course-wise-status-tab>
+            </mat-tab>
+        </ng-container>
 
         <mat-tab label='% against Potential Base' *ngIf="tabs.includes('% against Potential Base')">
             <app-potential-base-tab *ngIf="selectedTabLabel === '% against Potential Base'"></app-potential-base-tab>
@@ -32,9 +44,11 @@
                 *ngIf="selectedTabLabel === 'District Wise Status'"></app-district-wise-status-tab>
         </mat-tab>
 
-        <mat-tab label='Course Wise Status' *ngIf="tabs.includes('Course Wise Status')">
-            <app-course-wise-status-tab *ngIf="selectedTabLabel === 'Course Wise Status'"></app-course-wise-status-tab>
-        </mat-tab>
+        <ng-container *ngIf="!NVSK">
+            <mat-tab label='Course Wise Status' *ngIf="tabs.includes('Course Wise Status')">
+                <app-course-wise-status-tab *ngIf="selectedTabLabel === 'Course Wise Status'"></app-course-wise-status-tab>
+            </mat-tab>
+        </ng-container>
 
     </mat-tab-group>
 </div>

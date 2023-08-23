@@ -3,6 +3,7 @@ import { RbacService } from 'src/app/core/services/rbac-service.service';
 import { WrapperService } from 'src/app/core/services/wrapper.service';
 import { config } from '../../config/nishtha_config';
 import { ImplementationStatusComponent } from './reports/implementation-status/implementation-status.component';
+import { environment } from 'src/environments/environment';
 
 @Component({
     selector: 'app-implementation-status-tab',
@@ -29,6 +30,7 @@ export class ImplementationStatusTabComponent implements OnInit, AfterViewInit {
     hasCommonFilters: boolean = true;
     bigNumberMetrics: any = [];
     tabLabel:any = 'Implementation Status'
+    NVSK: boolean = true;
 
 @ViewChild('implementationStatus') implementationStatus: ImplementationStatusComponent;
 
@@ -36,6 +38,9 @@ constructor(private _wrapperService: WrapperService, private _rbacService: RbacS
     this._rbacService.getRbacDetails().subscribe((rbacDetails: any) => {
         this.rbacDetails = rbacDetails;
     })
+    if(environment.config === 'VSK') {
+        this.NVSK = false;
+    }
     }
 
     async ngOnInit(): Promise<void> {
@@ -90,4 +95,10 @@ constructor(private _wrapperService: WrapperService, private _rbacService: RbacS
     importBigNumberMetrics(bigNumberMetric: any) {
         this.bigNumberMetrics[bigNumberMetric.ind] = bigNumberMetric.data
     }
+
+    getMetricsArray() {
+        return this.bigNumberMetrics.filter((data) => {
+          return data.averagePercentage !== null || data.averagePercentage !== undefined
+        }) 
+      }
 }

@@ -154,7 +154,8 @@ export class DownloadButtonComponent implements OnInit {
       if (this.isVisible) {
         return;
       }
-      this.isVisible = true;
+      // this.isVisible = true;
+      alert('No data available to download')
       setTimeout(() => this.isVisible = false, 2500)
     } else {
       for (let i = 0; i < reportInputs.length; i++) {

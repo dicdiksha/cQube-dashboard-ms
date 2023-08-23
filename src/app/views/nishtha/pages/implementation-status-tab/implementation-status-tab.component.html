@@ -14,8 +14,9 @@
             <app-nishtha-bignumber-metrics (exportReportData)="importBigNumberMetrics($event)"></app-nishtha-bignumber-metrics>
         </div>
         <div class="row-wrapper grid grid-cols-5 gap-4">
+            <h2 *ngIf="NVSK" class="col-span-5 ml-3"><b>NISHTHA Coverage (No. of participants):</b></h2>
             <div class="col-span-2 xmd:col-span-1 bignumber-container" id="bignumber2"
-                *ngFor="let bigNumberData of bigNumberMetrics; let index = index">
+                *ngFor="let bigNumberData of getMetricsArray(); let index = index">
                 <div *ngIf="checkReport('nishtha_metrics', 'bigNumber'+(index+1))">
                     <app-big-number [bigNumberReportData]="bigNumberData"></app-big-number>
                 </div>
@@ -25,7 +26,7 @@
         <div class="row-wrapper grid ">
             <div class="col-span-1 xmd:col-span-1 div-shadow" *ngIf="checkReport('implementation_status', 'table') || checkReport('implementation_status', 'map')"
             id="table">
-            <app-implementation-status #implementationStatus></app-implementation-status>
+            <app-implementation-status #implementationStatus (exportReportData)="csvDownload($event)"></app-implementation-status>
         </div>
         </div>
     </div>

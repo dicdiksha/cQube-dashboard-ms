@@ -1,0 +1,8 @@
+<div class="grid grid-cols-12" *ngIf="reportData?.data?.length > 0">
+    <div class="xs:col-span-full">
+        <app-material-heat-chart-table [tableData]="reportData" [title]="title"></app-material-heat-chart-table>
+    </div>
+</div>
+<div class="noData" *ngIf="reportData?.data?.length <= 0">
+    No Data Found
+</div>

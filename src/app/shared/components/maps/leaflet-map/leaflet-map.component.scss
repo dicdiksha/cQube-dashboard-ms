@@ -13,8 +13,8 @@
 // }
 ::ng-deep {
     .leaflet-popup {
-        word-break: break-all;
-        // min-width: fit-content !important;
+        // word-break: break-all;
+        word-wrap: break-word;
     }
 
     .leaflet-notification {

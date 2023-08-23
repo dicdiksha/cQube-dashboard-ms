@@ -129,7 +129,7 @@ export class DataService {
           datasets: this.getDatasets(options.barChart, filters),
 
           options: {
-            height: ((defaultPageSize ? defaultPageSize : 30) * 15 + 150).toString(),
+            height: ((rows.length > defaultPageSize ? defaultPageSize : rows.length) * 15 + 150).toString(),
             tooltips: {
               callbacks: {
                 label: (tooltipItem, data) => {

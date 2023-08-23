@@ -10,12 +10,17 @@
         </div>
     </div>
     <div class="reports-row" >
-        <div class="row-wrapper grid grid-cols-2 gap-4">
+        <div class="row-wrapper grid grid-cols-2 gap-4" *ngIf="!NVSK">
             <div class="col-span-2 xmd:col-span-1 div-shadow" *ngIf="checkReport('potential_base', 'barChart') || checkReport('potential_base', 'stackedBarChart')" id="chart1">
                 <app-potential-base #potentialBase></app-potential-base>
             </div>
             <div class="col-span-2 xmd:col-span-1 div-shadow" *ngIf="checkReport('potential_base', 'barChart') || checkReport('potential_base', 'stackedBarChart')" id="chart2">
                 <app-potential-base-certificates #potentialBaseCertificates></app-potential-base-certificates>
+            </div>
+        </div>
+        <div class="row-wrapper grid grid-cols-1 gap-4" *ngIf="NVSK">
+            <div class="col-span-1 div-shadow" *ngIf="checkReport('potential_base_nvsk', 'barChart')" id="chart1">
+                <app-potential-base-nvsk #potentialBaseNVSK (exportReportData)="csvDownload($event)"></app-potential-base-nvsk>
             </div>
         </div>
     </div>

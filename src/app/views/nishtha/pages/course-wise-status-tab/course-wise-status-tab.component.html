@@ -14,7 +14,7 @@
 
             <div class="col-span-2 xmd:col-span-2 div-shadow" *ngIf="checkReport('course_wise_status', 'table', 'barChart')"
                 id="table">
-                <app-course-wise-status #courseWiseStatus></app-course-wise-status>
+                <app-course-wise-status #courseWiseStatus (exportReportData)="csvDownload($event)"></app-course-wise-status>
             </div>
         </div>
     </div>

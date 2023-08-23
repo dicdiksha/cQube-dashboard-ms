@@ -5,6 +5,7 @@ import { config } from '../../config/nishtha_config';
 import { PotentialBaseCertificatesComponent } from './reports/potential-base-certificates/potential-base-certificates.component';
 import { PotentialBaseComponent } from './reports/potential-base/potential-base.component';
 import { environment } from 'src/environments/environment';
+import { PotentialBaseNvskComponent } from './reports/potential-base-nvsk/potential-base-nvsk.component';
 
 @Component({
     selector: 'app-potential-base-tab',
@@ -34,6 +35,7 @@ export class PotentialBaseTabComponent implements OnInit, AfterViewInit {
     
 @ViewChild('potentialBase') potentialBase: PotentialBaseComponent;
 @ViewChild('potentialBaseCertificates') potentialBaseCertificates: PotentialBaseCertificatesComponent;
+@ViewChild('potentialBaseNVSK') potentialBaseNVSK: PotentialBaseNvskComponent;
         
 constructor(private _wrapperService: WrapperService, private _rbacService: RbacService) {
     this._rbacService.getRbacDetails().subscribe((rbacDetails: any) => {
@@ -52,8 +54,7 @@ constructor(private _wrapperService: WrapperService, private _rbacService: RbacS
     async ngAfterViewInit(): Promise<void> {
     if (this.NVSK) {
         this.filters = await this._wrapperService.constructCommonFilters(config.filters, this.matLabel);
-        this.potentialBase?.getReportData({ filterValues: this.filters.map((filter) => { return { ...filter, columnName: filter.valueProp, filterType: filter.id } }) });
-        this.potentialBaseCertificates?.getReportData({ filterValues: this.filters.map((filter) => { return { ...filter, columnName: filter.valueProp, filterType: filter.id } }) });
+        this.potentialBaseNVSK?.getReportData({ filterValues: this.filters.map((filter) => { return { ...filter, columnName: filter.valueProp, filterType: filter.id } }) });
     } else {
         this.potentialBase?.getReportData({ filterValues: [] });
         this.potentialBaseCertificates?.getReportData({ filterValues: [] });
@@ -88,8 +89,13 @@ constructor(private _wrapperService: WrapperService, private _rbacService: RbacS
 
     filtersUpdated(filters: any) {
     this.reportsData = [];
-    this.potentialBase?.getReportData({ filterValues: filters.map((filter) => { return { ...filter, columnName: filter.valueProp, filterType: filter.id } }) });
-    this.potentialBaseCertificates?.getReportData({ filterValues: filters.map((filter) => { return { ...filter, columnName: filter.valueProp, filterType: filter.id } }) });
+    if(this.NVSK) {
+        this.potentialBaseNVSK?.getReportData({ filterValues: this.filters.map((filter) => { return { ...filter, columnName: filter.valueProp, filterType: filter.id } }) });
+    }
+    else {
+        this.potentialBaseCertificates?.getReportData({ filterValues: filters.map((filter) => { return { ...filter, columnName: filter.valueProp, filterType: filter.id } }) });
+        this.potentialBase?.getReportData({ filterValues: filters.map((filter) => { return { ...filter, columnName: filter.valueProp, filterType: filter.id } }) });
+    }
         }
 
     timeSeriesUpdated(event: any): void {

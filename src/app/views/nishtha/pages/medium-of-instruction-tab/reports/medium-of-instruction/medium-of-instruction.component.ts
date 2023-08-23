@@ -5,23 +5,23 @@ import { RbacService } from 'src/app/core/services/rbac-service.service';
 import { WrapperService } from 'src/app/core/services/wrapper.service';
 import { buildQuery, parseFilterToQuery, parseRbacFilter, parseTimeSeriesQuery } from 'src/app/utilities/QueryBuilder';
 import { config } from 'src/app/views/nishtha/config/nishtha_config';
-import { ImplementationStatusTabComponent } from '../../implementation-status-tab.component';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { environment } from 'src/environments/environment';
+import { MediumOfInstructionTabComponent } from '../../medium-of-instruction-tab.component';
 
 @Component({
-  selector: 'app-implementation-status',
-  templateUrl: './implementation-status.component.html',
-  styleUrls: ['./implementation-status.component.scss']
+  selector: 'app-medium-of-instruction',
+  templateUrl: './medium-of-instruction.component.html',
+  styleUrls: ['./medium-of-instruction.component.scss']
 })
-export class ImplementationStatusComponent implements OnInit {
-  reportName: string = 'implementation_status';
+export class MediumOfInstructionComponent implements OnInit {
+  reportName: string = "medium_of_instruction";
   filters: any = [];
   levels: any;
   reportData: any = {
-    reportName: "Implementation Status"
+    reportName: "medium_of_instruction",
   };
-  title: string = 'Implementation Status'
+  title: string = "Medium of Instruction";
   selectedYear: any;
   selectedMonth: any;
   startDate: any;
@@ -30,22 +30,26 @@ export class ImplementationStatusComponent implements OnInit {
   compareDateRange: any = 30;
   filterIndex: any;
   rbacDetails: any;
-  NVSK = true;
+  NVSK: boolean = true;
 
   @Output() exportReportData = new EventEmitter<any>();
 
-  constructor(private spinner: NgxSpinnerService,private csv: ImplementationStatusTabComponent, private readonly _dataService: DataService, private readonly _wrapperService: WrapperService, private _rbacService: RbacService) {
+  constructor(
+    private readonly _dataService: DataService,
+    private csv: MediumOfInstructionTabComponent,
+    private readonly _wrapperService: WrapperService,
+    private _rbacService: RbacService,
+    private spinner: NgxSpinnerService
+  ) {
+    this._rbacService.getRbacDetails().subscribe((rbacDetails: any) => {
+      this.rbacDetails = rbacDetails;
+    });
     if(environment.config === 'VSK') {
       this.NVSK = false
     }
-
-    this._rbacService.getRbacDetails().subscribe((rbacDetails: any) => {
-      this.rbacDetails = rbacDetails;
-    })
   }
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
   getReportData(values: any): void {
     let { filterValues, timeSeriesValues } = values ?? {};
@@ -57,7 +61,7 @@ export class ImplementationStatusComponent implements OnInit {
     let onLoadQuery;
     let currentLevel;
 
-    if (this.rbacDetails?.role !== null && this.rbacDetails.role !== undefined) {
+    if (this.rbacDetails?.role !== undefined && this.rbacDetails?.role !== null) {
       filters.every((filter: any) => {
         if (Number(this.rbacDetails?.role) === Number(filter.hierarchyLevel)) {
           queries = { ...filter?.actions?.queries }
@@ -88,14 +92,6 @@ export class ImplementationStatusComponent implements OnInit {
       }
       let query = buildQuery(onLoadQuery, defaultLevel, this.levels, this.filters, this.startDate, this.endDate, key, this.compareDateRange);
 
-      let metricFilter = [...filterValues].filter((filter: any) => {
-        return filter.filterType === 'metric'
-      });
-
-      filterValues = [...filterValues].filter((filter: any) => {
-        return filter.filterType !== 'metric'
-      })
-
       filterValues.forEach((filterParams: any) => {
         query = parseFilterToQuery(query, filterParams)
       });
@@ -106,19 +102,10 @@ export class ImplementationStatusComponent implements OnInit {
         this.spinner.hide();
         if (this.reportData?.data?.length > 0) {
           let reportsData = { reportData: this.reportData.data, reportType: 'table', reportName: this.title }
-          // this.exportReportData.emit(reportsData)
-          this.csv.csvDownload(reportsData);
+          this.csv.csvDownload(reportsData)
         }
-      } else if (query && key === 'map') {
-        this.spinner.show();
-        this.reportData = await this._dataService.getMapReportData(query, options, metricFilter);
-        console.log(this.reportData)
-        this.spinner.hide();
-        if (this.reportData?.data?.length > 0) {
-          let reportsData = { reportData: this.reportData.data, reportType: 'map', reportName: this.title, downloadConfig: options?.downloadConfig }
-          this.exportReportData.emit(reportsData)
-        }
-      } else if (query && key === 'bigNumber') {
+      }
+      else if (query && key === 'bigNumber') {
         this.reportData = await this._dataService.getBigNumberReportData(query, options, 'averagePercentage', this.reportData);
       }
       else if (query && key === 'bigNumberComparison') {
