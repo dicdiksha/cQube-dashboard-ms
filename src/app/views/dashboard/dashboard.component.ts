@@ -24,6 +24,7 @@ export class DashboardComponent implements OnInit {
   // isNvsk = environment.config.toLocaleLowerCase() === 'nvsk';
   isNvsk = false;
   rbacDetails: any;
+  tempPrashast: any = { "title": "PRASHAST", "navigationURL": "/prashast", "icon": "prashast.png", "tooltip": "Prashast is a pre assessment holistic screening tool for preliminary screening of students in schools to facilitate further referral to assessment camps for disability certification.", "metrics": [{ "value": "5.12L", "name": "Total Registered Users" },{ "value": "20.66L", "name": "Total Students" }] }
   constructor(private spinner: NgxSpinnerService,private readonly _commonService: CommonService, private readonly _router: Router, private readonly rbac: RbacService, private _wrapperService: WrapperService) {
     this.rbac.getRbacDetails().subscribe((rbacDetails: any) => {
       this.rbacDetails = rbacDetails
@@ -85,6 +86,7 @@ export class DashboardComponent implements OnInit {
 
         }
       }
+      this.dashboardMenu.push(this.tempPrashast);
     })
 
   }
