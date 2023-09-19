@@ -15,16 +15,30 @@ export const config = {
             "labelProp": "program_name",
             "valueProp": "program_name",
             "id": "program_name",
-            "tableAlias": "t1",
-            "query": "select program_name from dimensions.programnishtha order by program_name"
+            // "tableAlias": "t1",
+            "query": `SELECT DISTINCT CASE
+            WHEN program_name LIKE 'NISHTHA_Elementary%' THEN 'NISHTHA Elementary'
+            WHEN program_name LIKE 'NISHTHA_Secondary%' THEN 'NISHTHA Secondary'
+            WHEN program_name LIKE 'NISHTHA_FLN%' THEN 'NISHTHA FLN'
+            WHEN program_name LIKE 'NISHTHA_ECCE%' THEN 'NISHTHA ECCE'
+            ELSE program_name
+            END AS program_name
+            FROM cqube_nvsk.public.nishta;`
         },
         {
             "label": "Implementation Status",
             "name": "Program",
             "labelProp": "program_name",
             "valueProp": "program_name",
-            "id": "metric",
-            "query": "select program_name from dimensions.programnishtha order by program_name"
+            "id": "program_name",
+            "query": `SELECT DISTINCT CASE
+              WHEN program_name LIKE 'NISHTHA_Elementary%' THEN 'NISHTHA Elementary'
+              WHEN program_name LIKE 'NISHTHA_Secondary%' THEN 'NISHTHA Secondary'
+              WHEN program_name LIKE 'NISHTHA_FLN%' THEN 'NISHTHA FLN'
+              WHEN program_name LIKE 'NISHTHA_ECCE%' THEN 'NISHTHA ECCE'
+              ELSE program_name
+              END AS program_name
+              FROM cqube_nvsk.public.nishta;`
         },
         {
             "label": "Courses and Medium Status",
@@ -41,8 +55,16 @@ export const config = {
             "labelProp": "program_name",
             "valueProp": "program_name",
             "id": "program_name",
-            "tableAlias": "ntae",
-            "query": "select program_name from dimensions.programnishtha order by program_name"
+            // "tableAlias": "ntae",
+            "query": `SELECT DISTINCT CASE
+            WHEN program_name LIKE 'NISHTHA_Elementary_(Face-to-face)%' THEN 'NISHTHA Elementary (Face-to-face)'
+            WHEN program_name LIKE 'NISHTHA_Elementary (Online)%' THEN 'NISHTHA Elementary (Online)'
+            WHEN program_name LIKE 'NISHTHA_Secondary%' THEN 'NISHTHA Secondary'
+            WHEN program_name LIKE 'NISHTHA_FLN%' THEN 'NISHTHA FLN'
+            WHEN program_name LIKE 'NISHTHA_ECCE%' THEN 'NISHTHA ECCE'
+            ELSE program_name
+            END AS program_name
+            FROM cqube_nvsk.public.nishta;`
         },
         // {
         //     "label": "District Wise Performance",
@@ -58,7 +80,14 @@ export const config = {
             "labelProp": "program_name",
             "valueProp": "program_name",
             "id": "program_name",
-            "query": "select program_name from dimensions.programnishtha order by program_name"
+            "query": `SELECT DISTINCT CASE
+            WHEN program_name LIKE 'NISHTHA_Elementary%' THEN 'NISHTHA Elementary'
+            WHEN program_name LIKE 'NISHTHA_Secondary%' THEN 'NISHTHA Secondary'
+            WHEN program_name LIKE 'NISHTHA_FLN%' THEN 'NISHTHA FLN'
+            WHEN program_name LIKE 'NISHTHA_ECCE%' THEN 'NISHTHA ECCE'
+            ELSE program_name
+            END AS program_name
+            FROM cqube_nvsk.public.nishta;`
         },
     ],
     implementation_status: {
@@ -69,7 +98,10 @@ export const config = {
                 "hierarchyLevel": "0",
                 "actions": {
                     "queries": {
-                        "map": "select d.latitude, d.longitude, t.state_id, t.program_name, state_name ,t.status from dimensions.state as d join (select state_id, program_name, case when sum > 0 then 'YES' else 'NO' end as status from datasets.nishtha_programstarted_state0programnishtha) as t on  d.state_id = t.state_id order by d.state_name asc"
+                        "map": `SELECT  latitude,longitude,state_id,program_name as program,state_name,status
+                        FROM cqube_nvsk.public.nishtha_implementation_status order by state_name asc;`
+                        // "select d.latitude, d.longitude, t.state_id, t.program_name, state_name ,t.status from dimensions.state as d join (select state_id, program_name, case when sum > 0 then 'YES' else 'NO' end as status from datasets.nishtha_programstarted_state0programnishtha) as t on  d.state_id = t.state_id order by d.state_name asc"
+                        
                     },
                     "level": "state",
                     "nextLevel": "district"
@@ -136,7 +168,7 @@ export const config = {
                     },
                     {
                         "valuePrefix": "",
-                        "value": "program_name",
+                        "value": "status",
                         "valueSuffix": "\n"
                     }
                 ]
@@ -204,7 +236,9 @@ export const config = {
                 "hierarchyLevel": "0",
                 "actions": {
                     "queries": {
-                        "table": "SELECT st.state_name, SUM(count) as no_of_languages, string_agg(language, ',' order by language) as list_of_languages FROM datasets.nishtha_totalmedium_dqamdiwbdiicaxv9f2xl as ntm JOIN dimensions.state as st ON st.state_id = ntm.state_id GROUP BY ntm.state_id, st.state_name ORDER BY st.state_name"
+                        "table": `SELECT  state_name, language,language_count
+                        FROM cqube_nvsk.public.nishtha_totalmedium
+                        GROUP BY state_name, language,language_count;`
                     },
                     "level": "state",
                     "nextLevel": "district"
@@ -221,12 +255,12 @@ export const config = {
                     },
                     {
                         name: "No.of Languages",
-                        property: "no_of_languages",
+                        property: "language_count",
                         class: "text-center"
                     },
                     {
                         name: "List of Languages",
-                        property: "list_of_languages",
+                        property: "language",
                         class: "text-center"
                     }
                 ],
@@ -390,7 +424,9 @@ export const config = {
                 "hierarchyLevel": "0",
                 "actions": {
                     "queries": {
-                        "barChart": "select s.state_name, sum(ntae.sum) as achieved_certifications from datasets.nishtha_achievedcertification_chydbgqxd0rtzw5hz3zt as ntae JOIN dimensions.state as s ON s.state_id = ntae.state_id group by s.state_name ORDER BY s.state_name;",
+                        "barChart": `SELECT  state_name,total_certifications_achieved
+                        FROM cqube_nvsk.public.nishtha_potential_base
+                        GROUP BY state_name,total_certifications_achieved;`,
                     },
                     "level": "district"
                 }
@@ -410,7 +446,7 @@ export const config = {
                     "metrics": [
                         {
                             "label": "Achieved Certifications",
-                            "value": "achieved_certifications"
+                            "value": "total_certifications_achieved"
                         },
                         
                     ]
@@ -427,7 +463,9 @@ export const config = {
                 "hierarchyLevel": "0",
                 "actions": {
                     "queries": {
-                        "barChart": "select t1.course_name , sum(t1.sum) as total_certifications from datasets.nishtha_totalcertification_crwedrorgzcbcxsof35_ as t1 group by t1.course_name",
+                        "barChart": `SELECT  course_name,total_certification
+                        FROM cqube_nvsk.public.nishtha_coursewise
+                        GROUP BY course_name,total_certification;`,
                     },
                     "level": "state"
                 }
@@ -479,13 +517,13 @@ export const config = {
                     "title": "Courses"
                 },
                 "xAxis": {
-                    "title": " Total Enrolement and Certifications",
+                    "title": "Total Certifications",
                     "label": "course_name",
                     "value": "course_name",
                     "metrics": [
                         {
                             "label": "Total Certifications",
-                            "value": "total_certifications"
+                            "value": "total_certification"
                         }
                     ]
                 }
@@ -572,8 +610,8 @@ export const config = {
                 "hierarchyLevel": "0",
                 "actions": {
                     "queries": {
-                        "bigNumber1": "select count(program_id) as programs from dimensions.programnishtha",
-                        "bigNumber2": "select sum(sum) as beneficiaries from datasets.nishtha_total_participants_programnishtha"
+                        "bigNumber1": "SELECT COUNT(DISTINCT program_name) AS program_count FROM cqube_nvsk.public.nishta;",
+                        "bigNumber2": "select benefeciaries_count from cqube_nvsk.public.nishtha_benefeciaries;"
                     },
                     "level": "state"
                 }
@@ -583,7 +621,7 @@ export const config = {
             "bigNumber": {
                 "title": ['No. of Programs', 'No. of benefeciaries'],
                 "valueSuffix": ['', ''],
-                "property": ['programs', 'beneficiaries']
+                "property": ['program_count', 'benefeciaries_count']
             }
         }
     },
@@ -600,11 +638,11 @@ export const config = {
                         "bigNumber3": "",
                         "bigNumber4": "",
                         "bigNumber5": "",
-                        "bigNumber6": "",
-                        "bigNumber7": "",
-                        "bigNumber8": "select sum(sum) as participants_3 from datasets.nishtha_total_participants_programnishtha where program_name = 'NISHTHA Secondary'",
-                        "bigNumber9": "select sum(sum) as participants_4 from datasets.nishtha_total_participants_programnishtha where program_name = 'NISHTHA FLN'",
-                        "bigNumber10": "select sum(sum) as participants_5 from datasets.nishtha_total_participants_programnishtha where program_name = 'NISHTHA ECCE'",
+                        "bigNumber6": "SELECT nishtha_participants FROM cqube_nvsk.public.nishta WHERE program_name = 'NISHTHA_Elementary_(Face-to-face)'",
+                        "bigNumber7": "SELECT nishtha_participants FROM cqube_nvsk.public.nishta WHERE program_name = 'NISHTHA_Elementary (Online)'",
+                        "bigNumber8": "SELECT nishtha_participants FROM cqube_nvsk.public.nishta WHERE program_name = 'NISHTHA_Secondary'",
+                        "bigNumber9": "SELECT nishtha_participants FROM cqube_nvsk.public.nishta WHERE program_name = 'NISHTHA_FLN'",
+                        "bigNumber10": "SELECT nishtha_participants FROM cqube_nvsk.public.nishta WHERE program_name = 'NISHTHA_ECCE'",
                     },
                     "level": "state"
                 }
@@ -627,9 +665,9 @@ export const config = {
         ],
         "options": {
             "bigNumber": {
-                "title": ['Total Enrolment', 'Total Completion', 'Total Certification', 'Total Mediums', 'Total States/UTs Participating', 'NISHTHA Elementary (Face-to-face)', 'NISHTHA Elementary (Online)', 'NISHTHA Secondary', 'NISHTHA FLN', 'NISHTHA ECCE'],
+                "title": ['Total Enrolment', 'Total Completion', 'Total Certification', 'Total Mediums', 'Total States/UTs Participating', 'NISHTHA Elementary (Face-to-face)', 'NISHTHA Elementary (Online)', 'NISHTHA Secondary (Online)', 'NISHTHA FLN (Online)', 'NISHTHA ECCE (Online)'],
                 "valueSuffix": ['', '', '', '', '', '', '', '', '', ''],
-                "property": ['total_enrolment', 'total_completion', 'total_certification', 'total_mediums', 'total_states', 'participants_1', 'participants_2', 'participants_3', 'participants_4', 'participants_5']
+                "property": ['total_enrolment', 'total_completion', 'total_certification', 'total_mediums', 'total_states', 'nishtha_participants', 'nishtha_participants', 'nishtha_participants', 'nishtha_participants', 'nishtha_participants']
             }
         }
     }

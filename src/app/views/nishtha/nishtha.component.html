@@ -7,6 +7,24 @@
                 principals at the elementary stage. NISHTHA is the world's largest teachers' training program.</p>
         </div>
     </div>
+</div><br>
+
+<div class="col-span-full tab-wrapper">
+    <div class="reports-row" >
+        <div *ngIf="checkReport('nishtha_metrics', 'bigNumber1')" id="bignumber1">
+            <app-nishtha-bignumber-metrics (exportReportData)="importBigNumberMetrics($event)"></app-nishtha-bignumber-metrics>
+        </div>
+        <div class="row-wrapper grid grid-cols-5 gap-4">
+            <h2 *ngIf="NVSK" class="col-span-5 ml-3 program-desc"><b>NISHTHA Coverage (No. of participants):</b></h2>
+            <div class="col-span-2 xmd:col-span-1 bignumber-container" id="bignumber2"
+                *ngFor="let bigNumberData of getMetricsArray(); let index = index">
+                <div *ngIf="checkReport('nishtha_metrics', 'bigNumber'+(index+1))">
+                    <app-big-number [bigNumberReportData]="bigNumberData"></app-big-number>
+                </div>
+            </div>
+
+        </div>
+    </div>
 </div>
 
 <div class="custom-tab-group-wrapper">

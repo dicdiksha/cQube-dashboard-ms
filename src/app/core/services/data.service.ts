@@ -301,7 +301,7 @@ export class DataService {
           metricFilter = filters.filter((filter: any) => {
             return filter.filterType === 'metric'
           })[0]
-          rows = this.mapGroupBy(rows, groupByColumn, metricLabelProp, metricValueProp, tooltipMetrics, metricFilter.value)
+          rows = this.mapGroupBy(rows, groupByColumn, metricLabelProp, metricValueProp, tooltipMetrics, metricFilter?.value)
         }
 
         reportData = {

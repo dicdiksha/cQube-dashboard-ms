@@ -293,7 +293,7 @@ export class LeafletMapComponent implements OnInit, AfterViewInit, OnChanges {
         // });
 
         if (this.hierarchyLevel < 3 && !singleColor) {
-          this.createLegend(reportTypeIndicator, this.mapData.options, values);
+          this.createLegend(reportTypeIndicator, this.mapData, values);
         }
         resolve('India map borders plotted successfully');
       } catch (e) {
@@ -639,7 +639,7 @@ export class LeafletMapComponent implements OnInit, AfterViewInit, OnChanges {
         else if (this.config === 'NVSK' && level === 0) {
           this.fitBoundsToCountryBorder();
         }
-        this.createLegend(reportTypeIndicator, this.mapData.options, values);
+        this.createLegend(reportTypeIndicator, this.mapData, values);
       }
       else if (prevValues && mapData?.data?.length === 0) {
         const NotificationControl = L.Control.extend({
@@ -661,7 +661,8 @@ export class LeafletMapComponent implements OnInit, AfterViewInit, OnChanges {
     }
   }
 
-  createLegend(reportTypeIndicator: string, mapOptions: any, values: any): void {
+  createLegend(reportTypeIndicator: string, mapData: any, values: any): void {
+    let mapOptions = mapData.options;
     let legend = L.control({ position: 'topright' });
     let ref = this;
     let labels: any[] = [];
@@ -674,7 +675,17 @@ export class LeafletMapComponent implements OnInit, AfterViewInit, OnChanges {
       }
 
       if (reportTypeIndicator === 'boolean') {
-        values = ["Yes", "No"];
+        if (mapOptions.legend && mapOptions.legend.title && mapOptions.legend.title == 'Implemented Nishtha'){
+          if(mapData.data[0].program == 'NISHTHA Elementary'){
+            values = ["Implemented in only online mode","Implemented in only face-to-face mode","Implemented in both face-to-face and online modes","Not implemented"];
+          }else if(mapData.data[0].program == 'NISHTHA Secondary' || mapData.data[0].program == 'NISHTHA FLN'){
+            values = ["Implemented in only online mode","Implemented in only face-to-face mode","Not implemented"];
+          }else if(mapData.data[0].program == 'NISHTHA ECCE'){
+            values = ["Implemented in only online mode","Not implemented"];
+          }else{}
+        } else {
+          values = ["Yes", "No"]; 
+        }
         for (let i = 0; i < values.length; i++) {
           // labels.push(`<i class="fa fa-square" style="color:${ref.getLayerColor(values[i])}"></i> ${values[i]}`);
           labels.push(`<button class="legend-range" style="background-color: ${ref.getZoneColor(reportTypeIndicator, values[i], values)}; color: ${invert(ref.getZoneColor(reportTypeIndicator, values[i], values), true)}">
@@ -756,6 +767,14 @@ export class LeafletMapComponent implements OnInit, AfterViewInit, OnChanges {
     if (reportTypeIndicator === 'boolean') {
       if (String(value).toLowerCase() == "yes") {
         return "#007000";
+      }else if (String(value).toLowerCase() == "implemented in only online mode") {
+        return "#29c0c2";
+      }else if (String(value).toLowerCase() == "implemented in only face-to-face mode") {
+        return "#705000";
+      }else if (String(value).toLowerCase() == "implemented in both face-to-face and online modes") {
+        return "#007000";
+      }else if (String(value).toLowerCase() == "not implemented") {
+        return "#D2222D";
       } else {
         return "#D2222D";
       }
