@@ -1,0 +1,9 @@
+<div class="col-span-full">
+    <ng-container *ngIf="(reportData?.data && reportData?.data?.length > 0)">
+        <p class="text-center font-medium py-2 filename">{{title}}</p><br>
+        <app-leaflet-map [mapData]="reportData" [drillDownLevel]="drillDownLevel"></app-leaflet-map>
+    </ng-container>
+    <div class="noData" *ngIf="!(reportData?.data && reportData?.data?.length > 0)">
+        No Data Found
+    </div>
+</div>

@@ -180,7 +180,15 @@ routes = [
             (module) => module.PrashastModule
           ),
         canLoad: [AuthGuard]
-      }
+      },
+      {
+        path: 'pmShri',
+        loadChildren: () =>
+          import('./views/pm-shri/pm-shri.module').then(
+            (module) => module.PmShriModule
+          ),
+        canLoad: [AuthGuard]
+      },
     ],
   },
 ];
