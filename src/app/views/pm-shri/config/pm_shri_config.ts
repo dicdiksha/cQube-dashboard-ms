@@ -33,7 +33,7 @@ export const config = {
                 "metricFilterNeeded": false,
                 "indicator": "status",
                 "legend": {
-                    "title": "Implemented PM Shri"
+                    "title": "Implemented PM SHRI"
                 },
                 "tooltipMetrics": [
                     {
@@ -42,7 +42,7 @@ export const config = {
                         "valueSuffix": "\n"
                     },
                     {
-                        "valuePrefix": "Implemented PM Shri: ",
+                        "valuePrefix": "Implemented PM SHRI: ",
                         "value": "status",
                         "valueSuffix": "\n"
                     }
