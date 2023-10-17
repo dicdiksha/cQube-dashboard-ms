@@ -174,6 +174,14 @@ routes = [
         canLoad: [AuthGuard]
       },
       {
+        path: 'pmShri',
+        loadChildren: () =>
+          import('./views/pm-shri/pm-shri.module').then(
+            (module) => module.PmShriModule
+          ),
+        canLoad: [AuthGuard]
+      },
+      {
         path: 'prashast',
         loadChildren: () =>
           import('./views/prashast/prashast.module').then(
