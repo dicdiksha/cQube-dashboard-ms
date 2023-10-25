@@ -78,7 +78,8 @@ export class BignumberMetricsComponent implements OnInit {
           bigNumber: {
             title: Array.isArray(options?.bigNumber?.title) ? options?.bigNumber?.title?.[index] : options?.bigNumber?.title,
             property: Array.isArray(options?.bigNumber?.property) ? options?.bigNumber?.property?.[index] : options?.bigNumber?.property,
-            valueSuffix: Array.isArray(options?.bigNumber?.valueSuffix) ? options?.bigNumber?.valueSuffix?.[index] : options?.bigNumber?.valueSuffix
+            valueSuffix: Array.isArray(options?.bigNumber?.valueSuffix) ? options?.bigNumber?.valueSuffix?.[index] : options?.bigNumber?.valueSuffix,
+            formatter: Array.isArray(options?.bigNumber?.formatter) ? options?.bigNumber?.formatter?.[index] : options?.bigNumber?.formatter,
           }
         }
         let metricData = await this._dataService.getBigNumberReportData(query, metricOptions, 'averagePercentage', this.reportData);

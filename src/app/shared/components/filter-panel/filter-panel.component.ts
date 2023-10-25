@@ -61,4 +61,12 @@ export class FilterPanelComponent implements OnInit, OnChanges {
   isFilterMulti(): boolean {
     return this.isMulti;
   }
+
+  convertNativeMetricLabelToReadable(label: string): string {
+    if (typeof label !== 'string') {
+      return label;
+    }
+    
+    return label.split('_').map(word => word[0]?.toUpperCase() + word?.substring(1).toLowerCase()).join(' ')
+  }
 }

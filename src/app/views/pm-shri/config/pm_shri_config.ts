@@ -61,7 +61,7 @@ export const config = {
                     {
                         "queries":
                         {
-                            "map": "select t1.state_id, t1.state_id as level, t2.state_name, t1.category_name, sum(t3.sum) as total_schools, round(cast(sum(t1.sum) / sum(t3.sum) as numeric) * 100, 2) as percentage, t2.latitude, t2.longitude from datasets.pm_shri_pm_shri_category_state0categorypmshri as t1 join dimensions.state as t2 on t2.state_id = t1.state_id join datasets.pm_shri_total_schools_state as t3 on t3.state_id = t1.state_id where category_name in ('total_schools_having_library', 'total_schools_having_handwash_facility', 'total_schools_having_drinking_water_facility', 'total_schools_having_ramp_facility', 'total_schools_having_playground', 'total_schools_having_internet_facility') group by t1.state_id, t2.state_name, t1.category_name, t2.latitude, t2.longitude"
+                            "map": "select t1.state_id, t1.state_id as level, t2.state_name, t1.category_name, t4.sum as total_girls_in_schools, t5.sum as total_boys_in_schools, sum(t1.sum) as category_value, sum(t3.sum) as total_schools, round(cast(sum(t1.sum) / sum(t3.sum) as numeric) * 100, 2) as percentage, t2.latitude, t2.longitude from datasets.pm_shri_pm_shri_category_state0categorypmshri as t1 join dimensions.state as t2 on t2.state_id = t1.state_id join datasets.pm_shri_total_schools_state as t3 on t3.state_id = t1.state_id join datasets.pm_shri_total_boys_in_schools_state as t4 on t4.state_id = t1.state_id join datasets.pm_shri_total_girls_in_schools_state as t5 on t5.state_id = t1.state_id where category_name in ('total_schools_having_library', 'total_schools_having_handwash_facility', 'total_schools_having_drinking_water_facility', 'total_schools_having_ramp_facility', 'total_schools_having_playground', 'total_schools_having_internet_facility') group by t1.state_id, t2.state_name, t1.category_name, t2.latitude, t2.longitude, t4.sum, t5.sum"
                         },
                         "level": "state",
                         "nextLevel": "district"
@@ -78,7 +78,8 @@ export const config = {
             {
                 "indicatorType": "percent",
                 "metricLabelProp": "category_name",
-                "metricValueProp": "percentage",
+                "metricValueProp": "category_value",
+                "indicator": "percentage",
                 "groupByColumn": "level",
                 "metricFilterNeeded": true,
                 "legend": { "title": "State Wise Performance" },
@@ -98,6 +99,16 @@ export const config = {
                         "valueSuffix": "\n"
                     },
                     {
+                        "valuePrefix": "Total Boys in schools: ",
+                        "value": "total_boys_in_schools",
+                        "valueSuffix": "\n"
+                    },
+                    {
+                        "valuePrefix": "Total Girls in schools: ",
+                        "value": "total_girls_in_schools",
+                        "valueSuffix": "\n"
+                    },
+                    {
                         "valuePrefix": "",
                         "value": "category_name",
                         "valueSuffix": "\n"
@@ -114,11 +125,14 @@ export const config = {
                 "hierarchyLevel": "0",
                 "actions": {
                     "queries": {
-                        "bigNumber1": "select SUM(count) as total_states from datasets.pm_shri_started_state",
-                        "bigNumber2": "select SUM(sum) as total_schools from datasets.pm_shri_total_schools_state",
-                        "bigNumber3": "select sum(sum) as only_boys_schools from datasets.pm_shri_pm_shri_category_state0categorypmshri where category_name = 'only_boys_school'",
-                        "bigNumber4": "select sum(sum) as only_girls_schools from datasets.pm_shri_pm_shri_category_state0categorypmshri where category_name = 'only_girls_school'",
-                        "bigNumber5": "select sum(sum) as co_ed_schools from datasets.pm_shri_pm_shri_category_state0categorypmshri where category_name = 'co-ed_school'"
+                        "bigNumber1": "6448",
+                        "bigNumber2": "763",
+                        "bigNumber3": "863",
+                        "bigNumber4": "1533",
+                        "bigNumber5": "1384",
+                        "bigNumber6": "1616",
+                        "bigNumber7": "735",
+                        "bigNumber8": "317"
                     },
                     "level": "state"
                 }
@@ -126,9 +140,8 @@ export const config = {
         ],
         "options": {
             "bigNumber": {
-                "title": ['Total states/UTs', 'Total schools', 'Only boys schools', 'Only girls schools', 'Co-ed schools'],
-                "valueSuffix": ['', '', '', '', ''],
-                "property": ['total_states', 'total_schools', 'only_boys_schools', 'only_girls_schools', 'co_ed_schools']
+                "title": ['Total PM SHRI schools', 'Total districts', 'No. of primary schools', 'No. of upper primary schools', 'No. of secondary schools', 'No. of higher secondary schools', 'KVS', 'NVS'],
+                "formatter": { locale: 'en-IN', format: "long" }
             }
         }
     }
