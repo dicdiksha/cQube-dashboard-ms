@@ -181,14 +181,14 @@ routes = [
           ),
         canLoad: [AuthGuard]
       },
-      {
+     /* {
         path: 'prashast',
         loadChildren: () =>
           import('./views/prashast/prashast.module').then(
             (module) => module.PrashastModule
           ),
         canLoad: [AuthGuard]
-      }
+      }*/
     ],
   },
 ];

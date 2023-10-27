@@ -7,7 +7,8 @@ function formatNumber(number: number, formatter: any): string {
             if (number < 1000) {
                 return `${number}`;
             } else if (number > 999 && number <= 99999) {
-                return `${(number / 1000).toFixed(2)}K`;
+                //return `${(number / 1000).toFixed(2)}K`;
+                return `${number}`;
             } else if (number > 99999 && number <= 9999999) {
                 return `${(number / 100000).toFixed(2)}L`;
             } else {
@@ -17,7 +18,8 @@ function formatNumber(number: number, formatter: any): string {
             if (number < 1000) {
                 return `${number}`;
             } else if (number > 999 && number <= 999999) {
-                return `${(number / 100000).toFixed(2)}K`;
+                //return `${(number / 100000).toFixed(2)}K`;
+                return `${number}`;
             } else if (number > 999999 && number <= 999999999) {
                 return `${(number / 1000000).toFixed(2)}M`;
             } else {
