@@ -19,6 +19,7 @@ export class PotentialBaseNvskComponent implements OnInit {
     reportName: "% against Potential Base"
   };
   title: string = '% against Potential Base'
+  subTitle: string = 'For NISHTHA Elementary (Face-to-face) program, the certification numbers correspond to certificate of participation.'
   selectedYear: any;
   selectedMonth: any;
   startDate: any;
@@ -27,6 +28,7 @@ export class PotentialBaseNvskComponent implements OnInit {
   compareDateRange: any = 30;
   filterIndex: any;
   rbacDetails: any;
+  currentFilterValue: any;
 
   @Output() exportReportData = new EventEmitter<any>();
 
@@ -48,7 +50,7 @@ export class PotentialBaseNvskComponent implements OnInit {
     let { timeSeriesQueries, queries, levels, defaultLevel, filters, options } = reportConfig[this.reportName];
     let onLoadQuery;
     let currentLevel;
-
+    this.currentFilterValue = onLoadQuery;
     if (this.rbacDetails?.role !== null && this.rbacDetails.role !== undefined) {
       filters.every((filter: any) => {
         if (Number(this.rbacDetails?.role) === Number(filter.hierarchyLevel)) {
@@ -85,11 +87,13 @@ export class PotentialBaseNvskComponent implements OnInit {
       })
 
       filterValues = [...filterValues].filter((filter: any) => {
+		this.currentFilterValue = filter.filterType;
         return filter.filterType !== 'metric'
       })
 
       filterValues.forEach((filterParams: any) => {
         query = parseFilterToQuery(query, filterParams)
+		this.currentFilterValue = filterParams.value;
       });
 
       if (query && key === 'table') {

@@ -84,8 +84,7 @@ export const config = {
                 "hierarchyLevel": "0",
                 "actions": {
                     "queries": {
-                        "map": "select d.latitude, d.longitude, t.state_id, t.program_name, state_name ,t.status from dimensions.state as d join (select state_id, program_name, case when sum > 0 then 'YES' else 'NO' end as status from datasets.nishtha_programstarted_state0programnishtha) as t on  d.state_id = t.state_id order by d.state_name asc"
-                        
+                        "map": "select d.latitude, d.longitude, t.state_id, t.program_name, t.program_status, state_name, t.status from dimensions.state as d join (select state_id, program_name, case when sum > 0 then CONCAT('YES. ', program_status) else CONCAT('NO. ', program_status) end as program_status, case when sum > 0 then 'YES' else 'NO' end as status from datasets.nishtha_programstarted_dwl6ewangb0rgg8igage) as t on  d.state_id = t.state_id order by d.state_name asc"  
                     },
                     "level": "state",
                     "nextLevel": "district"
@@ -152,7 +151,7 @@ export const config = {
                     },
                     {
                         "valuePrefix": "",
-                        "value": "status",
+                        "value": "program_status",
                         "valueSuffix": "\n"
                     }
                 ]
@@ -588,7 +587,11 @@ export const config = {
                 "hierarchyLevel": "0",
                 "actions": {
                     "queries": {
-                        "bigNumber1": "select count(program_id) as programs from dimensions.programnishtha",
+                        "bigNumber1": `SELECT count(program_name) as programs FROM( SELECT DISTINCT CASE
+                                      WHEN program_name LIKE 'NISHTHA_Elementary%' THEN 'NISHTHA Elementary'
+                                      ELSE program_name
+                                      END AS program_name
+                                      FROM dimensions.programnishtha) as programnishtha;`,
                         "bigNumber2": "select sum(sum) as beneficiaries from datasets.nishtha_total_participants_programnishtha"
                     },
                     "level": "state"
