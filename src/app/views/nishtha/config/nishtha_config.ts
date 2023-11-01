@@ -16,7 +16,7 @@ export const config = {
             "valueProp": "program_name",
             "id": "program_name",
             "tableAlias": "t1",
-            // "query": "select program_name from dimensions.programnishtha order by program_name"
+            //"query": "select program_name from dimensions.programnishtha order by program_name"
             "query": `SELECT DISTINCT CASE
               WHEN program_name LIKE 'NISHTHA_Elementary%' THEN 'NISHTHA Elementary'
               ELSE program_name
@@ -29,7 +29,7 @@ export const config = {
             "labelProp": "program_name",
             "valueProp": "program_name",
             "id": "metric",
-            // "query": "select program_name from dimensions.programnishtha order by program_name"
+            //"query": "select program_name from dimensions.programnishtha order by program_name"
             "query": `SELECT DISTINCT CASE
               WHEN program_name LIKE 'NISHTHA_Elementary%' THEN 'NISHTHA Elementary'
               ELSE program_name
@@ -68,7 +68,7 @@ export const config = {
             "labelProp": "program_name",
             "valueProp": "program_name",
             "id": "program_name",
-            // "query": "select program_name from dimensions.programnishtha order by program_name"
+            //"query": "select program_name from dimensions.programnishtha order by program_name"
             "query": `SELECT DISTINCT CASE
               WHEN program_name LIKE 'NISHTHA_Elementary%' THEN 'NISHTHA Elementary'
               ELSE program_name
@@ -142,7 +142,7 @@ export const config = {
                 "groupByColumn": "state_id",
                 "metricFilterNeeded": true,
                 "legend": {
-                    "title": "Implemented Nishtha"
+                    "title": "program_name"
                 },
                 "tooltipMetrics": [
                     {
@@ -597,7 +597,7 @@ export const config = {
         ],
         "options": {
             "bigNumber": {
-                "title": ['No. of Programs', 'No. of benefeciaries'],
+                "title": ['No. of Programs', 'No. of beneficiaries'],
                 "valueSuffix": ['', ''],
                 "property": ['programs', 'beneficiaries']
             }

@@ -67,6 +67,6 @@ export class FilterPanelComponent implements OnInit, OnChanges {
       return label;
     }
     
-    return label.split('_').map(word => word[0]?.toUpperCase() + word?.substring(1).toLowerCase()).join(' ')
+    return label.split('_').map(word => word[0]?.toUpperCase() + word?.substring(1)).join(' ')
   }
 }

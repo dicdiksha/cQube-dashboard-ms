@@ -6,7 +6,7 @@ export const config = {
             "labelProp": "category_name",
             "valueProp": "category_name",
             "id": "metric",
-            "query": "select category_name from dimensions.categorypmshri where category_name in ('total_schools_having_library', 'total_schools_having_handwash_facility', 'total_schools_having_drinking_water_facility', 'total_schools_having_ramp_facility', 'total_schools_having_playground', 'total_schools_having_internet_facility') order by category_name"
+            "query": "select category_name from dimensions.categorypmshri where category_name in ('total_schools_having_library', 'total_schools_having_handwash_facility', 'total_schools_having_drinking_water_facility', 'total_schools_having_ramp_facility', 'total_schools_having_playground', 'total_schools_having_internet_facility', 'co-ed_school','only_girls_school','only_boys_school') order by category_name"
         }
     ],
     implementation_status: {
@@ -61,7 +61,7 @@ export const config = {
                     {
                         "queries":
                         {
-                            "map": "select t1.state_id, t1.state_id as level, t2.state_name, t1.category_name, t4.sum as total_girls_in_schools, t5.sum as total_boys_in_schools, sum(t1.sum) as category_value, sum(t3.sum) as total_schools, round(cast(sum(t1.sum) / sum(t3.sum) as numeric) * 100, 2) as percentage, t2.latitude, t2.longitude from datasets.pm_shri_pm_shri_category_state0categorypmshri as t1 join dimensions.state as t2 on t2.state_id = t1.state_id join datasets.pm_shri_total_schools_state as t3 on t3.state_id = t1.state_id join datasets.pm_shri_total_girls_in_schools_state as t4 on t4.state_id = t1.state_id join datasets.pm_shri_total_boys_in_schools_state as t5 on t5.state_id = t1.state_id where category_name in ('total_schools_having_library', 'total_schools_having_handwash_facility', 'total_schools_having_drinking_water_facility', 'total_schools_having_ramp_facility', 'total_schools_having_playground', 'total_schools_having_internet_facility') group by t1.state_id, t2.state_name, t1.category_name, t2.latitude, t2.longitude, t4.sum, t5.sum order by t1.category_name"
+                            "map": "select t1.state_id, t1.state_id as level, t2.state_name, t1.category_name, t4.sum as total_girls_in_schools, t5.sum as total_boys_in_schools, sum(t1.sum) as category_value, sum(t3.sum) as total_schools, round(cast(sum(t1.sum) / sum(t3.sum) as numeric) * 100, 2) as percentage, t2.latitude, t2.longitude from datasets.pm_shri_pm_shri_category_state0categorypmshri as t1 join dimensions.state as t2 on t2.state_id = t1.state_id join datasets.pm_shri_total_schools_state as t3 on t3.state_id = t1.state_id join datasets.pm_shri_total_girls_in_schools_state as t4 on t4.state_id = t1.state_id join datasets.pm_shri_total_boys_in_schools_state as t5 on t5.state_id = t1.state_id where category_name in ('total_schools_having_library', 'total_schools_having_handwash_facility', 'total_schools_having_drinking_water_facility', 'total_schools_having_ramp_facility', 'total_schools_having_playground', 'total_schools_having_internet_facility' ,'co-ed_school','only_girls_school','only_boys_school') group by t1.state_id, t2.state_name, t1.category_name, t2.latitude, t2.longitude, t4.sum, t5.sum order by t1.category_name"
                         },
                         "level": "state",
                         "nextLevel": "district"
