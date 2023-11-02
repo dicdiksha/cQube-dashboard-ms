@@ -451,9 +451,8 @@ export class DataService {
 
   mapGroupBy(data: any, groupByLabel: any, metricLabelProp: string, metricValueProp: string, tooltipMetrics: any, metricFilterValue: any) {
     let result = _.chain(data).groupBy(groupByLabel).map((objs, key) => {
-      data = {
-        [groupByLabel]: key,
-      }
+      let row = objs.find(obj => obj.category_name === metricFilterValue)
+      
       objs?.forEach((obj: any, index: any) => {
         let modifiedTooltipMetrics = tooltipMetrics.filter(metric => metricLabelProp === metric.value).map((metric: any) => {
           return {
@@ -462,18 +461,18 @@ export class DataService {
             value: obj[metricLabelProp]
           }
         })
-        data = {
-          ...data,
-          ...obj,
-          // district_code: obj['district_id'] ? Number(obj['district_id']) : null,
+
+        row = {
+          ...row,
           [obj[metricLabelProp]]: obj[metricValueProp]
         }
+
         if (index === 0) {
-          data['tooltip'] = this._wrapperService.constructTooltip(tooltipMetrics.filter(metric => metricLabelProp !== metric.value), data, metricFilterValue)
+          row['tooltip'] = this._wrapperService.constructTooltip(tooltipMetrics.filter(metric => metricLabelProp !== metric.value), row, metricFilterValue)
         }
-        data['tooltip'] += this._wrapperService.constructTooltip(modifiedTooltipMetrics, data, metricFilterValue)
+        row['tooltip'] += this._wrapperService.constructTooltip(modifiedTooltipMetrics, row, metricFilterValue)
       });
-      return data;
+      return row;
     }).value()
     return result;
   }
