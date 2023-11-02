@@ -213,6 +213,14 @@ html body {
     }
 }
 
+.app-side-nav::-webkit-scrollbar {
+	width: 5px;
+}
+
+.app-side-nav{
+	overflow-x: hidden;
+}
+
 #footer {
     width: 100%;
     font-size: 13px;
