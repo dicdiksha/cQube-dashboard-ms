@@ -93,6 +93,9 @@ export class MediumOfInstructionComponent implements OnInit {
       let query = buildQuery(onLoadQuery, defaultLevel, this.levels, this.filters, this.startDate, this.endDate, key, this.compareDateRange);
 
       filterValues.forEach((filterParams: any) => {
+        if(filterParams.value == "NISHTHA Elementary"){
+          filterParams.value = "NISHTHA Elementary (Online)"
+        }
         query = parseFilterToQuery(query, filterParams)
       });
 

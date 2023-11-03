@@ -6,7 +6,7 @@ export const config = {
             "labelProp": "category_name",
             "valueProp": "category_name",
             "id": "metric",
-            "query": "select category_name from dimensions.categorypmshri where category_name not in ('total_instructional_classrooms')"
+            "query": "select category_name from dimensions.categorypmshri where category_name not in ('total_instructional_classrooms')  order by category_name"
         }
     ],
     implementation_status: {
@@ -61,7 +61,7 @@ export const config = {
                     {
                         "queries":
                         {
-                            "map": "select t1.state_id, t2.state_name, t1.category_name, SUM(t4.sum) as total_girls_in_schools, SUM(t5.sum) as total_boys_in_schools, SUM(t6.sum) as total_instructional_classrooms, sum(t1.sum) as category_value, sum(t3.sum) as total_schools, round(cast(sum(t1.sum) / sum(t3.sum) as numeric) * 100, 2) as percentage, t2.latitude, t2.longitude from datasets.pm_shri_pm_shri_category_state0categorypmshri as t1 join dimensions.state as t2 on t2.state_id = t1.state_id join datasets.pm_shri_total_schools_state as t3 on t3.state_id = t1.state_id join datasets.pm_shri_total_boys_in_schools_state as t4 on t4.state_id = t1.state_id join datasets.pm_shri_total_girls_in_schools_state as t5 on t5.state_id = t1.state_id join datasets.pm_shri_total_instructional_classrooms_state as t6 on t6.state_id = t1.state_id where category_name not in ('total_instructional_classrooms') group by t1.state_id, t2.state_name, t1.category_name, t2.latitude, t2.longitude"
+                            "map": "select t1.state_id, t2.state_name, t1.category_name, SUM(t4.sum) as total_girls_in_schools, SUM(t5.sum) as total_boys_in_schools, SUM(t6.sum) as total_instructional_classrooms, sum(t1.sum) as category_value, sum(t3.sum) as total_schools, round(cast(sum(t1.sum) / sum(t3.sum) as numeric) * 100, 2) as percentage, t2.latitude, t2.longitude from datasets.pm_shri_pm_shri_category_state0categorypmshri as t1 join dimensions.state as t2 on t2.state_id = t1.state_id join datasets.pm_shri_total_schools_state as t3 on t3.state_id = t1.state_id join datasets.pm_shri_total_boys_in_schools_state as t4 on t4.state_id = t1.state_id join datasets.pm_shri_total_girls_in_schools_state as t5 on t5.state_id = t1.state_id join datasets.pm_shri_total_instructional_classrooms_state as t6 on t6.state_id = t1.state_id where category_name not in ('total_instructional_classrooms') group by t1.state_id, t2.state_name, t1.category_name, t2.latitude, t2.longitude  order by t1.category_name"
                         },
                         "level": "state",
                         "nextLevel": "district"

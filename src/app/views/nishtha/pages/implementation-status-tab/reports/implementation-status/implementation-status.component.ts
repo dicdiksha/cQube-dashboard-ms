@@ -110,6 +110,11 @@ export class ImplementationStatusComponent implements OnInit {
           this.csv.csvDownload(reportsData);
         }
       } else if (query && key === 'map') {
+        metricFilter.filter((filter: any) => {
+          if(filter.value == "NISHTHA Elementary"){
+            filter.value = "NISHTHA Elementary (Online)"
+          }
+        });
         this.spinner.show();
         this.reportData = await this._dataService.getMapReportData(query, options, metricFilter);
         console.log(this.reportData)
