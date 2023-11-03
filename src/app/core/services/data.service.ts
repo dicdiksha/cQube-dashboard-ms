@@ -451,7 +451,7 @@ export class DataService {
 
   mapGroupBy(data: any, groupByLabel: any, metricLabelProp: string, metricValueProp: string, tooltipMetrics: any, metricFilterValue: any) {
     let result = _.chain(data).groupBy(groupByLabel).map((objs, key) => {
-      let row = objs.find(obj => obj.category_name === metricFilterValue)
+      let row = objs.find(obj => obj[metricLabelProp] === metricFilterValue)
       
       objs?.forEach((obj: any, index: any) => {
         let modifiedTooltipMetrics = tooltipMetrics.filter(metric => metricLabelProp === metric.value).map((metric: any) => {
