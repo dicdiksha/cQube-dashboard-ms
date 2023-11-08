@@ -1,0 +1,25 @@
+<div class="metric-card-wrapper">
+    <div class="grid gap-4 grid-cols-6 xmd:grid-cols-12">
+        <div class="col-span-12">
+            <p class="program-title">PM SHRI</p>
+            <p class="program-desc">PM SHRI initiative is intended to develop schools in which every student feels welcomed and cared for, where a safe and stimulating learning environment exists, where a wide range of learning experiences are offered, and where good physical infrastructure and appropriate resources conducive to learning are available to all students.</p>
+        </div>
+    </div>
+</div>
+
+<div class="custom-tab-group-wrapper">
+    <mat-tab-group [selectedIndex]="tabIndex" mat-align-tabs="start" animationDuration="0ms"
+        (selectedTabChange)="onTabChanged($event)" appFullScreen>
+        <div *ngIf="checkReport('pmShri_metrics', 'bigNumber3')">
+            <app-bignumber-metrics
+                (exportReportData)="importBigNumberMetrics($event)"></app-bignumber-metrics>
+        </div>
+        <mat-tab label='Implementation Status' *ngIf="tabs.includes('Implementation Status')">
+            <app-implementation-status-tab [bigNumberMetrics]="bigNumberMetrics" *ngIf="selectedTabLabel === 'Implementation Status'"></app-implementation-status-tab>
+        </mat-tab>
+        <mat-tab label='State Wise Performance' *ngIf="tabs.includes('State Wise Performance')">
+            <app-state-wise-performance-tab
+                *ngIf="selectedTabLabel === 'State Wise Performance'"></app-state-wise-performance-tab>
+        </mat-tab>
+    </mat-tab-group>
+</div>

@@ -13,10 +13,11 @@ export class BigNumberComponent implements OnInit, OnChanges {
   differenceInPercentage: any;
   differenceIndicator: any= undefined;
   valueSuffix: any;
+  formatter: any;
+
   constructor() { }
 
   ngOnInit(): void {
-    
   }
 
   ngOnChanges(): void {
@@ -24,6 +25,7 @@ export class BigNumberComponent implements OnInit, OnChanges {
   }
 
   updateValues(): void {
+    this.formatter = this.bigNumberReportData?.formatter;
     this.averagePercentage = this.bigNumberReportData?.averagePercentage;
     this.valueSuffix = this.bigNumberReportData?.valueSuffix ? this.bigNumberReportData?.valueSuffix : '';
     if(this.bigNumberReportData && this.bigNumberReportData.differencePercentage && this.bigNumberReportData.averagePercentage) {
@@ -42,7 +44,7 @@ export class BigNumberComponent implements OnInit, OnChanges {
   }
 
   formatNumber(input: any) {
-    return formatNumberForReport(Number(input))
+    return formatNumberForReport(Number(input), this.formatter);
   }
 
 }

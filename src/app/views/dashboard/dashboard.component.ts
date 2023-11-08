@@ -12,7 +12,7 @@ import { CommonService } from 'src/app/core/services/common/common.service';
 import { ConfigService } from 'src/app/core/services/config/config.service';
 import { RbacService } from 'src/app/core/services/rbac-service.service';
 import { WrapperService } from 'src/app/core/services/wrapper.service';
-import { formatNumberForReport } from 'src/app/utilities/NumberFomatter';
+import { formatNumberForReport, numberLabelFormatForReport } from 'src/app/utilities/NumberFomatter';
 import { parseRbacFilter } from 'src/app/utilities/QueryBuilder';
 import { environment } from 'src/environments/environment';
 
@@ -193,20 +193,28 @@ export class DashboardComponent implements OnInit {
                   break;
                 }
                 else if (metricQueriesKeys[k].indexOf('bigNumber') > -1) {
-                  let query = parseRbacFilter(metricQueries[metricQueriesKeys[k]], rbacDetails)
-                  let res = await this._wrapperService.runQuery(query, true)
-                  if (res && res.length > 0) {
-                    let metricData = {
-                      value: Array.isArray(programConfig[reports[i]]?.options?.bigNumber?.property) ? String(formatNumberForReport(res[0]?.[programConfig[reports[i]]?.options?.bigNumber?.property[k]])) + [programConfig[reports[i]]?.options?.bigNumber?.valueSuffix[k]] : String(formatNumberForReport(res[0]?.[programConfig[reports[i]]?.options?.bigNumber?.property])) + [programConfig[reports[i]]?.options?.bigNumber?.valueSuffix],
-                      name: Array.isArray(programConfig[reports[i]]?.options?.bigNumber?.title) ? programConfig[reports[i]]?.options?.bigNumber?.title[k] : programConfig[reports[i]]?.options?.bigNumber?.title
+                  let query = parseRbacFilter(metricQueries[metricQueriesKeys[k]], rbacDetails);
+                  if (query === "" || isNaN(Number(query))) {
+                    let res = await this._wrapperService.runQuery(query)
+                    if (res && res.length > 0) {
+                      let metricData = {
+                        value: Array.isArray(programConfig[reports[i]]?.options?.bigNumber?.property) ? String(formatNumberForReport(res[0]?.[programConfig[reports[i]]?.options?.bigNumber?.property[k]])) + [programConfig[reports[i]]?.options?.bigNumber?.valueSuffix[k]] : String(formatNumberForReport(res[0]?.[programConfig[reports[i]]?.options?.bigNumber?.property])) + [programConfig[reports[i]]?.options?.bigNumber?.valueSuffix],
+                        name: Array.isArray(programConfig[reports[i]]?.options?.bigNumber?.title) ? programConfig[reports[i]]?.options?.bigNumber?.title[k] : programConfig[reports[i]]?.options?.bigNumber?.title
+                      }
+                      if((Array.isArray(programConfig[reports[i]]?.options?.bigNumber?.property) ? res?.[0]?.[programConfig[reports[i]]?.options?.bigNumber?.property[k]] : res?.[0]?.[programConfig[reports[i]]?.options?.bigNumber?.property]) === null) {
+                        metricData.value = Array.isArray(programConfig[reports[i]]?.options?.bigNumber?.valueSuffix) ? '0' + programConfig[reports[i]]?.options?.bigNumber?.valueSuffix[k] : '0' + programConfig[reports[i]]?.options?.bigNumber?.valueSuffix
+                      } 
+                      if (metricData.value !== null && metricData !== undefined) {
+                        metrics.push(metricData)
+                        // console.log(metricData.value)
+                      }
                     }
-                    if ((Array.isArray(programConfig[reports[i]]?.options?.bigNumber?.property) ? res?.[0]?.[programConfig[reports[i]]?.options?.bigNumber?.property[k]] : res?.[0]?.[programConfig[reports[i]]?.options?.bigNumber?.property]) === null) {
-                      metricData.value = Array.isArray(programConfig[reports[i]]?.options?.bigNumber?.valueSuffix) ? '0' + programConfig[reports[i]]?.options?.bigNumber?.valueSuffix[k] : '0' + programConfig[reports[i]]?.options?.bigNumber?.valueSuffix
-                    }
-                    if (metricData.value !== null && metricData !== undefined) {
-                      metrics.push(metricData)
-                      // console.log(metricData.value)
-                    }
+                  } else {
+                    const formatter = programConfig[reports[i]]?.options?.bigNumber?.formatter[k] ? programConfig[reports[i]]?.options?.bigNumber?.formatter[k] : programConfig[reports[i]]?.options?.bigNumber?.formatter;
+                    metrics.push({
+                      value: !isNaN(metricQueries[metricQueriesKeys[k]]) ? formatNumberForReport(metricQueries[metricQueriesKeys[k]], formatter) : metricQueries[metricQueriesKeys[k]],
+                      name: programConfig[reports[i]]?.options?.bigNumber?.title[k]
+                    });
                   }
                 }
               }

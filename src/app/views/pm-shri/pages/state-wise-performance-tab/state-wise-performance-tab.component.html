@@ -1,0 +1,22 @@
+<div class="col-span-full tab-wrapper">
+    <div class="filter-row grid grid-cols-5">
+        <div class="xmd:col-span-3 col-span-5">
+            <app-filter-panel [filters]="filters" (filtersUpdated)="filtersUpdated($event)"
+                colSize="lg:col-span-4 col-span-6"></app-filter-panel>
+        </div>
+        <div class="download-button xmd:col-start-4 xmd:col-end-6 col-span-5 flex" id="downloadbutton" #downloadbutton>
+            <app-download-button [data]="reportsData"></app-download-button>
+        </div>
+        <div class="col-span-5"> 
+            <app-breadcrumb-component></app-breadcrumb-component>
+        </div>
+    </div>
+    <div class="reports-row">
+        <div class="row-wrapper grid grid-cols-1 gap-4">
+            <div class="col-span-2 xmd:col-span-1 div-shadow" *ngIf="checkReport('state_wise_performance', 'map')" id="map">
+                <app-state-wise-performance #stateWisePerformance
+                    (exportReportData)="csvDownload($event)"></app-state-wise-performance>
+            </div>
+        </div>
+    </div>
+</div>

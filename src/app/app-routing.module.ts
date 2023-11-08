@@ -12,7 +12,7 @@ var routes: Routes = [];
 if (environment.loginNeeded) {
   routes = [
     {
-      path: '/', redirectTo: `summary-statistics`, pathMatch: 'full'
+      path: '', redirectTo: `summary-statistics`, pathMatch: 'full'
     },
     {
       path: 'public', redirectTo: 'summary-statistics', pathMatch: 'full'
@@ -149,6 +149,15 @@ if (environment.loginNeeded) {
             ),
           canLoad: [AuthGuard],
           data: { nameSpace: 'nipun_bharat' }
+        },
+        {
+          path: 'pmShri',
+          loadChildren: () =>
+            import('./views/pm-shri/pm-shri.module').then(
+              (module) => module.PmShriModule
+            ),
+          canLoad: [AuthGuard],
+          data: { nameSpace: 'pm_shri' }
         },
       ],
     },
@@ -319,6 +328,15 @@ else {
             ),
           canLoad: [AuthGuard],
           data: { nameSpace: 'nipun_bharat' }
+        },
+        {
+          path: 'pmShri',
+          loadChildren: () =>
+            import('./views/pm-shri/pm-shri.module').then(
+              (module) => module.PmShriModule
+            ),
+          canLoad: [AuthGuard],
+          data: { nameSpace: 'pm_shri' }
         },
       ],
     },
