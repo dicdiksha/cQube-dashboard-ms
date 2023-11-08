@@ -78,35 +78,31 @@ export class DataService {
     return new Promise((resolve, reject) => {
       this.spinner.show();
       let { bigNumber } = options ?? {};
-      let { valueSuffix, property, title } = bigNumber ?? {};
+      let { valueSuffix, property, title, formatter } = bigNumber ?? {};
       let reportData = {
         ...prevReportData,
-        valueSuffix: valueSuffix,
-        reportName: title
+        valueSuffix,
+        reportName: title,
+        formatter
       }
-      if (indicator === 'averagePercentage') {
+      
+      if (query === "" || isNaN(Number(query))) {
         this._commonService.getReportDataNew(query).subscribe((res: any) => {
           if (res) {
             let rows = res;
             reportData = {
               ...reportData,
-              averagePercentage: rows[0]?.[property]
+              [indicator]: rows[0]?.[property]
             }
             resolve(reportData)
           }
-        })
-      }
-      else if (indicator === 'differencePercentage') {
-        this._commonService.getReportDataNew(query).subscribe((res: any) => {
-          if (res) {
-            let rows = res;
-            reportData = {
-              ...reportData,
-              differencePercentage: rows[0]?.[property]
-            }
-            resolve(reportData)
-          }
-        })
+        });
+      } else {
+        reportData = {
+          ...reportData,
+          [indicator]: !isNaN(Number(query)) ? Number(query) : query
+        }
+        resolve(reportData)
       }
       this.spinner.hide()
     });
@@ -321,6 +317,10 @@ export class DataService {
               tooltip: row.tooltip ? row.tooltip : this._wrapperService.constructTooltip(tooltipMetrics, row, metricFilter ? metricFilter.value : indicator)
             };
 
+            if (indicator) {
+              row.indicator = isNaN(row[indicator]) ? row[indicator] : Number(row[indicator]);
+            }
+
             return row;
           }),
           options: {
@@ -458,9 +458,8 @@ export class DataService {
 
   mapGroupBy(data: any, groupByLabel: any, metricLabelProp: string, metricValueProp: string, tooltipMetrics: any, metricFilterValue: any) {
     let result = _.chain(data).groupBy(groupByLabel).map((objs, key) => {
-      data = {
-        [groupByLabel]: key,
-      }
+      let row = objs.find(obj => obj[metricLabelProp] === metricFilterValue)
+      
       objs?.forEach((obj: any, index: any) => {
         let modifiedTooltipMetrics = tooltipMetrics.filter(metric => metricLabelProp === metric.value).map((metric: any) => {
           return {
@@ -469,18 +468,18 @@ export class DataService {
             value: obj[metricLabelProp]
           }
         })
-        data = {
-          ...data,
-          ...obj,
-          // district_code: obj['district_id'] ? Number(obj['district_id']) : null,
+
+        row = {
+          ...row,
           [obj[metricLabelProp]]: obj[metricValueProp]
         }
+
         if (index === 0) {
-          data['tooltip'] = this._wrapperService.constructTooltip(tooltipMetrics.filter(metric => metricLabelProp !== metric.value), data, metricFilterValue)
+          row['tooltip'] = this._wrapperService.constructTooltip(tooltipMetrics.filter(metric => metricLabelProp !== metric.value), row, metricFilterValue)
         }
-        data['tooltip'] += this._wrapperService.constructTooltip(modifiedTooltipMetrics, data, metricFilterValue)
+        row['tooltip'] += this._wrapperService.constructTooltip(modifiedTooltipMetrics, row, metricFilterValue)
       });
-      return data;
+      return row;
     }).value()
     return result;
   }

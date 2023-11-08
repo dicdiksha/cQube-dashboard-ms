@@ -1,0 +1,26 @@
+<div class="col-span-full tab-wrapper">
+    <div class="filter-row grid grid-cols-4">
+        <div class="col-span-3"> 
+            <app-breadcrumb-component></app-breadcrumb-component>
+        </div>
+        <div class="col-start-4 col-end-5 download-button" id="downloadbutton" >
+            <!-- <app-popup-options [data]="reportsData" [reportName]="'pgi'" ></app-popup-options> -->
+            <app-download-button [data]="reportsData"></app-download-button>
+        </div>
+    </div>
+    <div class="reports-row">
+        <div class="row-wrapper grid grid-cols-5 gap-4" *ngIf="NVSK">
+            <ng-container *ngFor="let bigNumberData of bigNumberMetrics; let index = index">
+                <div class="col-span-2 xmd:col-span-1 bignumber-container" *ngIf="index > 1">
+                    <div *ngIf="checkReport('pmShri_metrics', 'bigNumber' + (index + 1))">
+                        <app-big-number [bigNumberReportData]="bigNumberData"></app-big-number>
+                    </div>
+                </div>
+            </ng-container>
+        </div>
+        <div class="col-span-2 xmd:col-span-1 div-shadow" *ngIf="checkReport('implementation_status', 'map')" id="map">
+            <app-implementation-status #implementationStatus
+                (exportReportData)="csvDownload($event)"></app-implementation-status>
+        </div>
+    </div>
+</div>

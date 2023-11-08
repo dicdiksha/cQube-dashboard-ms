@@ -15,6 +15,7 @@ import {config as quiz} from '../../views/ncert-quiz/config/quiz_config';
 import{config as microImprovement} from '../../views/micro-improvements/config/microimprovements_config';
 import {config as nipunBharatConfig } from '../../views/nipun-bharat/config/nipun_bharat_config';
 import { config as telemetryConfig} from '../../views/telemetry/config/telemetry_config';
+import {config as pmShriConfig } from '../../views/pm-shri/config/pm_shri_config';
 
 export const configFiles = {
   std_att: studentAttendaceConfig,
@@ -33,8 +34,8 @@ export const configFiles = {
   quiz:quiz,
   micro_improvements:microImprovement,
   nipun_bharat:nipunBharatConfig,
-  telemetry:telemetryConfig
-
+  telemetry:telemetryConfig,
+  pm_shri: pmShriConfig
 };
 
 export const programFolderNames = {
@@ -51,6 +52,7 @@ export const programFolderNames = {
   ncf:'ncf',
   quiz:'quiz',
   microImprovement:'microImprovement',
+  pmShri: 'pm_shri'
 }
 
 export const stateProgramsFolderNames = {
@@ -67,4 +69,5 @@ export const stateProgramsFolderNames = {
   ncf:'',
   quiz:'',
   microImprovement:'',
+  pmShri: ''
 }

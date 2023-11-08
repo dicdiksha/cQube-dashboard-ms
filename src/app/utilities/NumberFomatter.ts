@@ -1,9 +1,9 @@
 import { environment } from "src/environments/environment";
 
-function formatNumber(number: number, config: any): string {
+function formatNumber(number: number, formatter: any): string {
 
-    if (config.format === 'short') {
-        if (config.locale === 'en-IN') {
+    if (formatter.format === 'short') {
+        if (formatter.locale === 'en-IN') {
             if (number < 1000) {
                 return `${number}`;
             } else if (number > 999 && number <= 99999) {
@@ -26,7 +26,7 @@ function formatNumber(number: number, config: any): string {
         }
     }
 
-    return new Intl.NumberFormat(config.locale).format(number);
+    return new Intl.NumberFormat(formatter.locale).format(number);
 }
 
 function numberLabelFormat(number: number, config: any, axisRef?: any): string {
@@ -89,8 +89,9 @@ function removeFormat(string, config) {
 
 }
 
-export function formatNumberForReport(number: number): string {
-    return formatNumber(number, environment.numberFormat.reports);
+export function formatNumberForReport(number: number, formatter?: any): string {
+    formatter = formatter ? formatter : environment.numberFormat.reports;
+    return formatNumber(number, formatter);
 }
 
 export function numberLabelFormatForReport(number: number, axisRef?: any): string {

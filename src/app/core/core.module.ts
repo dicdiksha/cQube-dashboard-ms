@@ -2,7 +2,6 @@ import { MatTooltipModule, MatTooltipDefaultOptions, MAT_TOOLTIP_DEFAULT_OPTIONS
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { TranslocoCoreModule } from './transloco/transloco.module';
 import { RouterModule } from '@angular/router';
 
 import { LayoutComponent } from './components/layout/layout.component';
@@ -38,7 +37,6 @@ const DECLARATIONS = [
   imports: [
     CommonModule,
     RouterModule,
-    TranslocoCoreModule,
     NgxSpinnerModule,
     MatTooltipModule,
     IMPORTS

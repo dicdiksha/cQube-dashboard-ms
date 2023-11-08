@@ -8,7 +8,7 @@
               [name]="'filter-'+filter.name" [multiple]="isFilterMulti()" [closeOnSelect]="false"
               placeholder="Select {{filter.name}}" [clearable]="resetOthers" [(ngModel)]="filter.value"
               (ngModelChange)="onSelectOption($event, i, selectRef)" appChange>
-              <ng-option *ngFor="let option of filter.options" [value]="option.value">{{ option.label }}</ng-option>
+              <ng-option *ngFor="let option of filter.options" [value]="option.value">{{ convertNativeMetricLabelToReadable(option.label) }}</ng-option>
             </ng-select>
           </div>
         </ng-container>
