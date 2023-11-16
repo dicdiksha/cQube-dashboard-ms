@@ -20,7 +20,7 @@ export const config = {
                 "actions": {
                     "queries":
                     {
-                        "map":"select t2.latitude, t2.longitude, t.state_id,state_name,t.category_name,sum(sum) as performance from datasets.ncf_categoryncf_state0categoryncf as t join dimensions.state as t2 on t.state_id = t2.state_id group by t.state_id,state_name,t.category_name, t2.latitude, t2.longitude"
+                        "map":"select t2.latitude, t2.longitude, t.state_id,state_name,t.category_name,sum(sum) as performance from datasets.ncf_category_state0categoryncf as t join dimensions.state as t2 on t.state_id = t2.state_id group by t.state_id,state_name,t.category_name, t2.latitude, t2.longitude"
                     },
                     "level": "state",
                     "nextLevel": "district"
@@ -145,9 +145,9 @@ export const config = {
                 "hierarchyLevel": "0",
                 "actions": {
                     "queries": {
-                        "bigNumber1": "select sum(sum) as total_dcr from datasets.ncf_categoryncf_state0categoryncf where category_name = 'dcr_completed_uploaded'",
-                        "bigNumber2": "select sum(sum) as total_mobile_survey from datasets.ncf_categoryncf_state0categoryncf where category_name = 'mobile_survey_completed'",
-                        "bigNumber3": "select sum(sum) as total_ndg from datasets.ncf_categoryncf_state0categoryncf where category_name = 'national_district_groups_created'",
+                        "bigNumber1": "select sum(sum) as total_dcr from datasets.ncf_category_state0categoryncf where category_name = 'dcr_completed_uploaded'",
+                        "bigNumber2": "select sum(sum) as total_mobile_survey from datasets.ncf_category_state0categoryncf where category_name = 'mobile_survey_completed'",
+                        "bigNumber3": "select sum(sum) as total_ndg from datasets.ncf_category_state0categoryncf where category_name = 'national_district_groups_created'",
                         "bigNumber4": "select sum(sum) as participants from datasets.ncf_number_of_participants_languagencf",
                     },
                     "level": "state"
