@@ -185,9 +185,11 @@ export const config = {
                     "queries": {
                         "bigNumber1": "select sum(sum) as total_students from datasets.udise_no_of_students_state",
                         "bigNumber2": "select round(cast (avg(sum) as numeric),2) as ptr from datasets.udise_category_state0categoryudise where category_name = 'ptr'",
-                        "bigNumber3": "select round(cast (avg(sum) as numeric),2) as schs_with_toilet from datasets.udise_category_state0categoryudise where category_name = '%_schools_having_toilet'",
-                        "bigNumber4": "select round(cast (avg(sum) as numeric),2) as schs_having_electricity from datasets.udise_category_state0categoryudise where category_name = '%_schools_having_electricity'",
-                        "bigNumber5": "select round(cast (avg(sum) as numeric),2) as schs_having_water from datasets.udise_category_state0categoryudise where category_name = '%_schools_having_drinking_water'",
+                        "bigNumber3": "select round(cast (avg(avg) as numeric),2) as schs_with_toilet from datasets.udise_category_state0categoryudise where category_name = '%_schools_having_toilet'",
+                        "bigNumber4": "select round(cast (avg(avg) as numeric),2) as schs_having_electricity from datasets.udise_category_state0categoryudise where category_name = '%_schools_having_electricity'",
+                        "bigNumber5": "select round(cast (avg(avg) as numeric),2) as schs_having_water from datasets.udise_category_state0categoryudise where category_name = '%_schools_having_drinking_water'",
+                        "bigNumber6": "select round(cast (avg(avg) as numeric),2) as schs_having_library from datasets.udise_category_state0categoryudise where category_name = '%_schools_having_library'",
+                        "bigNumber7": "select round(cast (avg(avg) as numeric),2) as schs_with_ramp from datasets.udise_category_state0categoryudise where category_name = '%_schools_with_ramp'",
                     },
                     "level": "state"
                 }
@@ -201,9 +203,11 @@ export const config = {
                     "queries": {
                         "bigNumber1": "select sum(sum) as total_students from datasets.udise_no_of_students_district",
                         "bigNumber2": "select round(cast (avg(sum) as numeric),2) as ptr from datasets.udise_category_district0categoryudise where category_name = 'ptr'",
-                        "bigNumber3": "select round(cast (avg(sum) as numeric),2) as schs_with_toilet from datasets.udise_category_district0categoryudise where category_name = '%_schools_having_toilet'",
-                        "bigNumber4": "select round(cast (avg(sum) as numeric),2) as schs_having_electricity from datasets.udise_category_district0categoryudise where category_name = '%_schools_having_electricity'",
-                        "bigNumber5": "select round(cast (avg(sum) as numeric),2) as schs_having_water from datasets.udise_category_district0categoryudise where category_name = '%_schools_having_drinking_water'",
+                        "bigNumber3": "select round(cast (avg(avg) as numeric),2) as schs_with_toilet from datasets.udise_category_district0categoryudise where category_name = '%_schools_having_toilet'",
+                        "bigNumber4": "select round(cast (avg(avg) as numeric),2) as schs_having_electricity from datasets.udise_category_district0categoryudise where category_name = '%_schools_having_electricity'",
+                        "bigNumber5": "select round(cast (avg(avg) as numeric),2) as schs_having_water from datasets.udise_category_district0categoryudise where category_name = '%_schools_having_drinking_water'",
+                        "bigNumber6": "select round(cast (avg(avg) as numeric),2) as schs_having_library from datasets.udise_category_district0categoryudise where category_name = '%_schools_having_library'",
+                        "bigNumber7": "select round(cast (avg(avg) as numeric),2) as schs_with_ramp from datasets.udise_category_district0categoryudise where category_name = '%_schools_with_ramp'",
                     },
                     "level": "district"
                 }
@@ -211,9 +215,9 @@ export const config = {
         ],
         "options": {
             "bigNumber": {
-                "title": ['Total Students', 'PTR', '% Schools With Toilets', '% Schools Having Electricity', '% Schools Having Drinking Water'],
-                "valueSuffix": ['', '', '%', '%', '%'],
-                "property": ['total_students', 'ptr', 'schs_with_toilet', 'schs_having_electricity', 'schs_having_water']
+                "title": ['Total Students', 'PTR', '% Schools With Toilets', '% Schools Having Electricity', '% Schools Having Drinking Water', '% Schools Having Library', '% Schools With Ramp'],
+                "valueSuffix": ['', '', '%', '%', '%', '%', '%'],
+                "property": ['total_students', 'ptr', 'schs_with_toilet', 'schs_having_electricity', 'schs_having_water', 'schs_having_library', 'schs_with_ramp']
             }
         }
     },

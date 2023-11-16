@@ -270,7 +270,7 @@ export const config = {
                         "bigNumber2": "",
                         "bigNumber3": "select sum(sum) as total_teachers from datasets.nas_no_of_teachers_state",
                         "bigNumber4": "select count(distinct state_id) as total_states from datasets.nas_started_state where sum > 0",
-                        "bigNumber5": ""
+                        "bigNumber5": "select count(lo_code) as total_lo_tested from datasets.nas_no_of_teachers_lonas"
                     },
                     "level": "State"
                 }

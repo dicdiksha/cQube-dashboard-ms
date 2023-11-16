@@ -9,7 +9,7 @@
         </div>
     </div>
     <div class="reports-row">
-        <div class="row-wrapper grid grid-cols-5 gap-4" *ngIf="NVSK">
+        <div class="row-wrapper grid grid-cols-7 gap-4" *ngIf="NVSK">
             <div class="col-span-2 xmd:col-span-1 bignumber-container" id="bignumber2"
                 *ngFor="let bigNumberData of bigNumberMetrics; let index = index">
                 <div *ngIf="checkReport('udise_metrics', 'bigNumber' + (index + 1))" id="bignumber2">
