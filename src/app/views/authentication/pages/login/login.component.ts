@@ -68,7 +68,7 @@ export class LoginComponent implements OnInit {
     type userRoles = Array<{ id: number, text: string }>
 
     if (this.isLoggedIn) {
-      this.router.navigate(['/home'])
+      this.router.navigate(['/summary-statistics'])
     }
 
     if (environment.config === 'VSK') {
@@ -123,27 +123,19 @@ export class LoginComponent implements OnInit {
         let results = await this._commonService.getUserAttributes(userId).toPromise();
         let preferences = results?.['details']
         let selectedRole = preferences?.['selectedRole']
-        if (userRoles.includes('admin')) {
-          this.preferences = { role: environment.config === 'VSK' ? 1 : 0, }
-          this.setStateDetails(this.preferences)
-          this.router.navigate(['/summary-statistics']);
-        }
-        else if(environment.config === 'NVSK') {
-          this.setStateDetails({})
-          this.router.navigate(['/summary-statistics']);
-        }
-        else if (preferences && preferences['selectedRole'] && (preferences['selectedRole'] == 1 || Object.keys(preferences).includes(String(selectedRole)))) {
+        
+        if (preferences && preferences['selectedRole'] && (preferences['selectedRole'] == 1 || Object.keys(preferences).includes(String(selectedRole)))) {
           this.preferences = {
             role: preferences['selectedRole'],
             ...preferences?.[selectedRole]
           }
           this.setStateDetails(preferences?.[selectedRole])
           this.router.navigate(['/summary-statistics']);
+        } else {
+          this.preferences = { role: environment.config === 'VSK' ? 1 : 0, }
+          this.setStateDetails(this.preferences)
+          this.router.navigate(['/summary-statistics']);
         }
-        else {
-          this.router.navigate(['/home']);
-        }
-
       },
         err => {
           this.error = true;

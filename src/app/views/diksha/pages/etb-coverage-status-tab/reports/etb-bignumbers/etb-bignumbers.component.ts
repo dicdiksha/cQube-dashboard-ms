@@ -61,6 +61,7 @@ export class EtbBignumbersComponent implements OnInit {
         return true
       })
     }
+
     Object.keys(queries).forEach(async (key: any, index: any) => {
       if (key.toLowerCase().includes('comparison')) {
         let endDate = new Date();
@@ -75,6 +76,10 @@ export class EtbBignumbersComponent implements OnInit {
       let query = buildQuery(onLoadQuery, defaultLevel, this.levels, this.filters, this.startDate, this.endDate, key, this.compareDateRange);
 
       if (query && key.indexOf('bigNumber') > -1) {
+        if (Array.isArray(options?.bigNumber)) {
+          options.bigNumber = options?.bigNumber[Number(this.rbacDetails?.role)];
+        }
+
         let metricOptions = {
           bigNumber: {
             title: Array.isArray(options?.bigNumber?.title) ? options?.bigNumber?.title?.[index] : options?.bigNumber?.title,
