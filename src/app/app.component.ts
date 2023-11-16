@@ -44,7 +44,7 @@ export class AppComponent {
     router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
         if (event.url !== '/login') {
-          //this.pageTrackerService.onPageChange(event);
+          this.pageTrackerService.onPageChange(event);
         }
       }
     });
@@ -111,7 +111,7 @@ export class AppComponent {
   @HostListener('window:beforeunload', ['$event'])
   handleUnload(event: Event): void {
     if (this.router.url !== '/login') {
-      //this.pageTrackerService.onPageChange(event);
+      this.pageTrackerService.onPageChange(event);
     }
   }
 }

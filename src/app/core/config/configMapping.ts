@@ -31,7 +31,7 @@ export const configFiles = {
   student_progression: progresConfig,
   assessment:studentAssessments,
   ncf:ncf,
-  quiz:quiz,
+  ncert_quiz:quiz,
   micro_improvements:microImprovement,
   nipun_bharat:nipunBharatConfig,
   telemetry:telemetryConfig,
