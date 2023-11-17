@@ -572,13 +572,23 @@ export class LeafletMapComponent implements OnInit, AfterViewInit, OnChanges {
         //   id = data[idProp]
         //   console.log(data[nameProp])
         // })
+		let fillColor
+		if(String(data.program_status).toLowerCase() === "yes. implemented in only online mode"){
+          fillColor = "#29c0c2"
+		} else if(String(data.program_status).toLowerCase() === "yes. implemented in only face-to-face mode"){
+			fillColor = "#705000"
+		} else if(String(data.program_status).toLowerCase() === "no. not applicable"){
+			fillColor = "#fff400"
+		} else{
+          fillColor = this.getZoneColor(reportTypeIndicator, data.indicator, values)
+		}
         let markerIcon = L.circleMarker([data.Latitude, data.Longitude], {
           id: data[idProp],
           name: data[nameProp],
           hierarchyLevel: data.hierarchyLevel,
           color: "gray",
           // fillColor: this.getZoneColor(reportTypeIndicator, data.indicator >= 1 ? (max - min ? (data.indicator - min) / (max - min) * 100 : data.indicator) : -1),
-          fillColor: this.getZoneColor(reportTypeIndicator, data.indicator, values),
+          fillColor: fillColor,
           fillOpacity: 1,
           strokeWeight: 0.01,
           weight: 1
@@ -675,15 +685,27 @@ export class LeafletMapComponent implements OnInit, AfterViewInit, OnChanges {
       }
 
       if (reportTypeIndicator === 'boolean') {
-        if (mapOptions.legend && mapOptions.legend.title && mapOptions.legend.title == 'Implemented Nishtha'){
-          if(mapData.data[0].program == 'NISHTHA Elementary'){
-            values = ["Implemented in only online mode","Implemented in only face-to-face mode","Implemented in both face-to-face and online modes","Not implemented"];
-          }else if(mapData.data[0].program == 'NISHTHA Secondary' || mapData.data[0].program == 'NISHTHA FLN'){
+		
+		// console.log('mapData.data[0].program', mapData.data[0].program_name)
+		// console.log('mapOptions.legend.title', mapOptions.legend)
+        // if (mapOptions.legend && mapOptions.legend.title && mapOptions.legend.title == 'Implemented Nishtha'){
+        //   if(mapData.data[0].program == 'NISHTHA Elementary'){
+        //     values = ["Implemented in only online mode","Implemented in only face-to-face mode","Implemented in both face-to-face and online modes","Not implemented"];
+        //   }else if(mapData.data[0].program == 'NISHTHA Secondary' || mapData.data[0].program == 'NISHTHA FLN'){
+        //     values = ["Implemented in only online mode","Implemented in only face-to-face mode","Not implemented"];
+        //   }else if(mapData.data[0].program == 'NISHTHA ECCE'){
+        //     values = ["Implemented in only online mode","Not implemented"];
+        //   }else{}
+        // }
+		if(mapData.data[0].program_name == 'NISHTHA Elementary (Online)'){
+            mapData.data[0].program_name = 'NISHTHA Elementary';
+            values = ["Implemented in only online mode","Implemented in only face-to-face mode","Implemented in both face-to-face and online modes","Not implemented", "Not applicable"];
+          }else if(mapData.data[0].program_name == 'NISHTHA Secondary' || mapData.data[0].program_name == 'NISHTHA FLN'){
             values = ["Implemented in only online mode","Implemented in only face-to-face mode","Not implemented"];
-          }else if(mapData.data[0].program == 'NISHTHA ECCE'){
+          }else if(mapData.data[0].program_name == 'NISHTHA ECCE'){
             values = ["Implemented in only online mode","Not implemented"];
-          }else{}
-        } else {
+		  }
+		 else {
           values = ["Yes", "No"]; 
         }
         for (let i = 0; i < values.length; i++) {
@@ -775,6 +797,8 @@ export class LeafletMapComponent implements OnInit, AfterViewInit, OnChanges {
         return "#007000";
       }else if (String(value).toLowerCase() == "not implemented") {
         return "#D2222D";
+      }else if (String(value).toLowerCase() == "not applicable") {
+        return "#fff400";
       } else {
         return "#D2222D";
       }

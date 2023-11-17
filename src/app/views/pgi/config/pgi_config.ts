@@ -122,11 +122,11 @@ export const config = {
                 "hierarchyLevel": "0",
                 "actions": {
                     "queries": {
-                        "bigNumber1": "select sum(sum) as outcome from datasets.pgi_category_state0categorypgi as t where category_name = 'outcome'",
-                        "bigNumber2": "select sum(sum) as infra_score from datasets.pgi_category_state0categorypgi as t where category_name = 'infrastructure_facilities_studententitlements'",
-                        "bigNumber3": "select sum(sum) as governance_processes from datasets.pgi_category_state0categorypgi as t where category_name = 'governance_processes'",
-                        "bigNumber4": "",
-                        "bigNumber5": ""
+                        "bigNumber1": "select sum(sum) as outcome from datasets.pgi_category_value_performancecategorypgi as t where category_name = 'learningoutcomes_and_quality'",
+                        "bigNumber2": "select sum(sum) as infra_score from datasets.pgi_category_value_performancecategorypgi as t where category_name = 'infrastructure_and_facilities'",
+                        "bigNumber3": "select sum(sum) as governance_processes from datasets.pgi_category_value_performancecategorypgi as t where category_name = 'governance_processes'",
+                        "bigNumber4": "select sum(sum) as access from datasets.pgi_category_value_performancecategorypgi as t where category_name = 'access'",
+                        "bigNumber5": "select sum(sum) as equity from datasets.pgi_category_value_performancecategorypgi as t where category_name = 'equity'",
                     },
                     "level": "state"
                 }
@@ -141,7 +141,7 @@ export const config = {
                         "bigNumber1": "select sum(sum) as outcome from datasets.pgi_category_district0categorypgi as t where category_name = 'outcome'",
                         "bigNumber2": "select sum(sum) as infra_score from datasets.pgi_category_district0categorypgi as t where category_name = 'infrastructure_facilities_studententitlements'",
                         "bigNumber3": "select sum(sum) as governance_processes from datasets.pgi_category_district0categorypgi as t where category_name = 'governance_processes'",
-                        "bigNumber4": "",
+                        "bigNumber4": "select sum(sum) as equity from datasets.pgi_category_value_performancecategorypgi as t where category_name = 'equity'",
                         "bigNumber5": ""
                     },
                     "level": "district"
@@ -152,7 +152,7 @@ export const config = {
             "bigNumber": {
                 "title": ['Learning Outcomes & Quality', 'Infrastructure & Facilities', 'Governance Processes', 'Access', 'Equity',],
                 "valueSuffix": ['', '', '', '', ''],
-                "property": ['outcome', 'infra_score', 'governance_processes', '', '']
+                "property": ['outcome', 'infra_score', 'governance_processes', 'access', 'equity']
             }
         }
     },
