@@ -681,7 +681,7 @@ export class LeafletMapComponent implements OnInit, AfterViewInit, OnChanges {
       let div = L.DomUtil.create('div', 'info legend text-center');
       let clickable = false;
       if (mapOptions.legend && mapOptions.legend.title) {
-        labels.push(`<strong>${mapOptions.selectedMetric ? mapOptions.selectedMetric : mapOptions.legend.title}:</strong>`)
+        labels.push(`<strong>${mapOptions.selectedMetric ? mapOptions.legend.title + mapOptions.selectedMetric : mapOptions.legend.title}:</strong>`)
       }
 
       if (reportTypeIndicator === 'boolean') {
