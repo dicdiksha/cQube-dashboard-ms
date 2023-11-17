@@ -18,7 +18,7 @@ export const config = {
             "tableAlias": "t1",
             //"query": "select program_name from dimensions.programnishtha order by program_name"
             "query": `SELECT DISTINCT CASE
-              WHEN program_name LIKE 'NISHTHA_Elementary%' THEN 'NISHTHA Elementary'
+              WHEN program_name LIKE 'NISHTHA_Elementary%' THEN 'NISHTHA Elementary (Online)'
               ELSE program_name
               END AS program_name
               FROM dimensions.programnishtha;`
@@ -70,7 +70,7 @@ export const config = {
             "id": "program_name",
             //"query": "select program_name from dimensions.programnishtha order by program_name"
             "query": `SELECT DISTINCT CASE
-              WHEN program_name LIKE 'NISHTHA_Elementary%' THEN 'NISHTHA Elementary'
+              WHEN program_name LIKE 'NISHTHA_Elementary%' THEN 'NISHTHA Elementary (Online)'
               ELSE program_name
               END AS program_name
               FROM dimensions.programnishtha;`
@@ -141,7 +141,7 @@ export const config = {
                 "groupByColumn": "state_id",
                 "metricFilterNeeded": true,
                 "legend": {
-                    "title": "program_name"
+                    "title": "Implemented " 
                 },
                 "tooltipMetrics": [
                     {
@@ -405,7 +405,7 @@ export const config = {
                 "hierarchyLevel": "0",
                 "actions": {
                     "queries": {
-                        "barChart": "select s.state_name, sum(ntae.sum) as achieved_certifications from datasets.nishtha_achievedcertification_chydbgqxd0rtzw5hz3zt as ntae JOIN dimensions.state as s ON s.state_id = ntae.state_id group by s.state_name ORDER BY s.state_name;",
+                        "barChart": "SELECT s.state_name as state_name, ntae.sum AS achieved_certifications,nttcs.sum AS target_certifications, ntae.program_name AS program_name, CASE WHEN ntae.sum > nttcs.sum THEN 100 WHEN ntae.sum =0 and  nttcs.sum = 0 THEN 0 ELSE round(cast(ntae.sum/nttcs.sum*100 as numeric), 2) END AS percentage_achieved FROM datasets.nishtha_achievedcertification_chydbgqxd0rtzw5hz3zt AS ntae JOIN datasets.nishtha_targetcertification_hgcdmwjzbvlyaxbnu3r_ AS nttcs ON ntae.state_id = nttcs.state_id AND ntae.program_name = nttcs.program_name JOIN dimensions.state AS s ON s.state_id = ntae.state_id ORDER BY s.state_name ASC",
                     },
                     "level": "district"
                 }
@@ -427,7 +427,14 @@ export const config = {
                             "label": "Achieved Certifications",
                             "value": "achieved_certifications"
                         },
-                        
+                        {
+                            "label": "Target Certifications",
+                            "value": "target_certifications"
+                        },
+                        {
+                            "label": "Percentage of Certifications achieved",
+                            "value": "percentage_achieved"
+                        },
                     ]
                 }
             },
