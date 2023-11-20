@@ -521,10 +521,10 @@ export const config = {
                 "hierarchyLevel": "0",
                 "actions": {
                     "queries": {
-                        "bigNumber1": "select sum(sum) as total_etbs from datasets.diksha_resourcecount_textbookdiksha0grade0subject0medium",
-                        "bigNumber2": "select sum(sum) as total_qr_codes from datasets.diksha_totalqrcodes_textbookdiksha0grade0subject0medium",
-                        "bigNumber3": "select round(cast(avg(sum) as numeric),2) as content_coverage from datasets.diksha_qrcoverage_textbookdiksha0grade0subject0medium",
-                        "bigNumber4": "select count(distinct state_id) as total_states from datasets.diksha_energized_textbooks_state where sum > 0",
+                        "bigNumber1": "select count(distinct state_id) as total_states from datasets.diksha_energized_textbooks_state where sum > 0",
+                        "bigNumber2": "select sum(sum) as total_etbs from datasets.diksha_total_energized_textbooks_state",
+                        "bigNumber3": "select sum(sum) as total_qr_codes from datasets.diksha_totalqrcodes_textbookdiksha0grade0subject0medium",
+                        "bigNumber4": "select round(cast(avg(sum) as numeric),2) as content_coverage from datasets.diksha_qrcoverage_textbookdiksha0grade0subject0medium",
                         "bigNumber5": ""
                     },
                     "level": "district"
@@ -548,9 +548,9 @@ export const config = {
         ],
         "options": {
             "bigNumber": {
-                "title": ['Total ETBs', 'Total QR Codes', 'Content Coverage on QR', 'Total States/UTs Participating', 'Total Content'],
-                "valueSuffix": ['', '', '%', '', ''],
-                "property": ['total_etbs', 'total_qr_codes', 'content_coverage', 'total_states', '']
+                "title": ['Total States/UTs Participating', 'Total ETBs', 'Total QR Codes', 'Content Coverage on QR', 'Total Content'],
+                "valueSuffix": ['', '', '', '%', ''],
+                "property": ['total_states', 'total_etbs', 'total_qr_codes', 'content_coverage', '']
             }
         }
     }
