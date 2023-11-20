@@ -153,14 +153,3 @@
     font-size: 40px;
     line-height: 60px
 }
-
-::ng-deep {
-    .ng-select.ng-select-focused .ng-select-container:after {
-        border-color: transparent;
-        border-width: 0px;
-    }
-
-    .ng-select .ng-select-container:after {
-        border-bottom: 0px solid rgba(0, 0, 0, 0.42);
-    }
-}
