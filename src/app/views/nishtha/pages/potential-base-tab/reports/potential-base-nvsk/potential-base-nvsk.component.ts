@@ -118,6 +118,18 @@ export class PotentialBaseNvskComponent implements OnInit {
           this.exportReportData.emit(reportsData)
         }
       }
+      else if (query && key === 'stackedBarChart') {
+        let { reportData, config } = await this._dataService.getStackedBarChartReportData(query, options, filters, defaultLevel);
+        config.options.scales.yAxes[0].scaleLabel.fontSize = 10;
+
+        this.reportData = reportData
+        this.config = config;
+        if (this.reportData?.values?.length > 0) {
+          let reportsData = { reportData: this.reportData.values, reportType: 'dashletBar', reportName: this.title }
+          this.exportReportData.emit(reportsData)
+          //this.csv.csvDownload(reportsData)
+        }
+      }
       else if (query && key === 'map') {
         console.log('quary', query);
         this.reportData = await this._dataService.getMapReportData(query, options, metricFilter)

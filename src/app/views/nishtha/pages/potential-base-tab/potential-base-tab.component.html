@@ -19,7 +19,7 @@
             </div>
         </div>
         <div class="row-wrapper grid grid-cols-1 gap-4" *ngIf="NVSK">
-            <div class="col-span-1 div-shadow" *ngIf="checkReport('potential_base_nvsk', 'barChart')" id="chart1">
+            <div class="col-span-1 div-shadow" *ngIf="checkReport('potential_base_nvsk', 'stackedBarChart')" id="chart1">
                 <app-potential-base-nvsk #potentialBaseNVSK (exportReportData)="csvDownload($event)"></app-potential-base-nvsk>
             </div>
         </div>

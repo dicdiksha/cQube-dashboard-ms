@@ -405,39 +405,58 @@ export const config = {
                 "hierarchyLevel": "0",
                 "actions": {
                     "queries": {
-                        "barChart": "SELECT s.state_name as state_name, ntae.sum AS achieved_certifications,nttcs.sum AS target_certifications, ntae.program_name AS program_name, CASE WHEN ntae.sum > nttcs.sum THEN 100 WHEN ntae.sum =0 and  nttcs.sum = 0 THEN 0 ELSE round(cast(ntae.sum/nttcs.sum*100 as numeric), 2) END AS percentage_achieved FROM datasets.nishtha_achievedcertification_chydbgqxd0rtzw5hz3zt AS ntae JOIN datasets.nishtha_targetcertification_hgcdmwjzbvlyaxbnu3r_ AS nttcs ON ntae.state_id = nttcs.state_id AND ntae.program_name = nttcs.program_name JOIN dimensions.state AS s ON s.state_id = ntae.state_id ORDER BY s.state_name ASC",
+                        //"barChart": "SELECT s.state_name as state_name, ntae.sum AS achieved_certifications,nttcs.sum AS target_certifications, ntae.program_name AS program_name, CASE WHEN ntae.sum > nttcs.sum THEN 100 WHEN ntae.sum =0 and  nttcs.sum = 0 THEN 0 ELSE round(cast(ntae.sum/nttcs.sum*100 as numeric), 2) END AS percentage_achieved FROM datasets.nishtha_achievedcertification_chydbgqxd0rtzw5hz3zt AS ntae JOIN datasets.nishtha_targetcertification_hgcdmwjzbvlyaxbnu3r_ AS nttcs ON ntae.state_id = nttcs.state_id AND ntae.program_name = nttcs.program_name JOIN dimensions.state AS s ON s.state_id = ntae.state_id ORDER BY s.state_name ASC",
+                        "stackedBarChart": "select s.state_id, s.state_name, CASE WHEN ntae.sum > nttcs.sum THEN 100 WHEN ntae.sum =0 and  nttcs.sum = 0 THEN 0 ELSE round(cast(ntae.sum/nttcs.sum*100 as numeric), 2) END as achieved_certificates_per, (100 -  CASE WHEN ntae.sum > nttcs.sum THEN 100 WHEN ntae.sum =0 and  nttcs.sum = 0 THEN 0 ELSE round(cast(ntae.sum/nttcs.sum*100 as numeric), 2) END ) as incomplete_certificates_per, ntae.sum as actual_certificates, nttcs.sum as expected_certificates FROM datasets.nishtha_achievedcertification_chydbgqxd0rtzw5hz3zt AS ntae JOIN datasets.nishtha_targetcertification_hgcdmwjzbvlyaxbnu3r_ AS nttcs ON ntae.state_id = nttcs.state_id AND ntae.program_name = nttcs.program_name JOIN dimensions.state AS s ON s.state_id = ntae.state_id ORDER BY s.state_name ASC;"
                     },
                     "level": "district"
                 }
             },
         ],
         "options": {
-            "barChart": {
+            // "barChart": {
+            //     "isMultibar": true,
+            //     "valueSuffix": "%",
+            //     "type": "horizontal",
+            //     "yAxis": {
+            //         "title": "States"
+            //     },
+            //     "xAxis": {
+            //         "title": "Achieved Certifications",
+            //         "label": "state_name",
+            //         "value": "state_name",
+            //         "metrics": [
+                        
+            //             {
+            //                 "label": "Percentage of Certifications achieved",
+            //                 "value": "percentage_achieved",
+
+            //             },
+            //         ]
+            //     }
+            // },
+            "stackedBarChart": {
                 "isMultibar": true,
+                "valueSuffix": "%",
                 "type": "horizontal",
                 "yAxis": {
-                    "title": "States"
+                    "title": "States",
+                    "label": "state_name",
+                    "value": "state_name",
                 },
                 "xAxis": {
                     "title": "Achieved Certifications",
-                    "label": "state_name",
-                    "value": "state_name",
                     "metrics": [
                         {
-                            "label": "Achieved Certifications",
-                            "value": "achieved_certifications"
+                            "label": "Percentage of Certifications Achieved",
+                            "value": "achieved_certificates_per"
                         },
                         {
-                            "label": "Target Certifications",
-                            "value": "target_certifications"
-                        },
-                        {
-                            "label": "Percentage of Certifications achieved",
-                            "value": "percentage_achieved"
-                        },
+                            "label": "Percentage of Incomplete Certifications",
+                            "value": "incomplete_certificates_per"
+                        }
                     ]
                 }
-            },
+            }
         }
     },
     course_wise_status: {
