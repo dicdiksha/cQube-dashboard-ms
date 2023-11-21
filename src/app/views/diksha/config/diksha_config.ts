@@ -521,10 +521,7 @@ export const config = {
                 "hierarchyLevel": "0",
                 "actions": {
                     "queries": {
-                        "bigNumber1": "6766",
-                        "bigNumber2": "107000",
-                        "bigNumber3": "332000",
-                        "bigNumber4": "select count(distinct state_id) as total_states from datasets.diksha_energized_textbooks_state where sum > 0"
+                        "bigNumber1": "select count(distinct state_id) as total_states from datasets.diksha_energized_textbooks_state where sum > 0"
                     },
                     "level": "district"
                 }
@@ -547,10 +544,9 @@ export const config = {
         ],
         "options": {
             "bigNumber": [{
-                "title": ['Total ETBs', 'Total QR Codes', 'Total Content', 'Total States/UTs Participating'],
-                "valueSuffix": ['', '', '', ''],
-                "property": ['', '', '', 'total_states'],
-                "formatter": { locale: 'en-IN', format: "long" }
+                "title": ['Total States/UTs Participating'],
+                "valueSuffix": [''],
+                "property": ['total_states']
             }, {
                 "title": ['Total ETBs', 'Total QR Codes', 'Content Coverage on QR', 'Total States/UTs Participating', 'Total Content'],
                 "valueSuffix": ['', '', '%', '', ''],

@@ -187,22 +187,22 @@ export class DashboardComponent implements OnInit {
             if (currentLevelFilter !== undefined) {
               let metricQueries = currentLevelFilter?.actions?.queries;
               let metricQueriesKeys = Object.keys(metricQueries);
-              console.log("cvbn:", { metricQueriesKeys, currentLevelFilter, metricQueries })
               for (let k = 0; k < metricQueriesKeys?.length; k++) {
                 if (metrics.length >= 2) {
                   break;
                 }
                 else if (metricQueriesKeys[k].indexOf('bigNumber') > -1) {
                   let query = parseRbacFilter(metricQueries[metricQueriesKeys[k]], rbacDetails);
+                  let bigNumberOptions = Array.isArray(programConfig[reports[i]]?.options?.bigNumber) ? programConfig[reports[i]]?.options?.bigNumber[rbacDetails.role] : programConfig[reports[i]]?.options?.bigNumber;
                   if (query === "" || isNaN(Number(query))) {
                     let res = await this._wrapperService.runQuery(query)
                     if (res && res.length > 0) {
                       let metricData = {
-                        value: Array.isArray(programConfig[reports[i]]?.options?.bigNumber?.property) ? String(formatNumberForReport(res[0]?.[programConfig[reports[i]]?.options?.bigNumber?.property[k]])) + [programConfig[reports[i]]?.options?.bigNumber?.valueSuffix[k]] : String(formatNumberForReport(res[0]?.[programConfig[reports[i]]?.options?.bigNumber?.property])) + [programConfig[reports[i]]?.options?.bigNumber?.valueSuffix],
-                        name: Array.isArray(programConfig[reports[i]]?.options?.bigNumber?.title) ? programConfig[reports[i]]?.options?.bigNumber?.title[k] : programConfig[reports[i]]?.options?.bigNumber?.title
+                        value: Array.isArray(bigNumberOptions?.property) ? String(formatNumberForReport(res[0]?.[bigNumberOptions?.property[k]])) + [bigNumberOptions?.valueSuffix[k]] : String(formatNumberForReport(res[0]?.[bigNumberOptions?.property])) + [bigNumberOptions?.valueSuffix],
+                        name: Array.isArray(bigNumberOptions?.title) ? bigNumberOptions?.title[k] : bigNumberOptions?.title
                       }
-                      if((Array.isArray(programConfig[reports[i]]?.options?.bigNumber?.property) ? res?.[0]?.[programConfig[reports[i]]?.options?.bigNumber?.property[k]] : res?.[0]?.[programConfig[reports[i]]?.options?.bigNumber?.property]) === null) {
-                        metricData.value = Array.isArray(programConfig[reports[i]]?.options?.bigNumber?.valueSuffix) ? '0' + programConfig[reports[i]]?.options?.bigNumber?.valueSuffix[k] : '0' + programConfig[reports[i]]?.options?.bigNumber?.valueSuffix
+                      if((Array.isArray(bigNumberOptions?.property) ? res?.[0]?.[bigNumberOptions?.property[k]] : res?.[0]?.[bigNumberOptions?.property]) === null) {
+                        metricData.value = Array.isArray(bigNumberOptions?.valueSuffix) ? '0' + bigNumberOptions?.valueSuffix[k] : '0' + bigNumberOptions?.valueSuffix
                       } 
                       if (metricData.value !== null && metricData !== undefined) {
                         metrics.push(metricData)
@@ -210,10 +210,10 @@ export class DashboardComponent implements OnInit {
                       }
                     }
                   } else {
-                    const formatter = programConfig[reports[i]]?.options?.bigNumber?.formatter[k] ? programConfig[reports[i]]?.options?.bigNumber?.formatter[k] : programConfig[reports[i]]?.options?.bigNumber?.formatter;
+                    const formatter = bigNumberOptions?.formatter[k] ? bigNumberOptions?.formatter[k] : bigNumberOptions?.formatter;
                     metrics.push({
                       value: !isNaN(metricQueries[metricQueriesKeys[k]]) ? formatNumberForReport(metricQueries[metricQueriesKeys[k]], formatter) : metricQueries[metricQueriesKeys[k]],
-                      name: programConfig[reports[i]]?.options?.bigNumber?.title[k]
+                      name: bigNumberOptions?.title[k]
                     });
                   }
                 }
