@@ -547,11 +547,15 @@ export const config = {
             },
         ],
         "options": {
-            "bigNumber": {
+            "bigNumber": [{
+                "title": ['Total States/UTs Participating'],
+                "valueSuffix": [''],
+                "property": ['total_states']
+            }, {
                 "title": ['Total States/UTs Participating', 'Total ETBs', 'Total QR Codes', 'Content Coverage on QR', 'Total Content'],
                 "valueSuffix": ['', '', '', '%', ''],
                 "property": ['total_states', 'total_etbs', 'total_qr_codes', 'content_coverage', '']
-            }
+            }]
         }
     }
 

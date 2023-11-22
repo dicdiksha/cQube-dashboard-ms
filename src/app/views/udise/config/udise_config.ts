@@ -232,7 +232,7 @@ export const config = {
                     {
                         "queries":
                         {
-                            "map": "select t2.latitude, t2.longitude, t2.state_name, t1.state_id, t1.state_id as level , t1.category_name,round(cast(sum(t1.sum) as numeric ),2) as percentage from datasets.udise_category_state0categoryudise as t1 join dimensions.state as t2 on t2.state_id = t1.state_id group by t1.state_id, t2.state_name,t1.category_name, t2.latitude, t2.longitude"
+                            "map": "select t2.latitude, t2.longitude, t2.state_name, t1.state_id, t1.state_id as level, t1.category_name, sum(t1.sum) as category_value, round(cast(sum(t1.avg) as numeric ),2) as percentage from datasets.udise_category_state0categoryudise as t1 join dimensions.state as t2 on t2.state_id = t1.state_id group by t1.state_id, t2.state_name,t1.category_name, t2.latitude, t2.longitude"
                         },
                         "level": "state",
                         "nextLevel": "district"
@@ -262,8 +262,9 @@ export const config = {
             {
                 "indicatorType": "percent",
                 "metricLabelProp": "category_name",
-                "metricValueProp": "percentage",
+                "metricValueProp": "category_value",
                 "groupByColumn": "level",
+                "indicator": "percentage",
                 "metricFilterNeeded": true,
                 "legend": { "title": "District Wise Performance" },
                 "drillDownConfig": {
