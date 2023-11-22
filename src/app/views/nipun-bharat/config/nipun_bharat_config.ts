@@ -98,9 +98,9 @@ export const config = {
                 "actions": {
                     "queries": {
                         "bigNumber1": "select sum(sum) as total_learning_sessions from datasets.nipun_bharat_totallearningsessions_grade0subject",
-                        "bigNumber2": "",
-                        "bigNumber3": "",
-                        "bigNumber4": "",
+                        "bigNumber2": "select count(*) as total_digital_books from datasets.nipun_bharat_totallearningsessions_grade0subject",
+                        "bigNumber3": "select sum(sum) as total_learning_sessions from datasets.nipun_bharat_totallearningsessions_grade0subject",
+                        "bigNumber4": "select sum(sum) as total_learning_sessions from datasets.nipun_bharat_totallearningsessions_grade0subject",
                     },
                     "level": "state"
                 }
@@ -110,7 +110,7 @@ export const config = {
             "bigNumber": {
                 "title": ['Total Learning Sessions','Total Digital Books','Total Content', 'Total Learning Outcomes (LOs) Covered'],
                 "valueSuffix": ['','','',''],
-                "property": ['total_learning_sessions','','','']
+                "property": ['total_learning_sessions','total_digital_books','','total_learning_sessions']
             }
         }
     }
