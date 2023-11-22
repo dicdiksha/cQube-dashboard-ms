@@ -146,7 +146,7 @@ export class DashboardComponent implements OnInit {
               let metricQueries = currentLevelFilter?.actions?.queries;
               let metricQueriesKeys = Object.keys(metricQueries);
               for (let k = 0; k < metricQueriesKeys?.length; k++) {
-                if (k >= 2) {
+                if (metrics.length >= 2) {
                   break;
                 }
                 else if (metricQueriesKeys[k].indexOf('bigNumber') > -1) {
