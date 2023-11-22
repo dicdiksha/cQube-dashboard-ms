@@ -10,10 +10,10 @@
         </div>
     </div>
             <div class="reports-row" >
-                <div class="row-wrapper grid grid-cols-2 gap-4">
-                
+                <div class="row-wrapper grid grid-cols-1 gap-4">
                     <div class="col-span-2 xmd:col-span-1 div-shadow" *ngIf="checkReport('learning_sessions', 'barChart')" id="chart">
                         <app-learning-sessions #learningSessions (exportReportData)="csvDownload($event)"></app-learning-sessions>
-                    </div></div>
+                    </div>
+				</div>
             </div>
         </div>

@@ -47,7 +47,7 @@ export class WrapperService {
     return filters;
   }
 
-  async constructCommonFilters(filterConfig: any, tabLabel?: any, updatedFilter?: any, changedInd?: any) {
+  async constructCommonFilters(filterConfig: any, tabLabel?: any, updatedFilter?: any, changedInd?: any, defaultFilterApplied?:boolean) {
     this.spinner.show();
     let filters: any = []
     if (tabLabel) {
@@ -91,7 +91,9 @@ export class WrapperService {
             })
           }
         }
-        filter.value = (changedInd === index && filterConfig[index]?.dependentFilter) ? updatedFilter[index].value : filter.options?.[0]?.value
+        if(defaultFilterApplied != true){
+            filter.value = (changedInd === index && filterConfig[index]?.dependentFilter) ? updatedFilter[index].value : filter.options?.[0]?.value
+        }
         filters.push(filter)
       }
       else {
