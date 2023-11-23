@@ -525,7 +525,7 @@ export const config = {
                         "bigNumber2": "select sum(sum) as total_etbs from datasets.diksha_total_energized_textbooks_state",
                         "bigNumber3": "select sum(sum) as total_qr_codes from datasets.diksha_totalqrcodes_textbookdiksha0grade0subject0medium",
                         "bigNumber4": "select round(cast(avg(sum) as numeric),2) as content_coverage from datasets.diksha_qrcoverage_textbookdiksha0grade0subject0medium",
-                        "bigNumber5": ""
+                        "bigNumber5": "select (sum(sum)) as total_time_spent from datasets.diksha_totalplays_bm9wanljxyeydndkywrr"
                     },
                     "level": "district"
                 }
@@ -547,14 +547,10 @@ export const config = {
             },
         ],
         "options": {
-            "bigNumber": [{
-                "title": ['Total States/UTs Participating'],
-                "valueSuffix": [''],
-                "property": ['total_states']
-            }, {
-                "title": ['Total States/UTs Participating', 'Total ETBs', 'Total QR Codes', 'Content Coverage on QR', 'Total Content'],
+            "bigNumber": [ {
+                "title": ['Total States/UTs Participating', 'Total ETBs', 'Total QR Codes', 'Content Coverage on QR', 'Total Time Spent (mins)'],
                 "valueSuffix": ['', '', '', '%', ''],
-                "property": ['total_states', 'total_etbs', 'total_qr_codes', 'content_coverage', '']
+                "property": ['total_states', 'total_etbs', 'total_qr_codes', 'content_coverage', 'total_time_spent']
             }]
         }
     }
