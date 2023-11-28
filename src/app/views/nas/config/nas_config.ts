@@ -7,7 +7,8 @@ export const config = {
             "tableAlias": "t",
             "labelProp": "grade",
             "valueProp": "grade",
-            "query": "select grade from datasets.nas_performance_grade"
+            "columnName": "grade",
+            "query": "select grade from datasets.nas_performance_grade as t"
         },
         {
             "label": "District Wise Performance",
@@ -16,7 +17,8 @@ export const config = {
             "tableAlias": "t",
             "labelProp": "subject",
             "valueProp": "subject",
-            "query": "select subject from datasets.nas_performance_subject"
+            "columnName": "subject",
+            "query": "select distinct(subject) from datasets.nas_performance_district0lonas0subject0grade as t order by subject"
         },
         {
             "label": "District Wise Performance",
@@ -25,23 +27,28 @@ export const config = {
             "id": "lo_code",
             "labelProp": "lo_code",
             "valueProp": "lo_code",
-            "query": "select lo_code from datasets.nas_performance_lonas"
+            "columnName": "lo_code",
+            "query": "select distinct(lo_code) from datasets.nas_performance_district0lonas0subject0grade as t order by lo_code"
         },
         {
             "label": "Grade & Subject Performance",
             "name": "Grade",
+            "tableAlias": "t",
             "id": "grade",
             "labelProp": "grade",
             "valueProp": "grade",
-            "query": "select grade from datasets.nas_performance_grade"
+            "columnName": "grade",
+            "query": "select grade from datasets.nas_performance_grade as t"
         },
         {
             "label": "Grade & Subject Performance",      
             "name": "Subject",
             "id": "subject",
+            "tableAlias": "t",
             "labelProp": "subject",
             "valueProp": "subject",
-            "query": "select subject from datasets.nas_performance_subject"
+            "columnName": "subject",
+            "query": "select distinct(subject) from datasets.nas_performance_state0lonas0subject0grade as t order by subject"
         },
       
         {
@@ -51,7 +58,8 @@ export const config = {
             "tableAlias": "t",
             "labelProp": "grade",
             "valueProp": "grade",
-            "query": "select grade from datasets.nas_performance_grade"
+            "columnName": "grade",
+            "query": "select grade from datasets.nas_performance_grade as t"
         },
         {
             "label": "State Wise Performance",
@@ -60,16 +68,18 @@ export const config = {
             "tableAlias": "t",
             "labelProp": "subject",
             "valueProp": "subject",
-            "query": "select subject from datasets.nas_performance_subject"
+            "columnName": "subject",
+            "query": "select distinct(subject) from datasets.nas_performance_state0lonas0subject0grade as t order by subject"
         },
         {
             "label": "State Wise Performance",
             "name": "Learning Outcome Code",
-            "tableAlias": "t",
             "id": "lo_code",
+            "tableAlias": "t",
             "labelProp": "lo_code",
             "valueProp": "lo_code",
-            "query": "select lo_code from datasets.nas_performance_lonas"
+            "columnName": "lo_code",
+            "query": "select distinct(lo_code) from datasets.nas_performance_state0lonas0subject0grade as t order by lo_code"
         },
 
     ],

@@ -44,6 +44,7 @@ constructor(private _wrapperService: WrapperService, private _rbacService: RbacS
   async ngAfterViewInit(): Promise<void> {
   if (this.hasCommonFilters) {
       this.filters = await this._wrapperService.constructCommonFilters(config.filters, this.tabLabel);
+      this.filters = await this._wrapperService.updateDependantFilters(this.filters, 0);
       this.nasstatewiseperformance?.getReportData({ filterValues: this.filters.map((filter) => { return { ...filter, columnName: filter.valueProp, filterType: filter.id} }) });
       }
   if (this.startDate === undefined && this.endDate === undefined && this.hasTimeSeriesFilters) {
@@ -54,6 +55,7 @@ constructor(private _wrapperService: WrapperService, private _rbacService: RbacS
       this.nasstatewiseperformance?.getReportData({ timeSeriesValues: { startDate: startDate?.toISOString().split('T')[0], endDate: endDate?.toISOString().split('T')[0] } });
       }
   }
+
 
   checkReport(key: string, reportType: string): Boolean {
   let reportConfig = config;
@@ -72,7 +74,16 @@ constructor(private _wrapperService: WrapperService, private _rbacService: RbacS
   }
   }
 
-  filtersUpdated(filters: any) {
+  async filtersUpdated(filters: any) {
+    let updatedIndex = 0;
+    for (let index = 0; index < filters.length; index++) {
+        if(filters[index].isUpdated){
+            updatedIndex = index;
+            break;
+        }
+    };
+    this.filters = await this._wrapperService.updateDependantFilters(this.filters, updatedIndex);
+
   this.reportsData = [];
   this.nasstatewiseperformance?.getReportData({ filterValues: filters.map((filter) => { return { ...filter, columnName: filter.valueProp, filterType: filter.id} }) });
       }

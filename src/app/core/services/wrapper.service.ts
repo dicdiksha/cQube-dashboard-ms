@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { parseQueryParam } from 'src/app/utilities/QueryBuilder';
+import { parseQueryParam, parseFilterToQuery} from 'src/app/utilities/QueryBuilder';
 import { CommonService } from './common/common.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 
@@ -45,6 +45,48 @@ export class WrapperService {
     };
     this.spinner.hide()
     return filters;
+  }
+
+  async updateDependantFilters(filters: any, updatedIndex: any){
+    this.spinner.show();
+    let query
+    let filterParams: any = []
+    for (let index = 0; index < filters.length; index++) {
+        let filter = filters[index]
+        if (index > updatedIndex && filterParams.length > 0) {
+            let whereIndex = filter.query.toLowerCase().indexOf('where');
+            let orderByIndex = filter.query.toLowerCase().indexOf('order by');
+            if(whereIndex !== -1){
+                if(orderByIndex !== -1)
+                    query = filter.query.substring(0, whereIndex).trim() + " " + filter.query.substring(orderByIndex).trim();
+                else
+                    query = filter.query.substring(0, whereIndex).trim();
+            }
+            else
+                query = filter.query.trim();
+
+            filter.query = query
+
+            filterParams.forEach((filterParam: any) => {
+                filter.query = parseFilterToQuery(filter.query, filterParam)
+            });
+
+            let res = await this.runQuery(filter.query);
+            if (res) {
+              let rows = res;
+              filter.options = rows.map((row) => {
+                return {
+                  value: row?.[filter.valueProp],
+                  label: row?.[filter.labelProp]
+                }
+              })
+              filter.value = filter.options?.[0]?.value
+            }
+      }
+      filterParams.push(filter)
+    }
+    this.spinner.hide()
+    return filters
   }
 
   async constructCommonFilters(filterConfig: any, tabLabel?: any, updatedFilter?: any, changedInd?: any, defaultFilterApplied?:boolean) {

@@ -51,23 +51,7 @@ export class DistrictWisePerformanceTabComponent implements OnInit, AfterViewIni
     async ngAfterViewInit(): Promise<void> {
         if (this.hasCommonFilters) {
             this.filters = await this._wrapperService.constructCommonFilters(config.filters, this.tabLabel);
-            // this.filters.map((a) => {
-            //     let allObj = {
-            //         "value": "all",
-            //         "label": "All"
-            //     }
-            //     var index = a.options.findIndex(x => x.value == "all");
-            //     if (index === -1) {
-            //         a.options.push(allObj)
-            //         a.options.map((item, i) => {
-            //             if (item.value === "all") {
-            //                 a.options.splice(i, 1);
-            //                 a.options.unshift(item);
-            //             }
-            //         })
-            //         a.value = "all"
-            //     }
-            // })
+            this.filters = await this._wrapperService.updateDependantFilters(this.filters,0);
             this.districtWisePerformance?.getReportData({ filterValues: this.filters.map((filter) => { return { ...filter, columnName: filter.valueProp, filterType: filter.id } }) });
             this.nasMetrics?.getReportData({ filterValues: this.filters.map((filter) => { return { ...filter, columnName: filter.valueProp, filterType: filter.id } }) });
         }
@@ -98,7 +82,16 @@ export class DistrictWisePerformanceTabComponent implements OnInit, AfterViewIni
         }
     }
 
-    filtersUpdated(filters: any) {
+    async filtersUpdated(filters: any) {
+        let updatedIndex = 0;
+        for (let index = 0; index < filters.length; index++) {
+            if(filters[index].isUpdated){
+                updatedIndex = index;
+                break;
+            }
+        };
+        this.filters = await this._wrapperService.updateDependantFilters(this.filters, updatedIndex);
+        
         this.reportsData = [];
         this.districtWisePerformance?.getReportData({ filterValues: filters.map((filter) => { return { ...filter, columnName: filter.valueProp, filterType: filter.id } }) });
         // this.nasMetrics?.getReportData({ filterValues: filters.map((filter) => { return { ...filter, columnName: filter.valueProp, filterType: filter.id } }) });

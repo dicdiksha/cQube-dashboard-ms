@@ -40,7 +40,13 @@ export class FilterPanelComponent implements OnInit, OnChanges {
         this.filters[i].value = null;
       }
     }
-
+    for (let i = 0; i < this.filters.length; i++) {
+      if(i === ind)
+        this.filters[i].isUpdated = true;
+      else
+        this.filters[i].isUpdated = false;
+    }
+    
     this.filtersUpdated.emit(this.filters);
     this.filterIndexUpdated.emit(ind);
 
