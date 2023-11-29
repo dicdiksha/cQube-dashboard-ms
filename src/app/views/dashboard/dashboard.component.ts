@@ -87,7 +87,7 @@ export class DashboardComponent implements OnInit {
         }
       }
       //Prashast static changes
-      //this.dashboardMenu.push(this.tempPrashast);
+      this.dashboardMenu.push(this.tempPrashast);
       //Prashast static changes
     })
 
