@@ -18,14 +18,14 @@ export class PrashastComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.bigNumberMetrics = [{ "valueSuffix": "", "reportName": "Total Registered Users", "averagePercentage": 511572 }, 
-    { "valueSuffix": "", "reportName": "Total Students", "averagePercentage": 2065848 }, 
-    { "valueSuffix": "", "reportName": "Total Schools", "averagePercentage": 187568 }, 
-    { "valueSuffix": "", "reportName": "Total Teachers", "averagePercentage": 324822 },
-    { "valueSuffix": "", "reportName": "Total Principal/Headmaster", "averagePercentage": 135950 }, 
-    { "valueSuffix": "", "reportName": "Total Special Educators", "averagePercentage": 11815 }, 
-    { "valueSuffix": "", "reportName": "Total Survey Part-1", "averagePercentage": 1043013 }, 
-    { "valueSuffix": "", "reportName": "Total Survey Part-2", "averagePercentage": 213699 }, ]
+    this.bigNumberMetrics = [{ "valueSuffix": "", "reportName": "Total Registered Users", "averagePercentage": 699041 }, 
+    { "valueSuffix": "", "reportName": "Total Students", "averagePercentage": 3418908 }, 
+    { "valueSuffix": "", "reportName": "Total Schools", "averagePercentage": 259611 }, 
+    { "valueSuffix": "", "reportName": "Total Teachers", "averagePercentage": 429170 },
+    { "valueSuffix": "", "reportName": "Total Principal/Headmaster", "averagePercentage": 188249 }, 
+    { "valueSuffix": "", "reportName": "Total Special Educators", "averagePercentage": 15683 }, 
+    { "valueSuffix": "", "reportName": "Total Survey Part-1", "averagePercentage": 2051823 }, 
+    { "valueSuffix": "", "reportName": "Total Survey Part-2", "averagePercentage": 1675259 }, ]
 
   }
 
