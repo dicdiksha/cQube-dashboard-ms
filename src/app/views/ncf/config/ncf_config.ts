@@ -145,10 +145,12 @@ export const config = {
                 "hierarchyLevel": "0",
                 "actions": {
                     "queries": {
-                        "bigNumber1": "select sum(sum) as total_dcr from datasets.ncf_category_state0categoryncf where category_name = 'dcr_completed_uploaded'",
-                        "bigNumber2": "select sum(sum) as total_mobile_survey from datasets.ncf_category_state0categoryncf where category_name = 'mobile_survey_completed'",
-                        "bigNumber3": "select sum(sum) as total_ndg from datasets.ncf_category_state0categoryncf where category_name = 'national_district_groups_created'",
-                        "bigNumber4": "select sum(sum) as participants from datasets.ncf_number_of_participants_languagencf",
+                        "bigNumber1": "select count(distinct state_id) as total_states from datasets.ncf_number_of_participants_state where sum > 0",
+                        "bigNumber2": "select sum(sum) as total_state_position_paper from datasets.ncf_category_value_categoryncf where category_name = 'state_position_paper_e-template_submitted'",
+                        "bigNumber3": "select sum(sum) as total_dcr from datasets.ncf_category_value_categoryncf where category_name = 'dcr_completed_uploaded'",
+                        "bigNumber4": "select sum(sum) as total_mobile_survey from datasets.ncf_category_value_categoryncf where category_name = 'mobile_survey_completed'",
+                        "bigNumber5": "select sum(sum) as total_ndg from datasets.ncf_category_value_categoryncf where category_name = 'national_district_groups_created'",
+                        "bigNumber6": "select sum(sum) as participants from datasets.ncf_number_of_participants_languagencf",
                     },
                     "level": "state"
                 }
@@ -156,9 +158,9 @@ export const config = {
         ],
         "options": {
             "bigNumber": {
-                "title": ['Total District Consultation Report (DCR) Completed/Uploaded', 'Total Mobile Survey', 'Total National District Groups (NDGs) created', 'Total Digital Survey for National Curriculum (DiSaNC) Survey'],
-                "valueSuffix": ['','','',''],
-                "property": ['total_dcr', 'total_mobile_survey', 'total_ndg', 'participants']
+                "title": ['Total States/UTs Participating', 'Total State Position Paper', 'Total District Consultation Report (DCR) Completed/Uploaded', 'Total Mobile Survey', 'Total National District Groups (NDGs) created', 'Total Digital Survey for National Curriculum (DiSaNC) Survey'],
+                "valueSuffix": ['','','','','',''],
+                "property": ['total_states', 'total_state_position_paper', 'total_dcr', 'total_mobile_survey', 'total_ndg', 'participants']
             }
         }
     }
