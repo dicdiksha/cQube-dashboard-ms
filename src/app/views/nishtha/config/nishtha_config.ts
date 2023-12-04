@@ -448,11 +448,16 @@ export const config = {
                     "metrics": [
                         {
                             "label": "Percentage of Certifications Achieved",
-                            "value": "achieved_certificates_per"
+                            "value": "achieved_certificates_per",
+                            "tooltipLabel":"Target Achieved",
                         },
                         {
                             "label": "Percentage of Incomplete Certifications",
-                            "value": "incomplete_certificates_per"
+                            "value": "incomplete_certificates_per",
+                            "tooltipLabel":"Actual Certification",
+                            "tooltipValue": "actual_certificates",
+                            "tooltipLabel1":"Total Excepted Certification",
+                            "tooltipValue1":"expected_certificates"
                         }
                     ]
                 }

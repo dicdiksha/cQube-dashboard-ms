@@ -217,12 +217,31 @@ export class DataService {
                   if (isMultibar) {
                     data.datasets.forEach((dataset: any, index: any) => {
                       if (index === tooltipItem.datasetIndex) {
-                        multistringText.push(`${dataset.label} : ${tooltipItem.value} ${valueSuffix !== undefined ? valueSuffix : ''}`)
+                        if(dataset.tooltipValue === undefined){
+                          multistringText.push(`${dataset.tooltipLabel} : ${tooltipItem.value} ${valueSuffix !== undefined ? valueSuffix : '\n'}`)
+                        }
+                        else{
+                          for (let i = 0; i < reportData.values.length; i++) {
+                            debugger
+                            if(reportData.values[i].state_name === tooltipItem.yLabel){
+                              multistringText.push(`${dataset.tooltipLabel} : ${reportData.values[i].actual_certificates}`)
+                              break;
+                            }
+                          }
+                        }
+                        if(dataset.tooltipValue1 !== undefined){
+                          for (let i = 0; i < reportData.values.length; i++) {
+                            if(reportData.values[i].state_name === tooltipItem.yLabel){
+                              multistringText.push(`${dataset.tooltipLabel1} : ${reportData.values[i].expected_certificates}`)
+                              break;
+                            }
+                          }
+                        }
                       }
                     })
                   }
                   else {
-                    multistringText.push(`${data.datasets[0].label} : ${tooltipItem.value} ${valueSuffix !== undefined ? valueSuffix : ''}`)
+                    multistringText.push(`${data.datasets[0].tooltipLabel} : ${tooltipItem.value} ${valueSuffix !== undefined ? valueSuffix : '\n'}, ${data.datasets[0].tooltipLabel2} : ${tooltipItem.value}`)
                   }
                   return multistringText;
                 }
@@ -270,7 +289,11 @@ export class DataService {
         xAxis?.metrics.map((metric: any) => {
           return {
             dataExpr: metric.value,
-            label: metric.label
+            label: metric.label,
+            tooltipLabel:metric.tooltipLabel,
+            tooltipValue:metric.tooltipValue,
+            tooltipLabel1:metric.tooltipLabel1,
+            tooltipValue1:metric.tooltipValue1
           }
         }),
         type,
