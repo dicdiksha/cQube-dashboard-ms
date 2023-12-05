@@ -1,12 +1,28 @@
 export const config = {
     filters: [
         {
-            "label": "District Wise Performance",
+            "label": "State Wise Progress Status",
             "name": "Metric",
             "labelProp": "category_name",
             "valueProp": "category_name",
             "id": "metric",
             "query": "select category_name from dimensions.categorypm"
+        },
+        {
+            "label": "District Wise Progress Status",
+            "name": "Metric",
+            "labelProp": "category_name",
+            "valueProp": "category_name",
+            "id": "metric",
+            "query": "select category_name from dimensions.categorypm"
+        },
+        {
+            "label": "District Wise Progress Status",
+            "name": "State",
+            "labelProp": "state_name",
+            "valueProp": "state_id",
+            "id": "state_name",
+            "query": "select state_id,state_name from dimensions.state order by state_name"
         },
     ],
     implementation_status:{

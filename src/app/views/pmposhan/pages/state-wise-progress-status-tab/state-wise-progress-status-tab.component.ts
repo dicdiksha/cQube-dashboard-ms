@@ -29,6 +29,7 @@ export class StateWiseProgressStatusTabComponent implements OnInit {
   hasTimeSeriesFilters: boolean = false;
   hasCommonFilters: boolean = true;
   NVSK: boolean = true;
+  tabLabel: any = 'State Wise Progress Status';
 
   @ViewChild('stateWiseProgressStatus') stateWiseProgressStatus: StateWiseProgressStatusComponent;
   @Input() bigNumberMetrics: any = [];
@@ -48,7 +49,7 @@ export class StateWiseProgressStatusTabComponent implements OnInit {
 
   async ngAfterViewInit(): Promise<void> {
       if (this.hasCommonFilters) {
-          this.filters = await this._wrapperService.constructCommonFilters(config.filters);
+          this.filters = await this._wrapperService.constructCommonFilters(config.filters, this.tabLabel);
           this.stateWiseProgressStatus?.getReportData({ filterValues: this.filters.map((filter) => { return { ...filter, columnName: filter.valueProp, filterType: filter.id } }) });
       }
       if (this.startDate === undefined && this.endDate === undefined && this.hasTimeSeriesFilters) {
