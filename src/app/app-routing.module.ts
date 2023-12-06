@@ -12,22 +12,22 @@ routes = [
   {
     path: '', redirectTo: `home`, pathMatch: 'full'
   },
-  {
-    path: '',
-    loadChildren: () => import('./views/authentication/authentication.module').then(module => module.AuthenticationModule)
-  },
+//   {
+//     path: '',
+//     loadChildren: () => import('./views/authentication/authentication.module').then(module => module.AuthenticationModule)
+//   },
   {
     path: '',
     component: LayoutComponent,
     children: [
       {
         path: 'rbac', component: RbacDialogComponent,
-        canActivate: [AuthGuard]
+        // canActivate: [AuthGuard]
 
       },
       {
         path: 'home', component: HomePageComponent,
-        canActivate: [AuthGuard]
+        // canActivate: [AuthGuard]
       },
       {
         path: 'summary-statistics',
@@ -35,7 +35,7 @@ routes = [
           import('./views/dashboard/dashboard.module').then(
             (module) => module.DashboardModule
           ),
-        canLoad: [AuthGuard]
+        // canLoad: [AuthGuard]
       },
       {
         path: 'student-attendance',
@@ -43,7 +43,7 @@ routes = [
           import('./views/student-attendance/student-attendance.module').then(
             (module) => module.StudentAttendanceModule
           ),
-        canLoad: [AuthGuard]
+        // canLoad: [AuthGuard]
       },
       {
         path: 'teacher-attendance',
@@ -51,7 +51,7 @@ routes = [
           import('./views/teacher-attendance/teacher-attendance.module').then(
             (module) => module.TeacherAttendanceModule
           ),
-        canLoad: [AuthGuard]
+        // canLoad: [AuthGuard]
       },
       {
         path: 'review-meetings',
@@ -59,7 +59,7 @@ routes = [
           import('./views/review-meetings/review-meetings.module').then(
             (module) => module.ReviewMeetingsModule
           ),
-        canLoad: [AuthGuard]
+        // canLoad: [AuthGuard]
       },
       {
         path: 'udise',
@@ -67,7 +67,7 @@ routes = [
           import('./views/udise/udise.module').then(
             (module) => module.UdiseModule
           ),
-        canLoad: [AuthGuard]
+        // canLoad: [AuthGuard]
       },
       {
         path: 'nishtha',
@@ -75,7 +75,7 @@ routes = [
           import('./views/nishtha/nishtha.module').then(
             (module) => module.NishthaModule
           ),
-        canLoad: [AuthGuard]
+        // canLoad: [AuthGuard]
       },
       {
         path: 'pgi',
@@ -83,7 +83,7 @@ routes = [
           import('./views/pgi/pgi.module').then(
             (module) => module.PgiModule
           ),
-        canLoad: [AuthGuard]
+        // canLoad: [AuthGuard]
       },
       {
         path: 'pmposhan',
@@ -91,7 +91,7 @@ routes = [
           import('./views/pmposhan/pmposhan.module').then(
             (module) => module.PmPoshanModule
           ),
-        canLoad: [AuthGuard]
+        // canLoad: [AuthGuard]
       },
       {
         path: 'nas',
@@ -99,7 +99,7 @@ routes = [
           import('./views/nas/nas.module').then(
             (module) => module.NasModule
           ),
-        canLoad: [AuthGuard]
+        // canLoad: [AuthGuard]
       },
       {
         path: 'diksha',
@@ -107,7 +107,7 @@ routes = [
           import('./views/diksha/diksha.module').then(
             (module) => module.DikshaModule
           ),
-        canLoad: [AuthGuard]
+        // canLoad: [AuthGuard]
       },
       {
         path: 'student-assessment',
@@ -115,7 +115,7 @@ routes = [
             import('./views/student-assessment/student-assessment.module').then(
                 (module) => module.StudentAssessmentModule
             ),
-        canLoad: [AuthGuard]
+        // canLoad: [AuthGuard]
       },
       {
         path: 'school-infrastructure',
@@ -123,7 +123,7 @@ routes = [
             import('./views/school-infrastructure/school-infrastructure.module').then(
                 (module) => module.SchoolInfrastructureModule
             ),
-        canLoad: [AuthGuard]
+        // canLoad: [AuthGuard]
       },
       {
         path: 'school-progression',
@@ -131,7 +131,7 @@ routes = [
             import('./views/school-progression/school-progression.module').then(
                 (module) => module.SchoolProgressionModule
             ),
-        canLoad: [AuthGuard]
+        // canLoad: [AuthGuard]
       },
       {
         path: 'student-assessments',
@@ -139,7 +139,7 @@ routes = [
             import('./views/student-assessments/student-assessments.module').then(
                 (module) => module.StudentAssessmentsModule
             ),
-        canLoad: [AuthGuard]
+        // canLoad: [AuthGuard]
       },
       {
         path: 'ncf',
@@ -147,7 +147,7 @@ routes = [
           import('./views/ncf/ncf.module').then(
             (module) => module.NcfModule
           ),
-        canLoad: [AuthGuard]
+        // canLoad: [AuthGuard]
       },
       {
         path: 'quizzes',
@@ -155,7 +155,7 @@ routes = [
           import('./views/ncert-quiz/ncert-quiz.module').then(
             (module) => module.NcertQuizModule
           ),
-        canLoad: [AuthGuard]
+        // canLoad: [AuthGuard]
       },
       {
         path: 'microimprovement',
@@ -163,7 +163,7 @@ routes = [
           import('./views/micro-improvements/micro-improvements.module').then(
             (module) => module.MicroImprovementsModule
           ),
-        canLoad: [AuthGuard]
+        // canLoad: [AuthGuard]
       },
       {
         path: 'nipunBharat',
@@ -171,7 +171,7 @@ routes = [
           import('./views/nipun-bharat/nipun-bharat.module').then(
             (module) => module.NipunBharatModule
           ),
-        canLoad: [AuthGuard]
+        // canLoad: [AuthGuard]
       },
       {
         path: 'pmShri',
@@ -179,7 +179,7 @@ routes = [
           import('./views/pm-shri/pm-shri.module').then(
             (module) => module.PmShriModule
           ),
-        canLoad: [AuthGuard]
+        // canLoad: [AuthGuard]
       },
       {
         path: 'prashast',
@@ -187,7 +187,7 @@ routes = [
           import('./views/prashast/prashast.module').then(
             (module) => module.PrashastModule
           ),
-        canLoad: [AuthGuard]
+        // canLoad: [AuthGuard]
       }
     ],
   },
