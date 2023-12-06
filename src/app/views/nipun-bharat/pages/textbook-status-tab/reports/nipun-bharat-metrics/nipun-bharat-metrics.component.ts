@@ -25,7 +25,7 @@ export class NipunBharatMetricsComponent implements OnInit {
   compareDateRange: any = 30;
   filterIndex: any;
   rbacDetails: any;
-
+  bigNumberMetrics: any = [];
   @Output() exportReportData = new EventEmitter<any>();
 
   constructor(private readonly _dataService: DataService, private readonly _wrapperService: WrapperService, private _rbacService: RbacService) {
@@ -38,6 +38,15 @@ export class NipunBharatMetricsComponent implements OnInit {
     this.getReportData();
   }
 
+  importBigNumberMetrics(bigNumberMetric: any) {
+    this.bigNumberMetrics[bigNumberMetric.ind] = bigNumberMetric.data
+}
+
+getMetricsArray() {
+    return this.bigNumberMetrics.filter((data) => {
+      return data.averagePercentage !== null || data.averagePercentage !== undefined
+    }) 
+  }
   getReportData(values?: any): void {
     let { filterValues, timeSeriesValues } = values ?? {};
     this.startDate = timeSeriesValues?.startDate;

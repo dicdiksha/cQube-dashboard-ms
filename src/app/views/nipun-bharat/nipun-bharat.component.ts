@@ -16,8 +16,8 @@ export class NipunBharatComponent implements OnInit {
   tabIndex;
   selectedTabLabel;
   tabs: any = [];
-  programName: any = 'nas'
-
+  programName: any = 'nipunBharat'
+  bigNumberMetrics: any = [];
   constructor(private route: ActivatedRoute, private _rbacService: RbacService, private _commonService: CommonService) {
     this.route.queryParams.subscribe((param: any) => {
       this.tabIndex = param.tab ? Number(param.tab) : 0;
@@ -44,6 +44,7 @@ export class NipunBharatComponent implements OnInit {
   }
 
   ngAfterViewInit(): void {
+    console.log("this.selectedTabLabel",this.selectedTabLabel)
     setTimeout(() => {
       this.selectedTabLabel = this.tabs.length > 0 ? this.tabs[0] : undefined
     });
@@ -54,9 +55,28 @@ export class NipunBharatComponent implements OnInit {
     this.tabIndex = $event.index;
     setTimeout(() => {
       window.dispatchEvent(new Event('resize'));
-      console.log('resize');
-    }, 100);
+      }, 100);
   }
+  checkReport(key: string, reportType: string): Boolean {
+    let reportConfig = config;
+    let flag = false;
+    reportConfig[key]?.filters?.forEach((filter: any) => {
+        if (Number(filter.hierarchyLevel) === Number(this.rbacDetails?.role) && Object.keys(filter?.actions?.queries).includes(reportType)) {
+        flag = true
+        }
+    })
+    return flag
+    }
+
+    importBigNumberMetrics(bigNumberMetric: any) {
+      this.bigNumberMetrics[bigNumberMetric.ind] = bigNumberMetric.data
+  }
+
+  getMetricsArray() {
+      return this.bigNumberMetrics.filter((data) => {
+        return data.averagePercentage !== null || data.averagePercentage !== undefined
+      }) 
+    }
 
 }
 
