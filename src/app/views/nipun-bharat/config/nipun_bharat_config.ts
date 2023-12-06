@@ -7,8 +7,148 @@ export const config = {
             "valueProp": "subject",
             "id": "subject",
             "query": "select distinct(subject) from datasets.nipun_bharat_totallearningsessions_grade0subject order by subject"
-        }
+        },
+        {
+            "label": "Module-wide Status",
+            "name": "Module",
+            "labelProp": "module",
+            "valueProp": "module",
+            "id": "module",
+            "query": "select m.module from dimensions.modulesnipun m order by m.module"
+         },
+         {
+            "label": "Module-wide Status",
+            "name": "Quarter",
+            "labelProp": "quarter",
+            "valueProp": "quarter",
+            "id": "quarter",
+            "query": "select q.quarter from dimensions.modulesnipunquarter q order by q.quarter"
+         },
+        {
+            "label": "Detailed Status",
+            "name": "Quarter",
+            "labelProp": "quarter",
+            "valueProp": "quarter",
+            "id": "quarter",
+            "query": "select q.quarter from dimensions.modulesnipunquarter q order by q.quarter"
+         },
+         
     ],
+    
+    module_wide_status: {
+        "label": "Module-wide Status",
+        "filters": [
+            {
+                "name": "National",
+                "hierarchyLevel": "0",
+                "actions": {
+                    "queries": {
+                        "map": "select s2.state_id,s2.latitude, s2.longitude,s2.state_name ,sum(tnm.sum) as total_modules, round(cast(avg(tnm.sum) as numeric), 2) * 100 as modules_completed,tnm.quarter as quarter from datasets.nipun_bharat_totalnoofmodules_bbyptg51gxhubgstibks tnm join datasets.nipun_bharat_entry_value_state  s on s.state_id = tnm.state_id join dimensions.state s2 on s2.state_id =s.state_id group by s2.state_name,s2.state_id,s2.latitude, s2.longitude,tnm.quarter,s2.state_id order by s2.state_id",
+                     },
+                    "level": "state",
+                    "nextLevel": "district"
+                }
+            }
+        ],
+        "options": {
+            "downloadConfig": {
+                "fileName": "Module-wide Status",
+                "excludeColumns": ['indicator', 'tooltip', 'Latitude', 'Longitude']
+            },
+                "map":
+                {
+                "indicatorType": "percent",
+                "indicator": "modules_completed",
+                "metricFilterNeeded": true,
+                "groupByColumn": "state_id",
+                "legend": { "title": "Modules Completed" },
+                "drillDownConfig": {
+                    "enableDrillDown": true,
+                    "allowedLevels": [0]
+                },
+                   "tooltipMetrics":
+                        [
+                            {
+                                "valuePrefix": "State/UT Name: ",
+                                "value": "state_name",
+                                "valueSuffix": "\n"
+                            },
+                            {
+                                "valuePrefix": "Quarter: ",
+                                "value": "quarter",
+                                "valueSuffix": "\n"
+                            },
+                            {
+                                "valuePrefix": "Total Modules: ",
+                                "value": "total_modules",
+                                "valueSuffix": "\n"
+                            },
+                            {
+                                "valuePrefix": "Modules Completed : ",
+                                "value": "modules_completed",
+                                "valueSuffix": "%\n"
+                            }
+                        ]
+                }
+            }
+    },
+    detailed_status: {
+        "label": "Detailed Status",
+        "filters": [
+            {
+                "name": "National",
+                "hierarchyLevel": "0",
+                "actions": {
+                    "queries": {
+                        "table": "select s.state_name,nbtbg.module,nbtbg.sub_module,nbtbg.quarter,case when nbtbg.sum = 1 then  'Yes' else 'No' end as status from datasets.nipun_bharat_totalnoofmodules_bbyptg51gxhubgstibks nbtbg join dimensions.state s on 	s.state_id = nbtbg.state_id group by s.state_name,nbtbg.sum,nbtbg.quarter,nbtbg.module,nbtbg.sub_module order by s.state_name",
+                    },
+                    "level": "district",
+                    "nextLevel": "block"
+                }
+            }
+        ],
+        "options": {
+            "table": {
+                "groupByNeeded": true,
+                "metricLabelProp": "state_name",
+                "metricValueProp": "status",
+                "columns": [
+                    {
+                        name: "Module",
+                        property: "module",
+                        class: "text-center"
+                    },
+                    {
+                        name: "Sub Module",
+                        property: "sub_module",
+                        class: "text-center"
+                    },
+                    {
+                        name: "state_name",
+                        groupByNeeded: true,
+                        property: "state_name",
+                        class: "text-center",
+                        isHeatMapRequired: true,
+                        color: {
+                            type: "status",
+                            values: [
+                                {
+                                    color: "#007000",
+                                    value: 'yes'
+                                },
+                                {
+                                    color: "#D2222D",
+                                    value: 'no'
+                                }
+                            ]
+                        },
+                     }
+                ],
+                "sortByProperty": "state_name",
+                "sortDirection": "asc"
+        }
+    }
+},
     textbook_status:{
         "label": "Textbook Status",
         "filters": [
@@ -87,9 +227,31 @@ export const config = {
             }
         }
     },
+    summary_metrics: {
+            "filters": [
+            {
+                "name": "National",
+                "hierarchyLevel": "0",
+                "actions": {
+                    "queries": {
+                        "bigNumber1": "select sum(sum) as total_learning_sessions from datasets.nipun_bharat_totallearningsessions_grade0subject",
+                        "bigNumber2": "select sum(count) as total_content from datasets.nipun_bharat_total_no_of_learning_sessions_grade",
+                      },
+                    "level": "state"
+                }
+            },
+        ],
+        "options": {
+            "bigNumber": {
+                "title": ['Total Learning Sessions','Total Content'],
+                "valueSuffix": ['',''],
+                "property": ['total_learning_sessions','total_content']
+          
+            }
+        }
+    },
     nipun_bharat_metrics: {
-        "label": "Textbook Status",
-        "filters": [
+            "filters": [
             {
                 "name": "National",
                 "labelProp": "state_name",
@@ -97,20 +259,20 @@ export const config = {
                 "hierarchyLevel": "0",
                 "actions": {
                     "queries": {
-                        "bigNumber1": "select sum(sum) as total_learning_sessions from datasets.nipun_bharat_totallearningsessions_grade0subject",
-                        "bigNumber2": "select count(*) as total_digital_books from datasets.nipun_bharat_totallearningsessions_grade0subject",
-                        "bigNumber3": "select sum(sum) as total_learning_sessions from datasets.nipun_bharat_totallearningsessions_grade0subject",
+                        "bigNumber1": "select sum(sum) as total_los_covered from datasets.nipun_bharat_los_covered_textbooknipun",
+                        "bigNumber2": "select count(*) as total_digital_books from datasets.nipun_bharat_total_los_textbooknipun",
+                        "bigNumber3": "select sum(count) as total_content from datasets.nipun_bharat_total_no_of_learning_sessions_grade",
                         "bigNumber4": "select sum(sum) as total_learning_sessions from datasets.nipun_bharat_totallearningsessions_grade0subject",
-                    },
+                        },
                     "level": "state"
                 }
             },
         ],
         "options": {
             "bigNumber": {
-                "title": ['Total Learning Sessions','Total Digital Books','Total Content', 'Total Learning Outcomes (LOs) Covered'],
+                "title": ['Total Learning Outcomes (LOs) Covered','Total Digital Books','Total Content','Total Learning Sessions' ],
                 "valueSuffix": ['','','',''],
-                "property": ['total_learning_sessions','total_digital_books','','total_learning_sessions']
+                "property": ['total_los_covered','total_digital_books','total_content','total_learning_sessions']
             }
         }
     }
