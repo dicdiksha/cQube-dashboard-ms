@@ -16,6 +16,7 @@ export class NcfComponent implements OnInit {
   selectedTabLabel;
   tabs: any = [];
   programName: any = 'nas'
+  bigNumberMetrics: any = [];
 
   constructor(private route: ActivatedRoute, private _rbacService: RbacService, private _commonService: CommonService) {
     this.route.queryParams.subscribe((param: any) => {
@@ -57,4 +58,23 @@ export class NcfComponent implements OnInit {
     }, 100);
   }
 
+checkReport(key: string, reportType: string): Boolean {
+    let reportConfig = config;
+    let flag = false;
+    reportConfig[key]?.filters?.forEach((filter: any) => {
+        if (Number(filter.hierarchyLevel) === Number(this.rbacDetails?.role) && Object.keys(filter?.actions?.queries).includes(reportType)) {
+        flag = true
+        }
+    })
+    return flag
+  }
+importBigNumberMetrics(bigNumberMetric: any) {
+    this.bigNumberMetrics[bigNumberMetric.ind] = bigNumberMetric.data
+}
+
+getMetricsArray() {
+    return this.bigNumberMetrics.filter((data) => {
+      return data.averagePercentage !== null || data.averagePercentage !== undefined
+    }) 
+  }
 }
