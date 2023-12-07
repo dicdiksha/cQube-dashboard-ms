@@ -80,7 +80,12 @@ export class WrapperService {
                   label: row?.[filter.labelProp]
                 }
               })
-              filter.value = filter.options?.[0]?.value
+              if(filter.selectDefaultValue != false){
+                filter.value = filter.options?.[0]?.value
+              }
+              else{
+                filter.value = null
+              }
             }
       }
       filterParams.push(filter)

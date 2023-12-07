@@ -44,7 +44,14 @@ export class GradeAndSubjectPerformanceComponent implements OnInit {
     this.startDate = timeSeriesValues?.startDate;
     this.endDate = timeSeriesValues?.endDate;
     let reportConfig = config
+    let isStateSelected = false
 
+    for (let i = 0; i < filterValues.length; i++) {
+      if(filterValues[i].id === 'state_name' && filterValues[i].value != null){
+        isStateSelected = true
+      }
+    }
+    
     let { timeSeriesQueries, queries, levels, defaultLevel, filters, options } = reportConfig[this.reportName];
     let onLoadQuery;
     let currentLevel;
@@ -52,7 +59,10 @@ export class GradeAndSubjectPerformanceComponent implements OnInit {
     if (this.rbacDetails?.role !== null && this.rbacDetails.role !== undefined) {
       filters.every((filter: any) => {
         if (Number(this.rbacDetails?.role) === Number(filter.hierarchyLevel)) {
-          queries = { ...filter?.actions?.queries }
+          if(isStateSelected)
+            queries = { ...filter?.actions?.queriesState}
+          else
+            queries = { ...filter?.actions?.queries }
           currentLevel = filter?.actions?.level;
           this.reportData = {
             ...this.reportData,

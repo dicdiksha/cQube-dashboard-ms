@@ -222,7 +222,6 @@ export class DataService {
                         }
                         else{
                           for (let i = 0; i < reportData.values.length; i++) {
-                            debugger
                             if(reportData.values[i].state_name === tooltipItem.yLabel){
                               multistringText.push(`${dataset.tooltipLabel} : ${reportData.values[i].actual_certificates}`)
                               break;

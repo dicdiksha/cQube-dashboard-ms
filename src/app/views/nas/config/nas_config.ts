@@ -31,6 +31,16 @@ export const config = {
             "query": "select distinct(lo_code) from datasets.nas_performance_district0lonas0subject0grade as t order by lo_code"
         },
         {
+            "label": "District Wise Performance",
+            "name": "State",
+            "id": "state_name",
+            "labelProp": "state_name",
+            "valueProp": "state_name",
+            "columnName": "state_name",
+            "selectDefaultValue": false,
+            "query": "select distinct(state_name) from datasets.nas_performance_state0lonas0subject0grade as t join dimensions.state as d on d.state_id = t.state_id order by state_name"
+        },
+        {
             "label": "Grade & Subject Performance",
             "name": "Grade",
             "tableAlias": "t",
@@ -50,7 +60,16 @@ export const config = {
             "columnName": "subject",
             "query": "select distinct(subject) from datasets.nas_performance_state0lonas0subject0grade as t order by subject"
         },
-      
+        {
+            "label": "Grade & Subject Performance",
+            "name": "State",
+            "id": "state_name",
+            "labelProp": "state_name",
+            "valueProp": "state_name",
+            "columnName": "state_name",
+            "selectDefaultValue": false,
+            "query": "select distinct(state_name) from datasets.nas_performance_state0lonas0subject0grade as t join dimensions.state as d on d.state_id = t.state_id order by state_name"
+        },
         {
             "label": "State Wise Performance",
             "name": "Grade",
@@ -198,6 +217,9 @@ export const config = {
                 {
                     "queries": {
                         "table": "select t.lo_code, grade, subject, round(cast(avg(t.sum) as numeric),2) as performance, state_name, state_name as location from datasets.nas_performance_state0lonas0subject0grade as t join dimensions.state as d on t.state_id = d.state_id group by t.state_id, state_name, subject, grade, t.lo_code"
+                    },
+                    "queriesState": {
+                        "table": "select t.lo_code, grade, subject, ROUND(CAST(avg(t.sum) AS numeric), 2) AS performance, district_name, district_name as location from datasets.nas_performance_district0lonas0subject0grade as t join dimensions.district as d on t.district_id = d.district_id group by t.district_id, district_name, subject, grade, t.lo_code, t.lo_code"
                     },
                     "level": "district",
                     "nextLevel": "block"
