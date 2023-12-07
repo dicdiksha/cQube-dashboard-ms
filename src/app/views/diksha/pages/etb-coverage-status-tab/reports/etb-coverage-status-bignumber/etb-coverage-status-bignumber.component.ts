@@ -12,11 +12,11 @@ import { config } from 'src/app/views/diksha/config/diksha_config';
   styleUrls: ['./etb-coverage-status-bignumber.component.scss']
 })
 export class EtbCoverageStatusComponentBignumber implements OnInit {
-  reportName: string = 'etb_coverage_status_bignumber';
+  reportName: string = 'etb_overall_coverage_percentage';
   filters: any = [];
   levels: any;
   reportData: any = {
-    reportName: "etb_coverage_status_bignumber"
+    reportName: "etb_overall_coverage_percentage"
   };
   title: string = 'Overall ETB Coverage '
   selectedYear: any;

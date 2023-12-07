@@ -79,7 +79,7 @@ export const config = {
         }
     },
 
-    etb_coverage_status_bignumber: {
+    etb_overall_coverage_percentage: {
         "label": "ETB Coverage Status",
         "filters": [
             {
@@ -222,7 +222,7 @@ export const config = {
         }
     },
 
-    content_coverage_bignumber:
+    content_coverage_qr_percentage:
     {
         "label": "Content Coverage on QR",
         "filters": [
@@ -512,7 +512,29 @@ export const config = {
             }
         }
     },
-
+    summary_metrics: {
+        "filters": [
+        {
+            "name": "National",
+            "hierarchyLevel": "0",
+            "actions": {
+                "queries": {
+                    "bigNumber1": "339000",
+                    "bigNumber2": "select sum(sum) as total_etbs from datasets.diksha_total_energized_textbooks_state",
+                    },
+                "level": "state"
+            }
+        },
+    ],
+    "options": {
+        "bigNumber": {
+            "title": ['Total Content','Total ETBs'],
+            "property": ['', 'total_etbs'],
+            "valueSuffix": ['', ''],
+            "formatter": { locale: 'en-IN', format: "short" }
+        }
+    }
+},
     diksha_metrics: {
         "label": "ETB Coverage Status",
         "filters": [
@@ -523,9 +545,9 @@ export const config = {
                     "queries": {
                         "bigNumber1": "select count(distinct state_id) as total_states from datasets.diksha_energized_textbooks_state where sum > 0",
                         "bigNumber2": "select sum(sum) as total_etbs from datasets.diksha_total_energized_textbooks_state",
-                        "bigNumber3": "select sum(sum) as total_qr_codes from datasets.diksha_totalqrcodes_textbookdiksha0grade0subject0medium",
-                        "bigNumber4": "select round(cast(avg(sum) as numeric),2) as content_coverage from datasets.diksha_qrcoverage_textbookdiksha0grade0subject0medium",
-                        "bigNumber5": "select (sum(sum)) as total_time_spent from datasets.diksha_totalplays_bm9wanljxyeydndkywrr"
+                        "bigNumber3": "1.07",
+                        "bigNumber4": "3.39",
+                         "bigNumber5": "select (sum(sum)) as total_time_spent from datasets.diksha_totalplays_bm9wanljxyeydndkywrr"
                     },
                     "level": "district"
                 }
@@ -548,9 +570,9 @@ export const config = {
         ],
         "options": {
             "bigNumber": [ {
-                "title": ['Total States/UTs Participating', 'Total ETBs', 'Total QR Codes', 'Content Coverage on QR', 'Total Time Spent (mins)'],
-                "valueSuffix": ['', '', '', '%', ''],
-                "property": ['total_states', 'total_etbs', 'total_qr_codes', 'content_coverage', 'total_time_spent']
+                "title": ['Total States/UTs Participating', 'Total ETBs', 'Total QR Codes', 'Total Content', 'Total Time Spent (mins)'],
+                "valueSuffix": ['', '', 'L', 'L', ''],
+                "property": ['total_states', 'total_etbs', '', '', 'total_time_spent']
             }]
         }
     }
