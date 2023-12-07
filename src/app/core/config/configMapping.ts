@@ -51,7 +51,8 @@ export const programFolderNames = {
   ncf:'ncf',
   quiz:'quiz',
   microImprovement:'microImprovement',
-  pmShri: 'pm_shri'
+  pmShri: 'pm_shri',
+  nipunBharat: 'nipun-bharat'
 }
 
 export const stateProgramsFolderNames = {
@@ -68,5 +69,6 @@ export const stateProgramsFolderNames = {
   ncf:'',
   quiz:'',
   microImprovement:'',
-  pmShri: ''
+  pmShri: '',
+  nipunBharat: ''
 }
