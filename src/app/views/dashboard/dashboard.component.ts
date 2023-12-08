@@ -71,8 +71,6 @@ export class DashboardComponent implements OnInit {
       let rbacDetails;
       let menuData = menuResult?.data
       for (let i = 0; i < menuData?.length; i++) {
-        if (hierarchyLevels[menuData[i].programID]?.includes(String(this.rbacDetails?.role))) {
-
           let menuToDisplay: IMenuItem | any = {};
           menuToDisplay.title = menuData[i].programName;
           menuToDisplay.navigationURL = menuData[i].navigationUrl;
@@ -83,8 +81,9 @@ export class DashboardComponent implements OnInit {
                  menuToDisplay.metrics = d;
                });
           this.dashboardMenu.push(menuToDisplay);
+        // if (hierarchyLevels[menuData[i].programID]?.includes(String(this.rbacDetails?.role))) {
 
-        }
+        // }
       }
       //Prashast static changes
       this.dashboardMenu.push(this.tempPrashast);

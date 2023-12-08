@@ -105,17 +105,15 @@ export class LayoutComponent implements OnInit {
       this.menu?.push(menuToDisplay);
       console.log("cvbn:", { menuResult })
       menuResult?.data?.forEach((dasboardMenu: IDashboardMenu | any) => {
-
-        if (hierarchyLevels[dasboardMenu.programID]?.includes(String(rbacRole))) {
-
           let menuToDisplay: IMenuItem | any = {};
           menuToDisplay.label = dasboardMenu.programName;
           menuToDisplay.path = dasboardMenu.navigationUrl;
           menuToDisplay.icon = dasboardMenu.imageUrl;
           menuToDisplay.isSelected = false;
-
           this.menu?.push(menuToDisplay);
-        }
+        // if (hierarchyLevels[dasboardMenu.programID]?.includes(String(rbacRole))) {
+          
+        // }
 
       });
       //Prashast static changes
