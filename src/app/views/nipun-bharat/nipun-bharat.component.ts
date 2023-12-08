@@ -57,15 +57,15 @@ export class NipunBharatComponent implements OnInit {
       window.dispatchEvent(new Event('resize'));
       }, 100);
   }
-  checkReport(key: string, reportType: string): Boolean {
-    let reportConfig = config;
-    let flag = false;
-    reportConfig[key]?.filters?.forEach((filter: any) => {
-        if (Number(filter.hierarchyLevel) === Number(this.rbacDetails?.role) && Object.keys(filter?.actions?.queries).includes(reportType)) {
-        flag = true
-        }
-    })
-    return flag
+    checkReport(key: string, reportType: string): Boolean {
+      let reportConfig = config;
+      let flag = false;
+      reportConfig[key]?.filters?.forEach((filter: any) => {
+          if (Number(filter.hierarchyLevel) === Number(this.rbacDetails?.role) && Object.keys(filter?.actions?.queries).includes(reportType)) {
+          flag = true
+          }
+      })
+      return flag
     }
 
     importBigNumberMetrics(bigNumberMetric: any) {

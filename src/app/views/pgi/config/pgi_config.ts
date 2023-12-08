@@ -114,6 +114,29 @@ export const config = {
             }
         }
     },
+    summary_metrics: {
+        "filters": [
+            {
+                "name": "National",
+                "hierarchyLevel": "0",
+                "actions": {
+                    "queries": {
+                        "bigNumber1": `select count(state_id) as total_state from datasets.pgi_started_state`,
+                        //hardcoded value '70' is written for second main metrics 'Total parameters', as raw data file does not have total parameters list
+                        "bigNumber2": "select 70 as total_parameters from datasets.pgi_started_state"
+                    },
+                    "level": "state"
+                }
+            },
+        ],
+        "options": {
+            "bigNumber": {
+                "title": ['Total States/UTs', 'Total Parameters'],
+                "valueSuffix": ['', ''],
+                "property": ['total_state', 'total_parameters']
+            }
+        }
+    },
     pgi_metrics: {
         "label": "Progress Status",
         "filters": [

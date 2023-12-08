@@ -99,7 +99,29 @@ export const config = {
                 }
             }
     },
-
+    summary_metrics: {
+        "filters": [
+        {
+            "name": "National",
+            "hierarchyLevel": "0",
+            "actions": {
+                "queries": {
+                    "bigNumber1": "select sum(sum) as total_states_uts from datasets.micro_improvements_started_state",
+                    "bigNumber2": "select sum(sum) as total_mi_ongoing from datasets.micro_improvements_categorymicro_state0categorymicro where category_name = 'total_microimprovement_projects'",
+                  },
+                "level": "state"
+            }
+        },
+    ],
+    "options": {
+        "bigNumber": {
+            "title": ['Total States/UTs Participating','Total Micro-Improvement Projects'],
+            "valueSuffix": ['',''],
+            "property": ['total_states_uts','total_mi_ongoing']
+      
+        }
+    }
+},
     micro_improvements_metrics: {
         "label": "Progress Status",
         "filters": [

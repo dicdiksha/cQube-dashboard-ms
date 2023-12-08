@@ -74,4 +74,9 @@ constructor(private route: ActivatedRoute, private _rbacService: RbacService, pr
         this.bigNumberMetrics[bigNumberMetric.ind] = bigNumberMetric.data
     }
 
+    getMetricsArray() {
+        return this.bigNumberMetrics.filter((data) => {
+          return data.averagePercentage !== null || data.averagePercentage !== undefined
+        }) 
+      }
 }

@@ -169,6 +169,28 @@ export const config = {
             }
         }
     },
+    summary_metrics: {
+        "filters": [
+        {
+            "name": "National",
+            "hierarchyLevel": "0",
+            "actions": {
+                "queries": {
+                    "bigNumber1": "select sum(sum) as total_enrolment from datasets.ncert_quiz_total_enrollments_quizncert where sum > 0",
+                    "bigNumber2": "select sum(sum) as total_certification from datasets.ncert_quiz_certificate_issued_100_perc_completion_medium",
+                    },
+                "level": "state"
+            }
+        },
+    ],
+    "options": {
+        "bigNumber": {
+            "title": ['Total Enrolment','Total Certification'],
+            "valueSuffix": ['',''],
+            "property": ['total_enrolment','total_certification']
+        }
+    }
+},
     quiz_metrics: {
         "label": "Progress Status",
         "filters": [

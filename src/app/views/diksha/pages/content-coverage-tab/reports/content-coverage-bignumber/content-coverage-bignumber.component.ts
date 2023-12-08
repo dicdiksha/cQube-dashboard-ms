@@ -12,7 +12,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
               styleUrls: ['./content-coverage-bignumber.component.scss']
             })
             export class ContentCoverageComponentBignumber implements OnInit {
-              reportName: string = 'content_coverage_bignumber';
+              reportName: string = 'content_coverage_qr_percentage';
               filters: any = [];
               levels: any;
               reportData: any = {
