@@ -10,7 +10,7 @@ var routes: Routes = [];
 
 routes = [
   {
-    path: '', redirectTo: `home`, pathMatch: 'full'
+    path: '', redirectTo: `summary-statistics`, pathMatch: 'full'
   },
 //   {
 //     path: '',
