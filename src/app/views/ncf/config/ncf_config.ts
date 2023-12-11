@@ -7,7 +7,7 @@ export const config = {
             "id": "metric",
             "labelProp": "category_name",
             "valueProp": "category_name",
-            "query": "SELECT category_name FROM dimensions.categoryncf"
+            "query": "SELECT category_name FROM dimensions.categoryncf order by category_name"
         },
     ],
  
@@ -20,7 +20,7 @@ export const config = {
                 "actions": {
                     "queries":
                     {
-                        "map":"select t2.latitude, t2.longitude, t.state_id,state_name,t.category_name,sum(sum) as performance from datasets.ncf_category_state0categoryncf as t join dimensions.state as t2 on t.state_id = t2.state_id group by t.state_id,state_name,t.category_name, t2.latitude, t2.longitude"
+                        "map":"select t2.latitude, t2.longitude, t.state_id,state_name,t.category_name,sum(sum) as performance from datasets.ncf_category_dxcdbwaaaaaaaaaamras as t join dimensions.state as t2 on t.state_id = t2.state_id group by t.state_id,state_name,t.category_name, t2.latitude, t2.longitude order by category_name"
                     },
                     "level": "state",
                     "nextLevel": "district"
