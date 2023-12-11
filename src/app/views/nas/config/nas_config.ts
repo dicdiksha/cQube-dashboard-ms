@@ -122,7 +122,7 @@ export const config = {
                 "metricFilterNeeded": false,
                 "indicator": "status",
                 "legend": {
-                    "title": "Implemented NAs"
+                    "title": "Implemented NAS"
                 },
                 "tooltipMetrics": [
                     {

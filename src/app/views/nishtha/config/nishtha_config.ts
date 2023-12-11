@@ -452,11 +452,11 @@ export const config = {
                             "tooltipLabel":"Target Achieved",
                         },
                         {
-                            "label": "Percentage of Incomplete Certifications",
+                            "label": "Percentage of Certifications Remaining to be Achieved",
                             "value": "incomplete_certificates_per",
                             "tooltipLabel":"Actual Certification",
                             "tooltipValue": "actual_certificates",
-                            "tooltipLabel1":"Total Excepted Certification",
+                            "tooltipLabel1":"Total Expected Certification",
                             "tooltipValue1":"expected_certificates"
                         }
                     ]
