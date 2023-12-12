@@ -4,6 +4,7 @@ import { CommonService } from 'src/app/core/services/common/common.service';
 import { RbacService } from 'src/app/core/services/rbac-service.service';
 import { config } from './config/pm_shri_config';
 import { environment } from 'src/environments/environment';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-pm-shri',
@@ -20,8 +21,11 @@ export class PmShriComponent implements OnInit {
   programName: any = 'pm_shri';
   bigNumberMetrics: any = [];
   NVSK: boolean = true;
+//   url:string = 'https://g120d41e0b7eddc-vskdevdb.adb.ap-mumbai-1.oraclecloudapps.com/ords/r/vskdev/udise/home?session=110658119291029';
+  url:string = 'https://g120d41e0b7eddc-vskdatabase.adb.ap-mumbai-1.oraclecloudapps.com/ords/r/pmshri/pm-shri/home?session=213816915034277';
+  urlSafe: SafeResourceUrl;
 
-  constructor(private route: ActivatedRoute, private _rbacService: RbacService, private _commonService: CommonService) {
+  constructor(private route: ActivatedRoute, private sanitizer: DomSanitizer, private _rbacService: RbacService, private _commonService: CommonService) {
     this.route.queryParams.subscribe((param: any) => {
         this.tabIndex = param.tab ? Number(param.tab) : 0;
     })
@@ -46,6 +50,7 @@ export class PmShriComponent implements OnInit {
   }
 
   ngOnInit(): void {
+	this.urlSafe = this.sanitizer.bypassSecurityTrustResourceUrl(this.url);
     this._commonService.getMetaData(this.programName).subscribe()
   }
 
