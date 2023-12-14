@@ -166,6 +166,29 @@ export const config = {
             }
         }
     },
+    summary_metrics: {
+         "filters": [
+            {
+                "name": "National",
+                "hierarchyLevel": "0",
+                "actions": {
+                    "queries": {
+                        "bigNumber1": `select sum(sum) as total_schools from datasets.pm_poshan_category_Daily_state0district0categorypm 
+                        where category_name = 'total_schools'`,
+                        "bigNumber2": "select count(distinct state_id) as total_states from datasets.pm_poshan_started_state where sum > 0"
+                    },
+                    "level": "state"
+                }
+            },
+        ],
+        "options": {
+            "bigNumber": {
+                "title": ['Total Schools', 'Total States'],
+                "valueSuffix": ['', ''],
+                "property": ['total_schools', 'total_states']
+            }
+        }
+    },
     pmposhan_metrics: {
         "label": "District Wise Progress Status",
         "filters": [
@@ -175,9 +198,9 @@ export const config = {
                 "actions": {
                     "queries": {
                         "bigNumber1": "select sum(sum) as total_schools from datasets.pm_poshan_category_value_daily_categorypm where category_name = 'total_schools'",
-                        "bigNumber2": "select sum(sum) as total_meals_served from datasets.pm_poshan_total_meals_served_daily_district",
+                        "bigNumber2": "select sum(sum) as total_meals_served from datasets.pm_poshan_meal_served_Daily_district",
                         "bigNumber3": "",
-                        "bigNumber4": "select count(distinct state_id) as total_states from datasets.pm_poshan_started_state where sum > 0",
+                        "bigNumber4": "select count(distinct state_id) as total_states from datasets.pm_poshan_meal_served_Daily_district where sum > 0",
                     },
                     "level": "state"
                 }
@@ -190,8 +213,8 @@ export const config = {
                 "actions": {
                     "queries": {
                         "bigNumber1": "select sum(sum) as total_schools from datasets.pm_poshan_category_value_categorypm where category_name = 'total_schools'",
-                        "bigNumber2": "select sum(sum) as total_meals_served from datasets.pm_poshan_total_meals_served_daily_district",
-                        "bigNumber3": "select count(distinct(district_id)) as total_districts from datasets.pm_poshan_total_meals_served_daily_district",
+                        "bigNumber2": "select sum(sum) as total_meals_served from datasets.pm_poshan_meal_served_Daily_district",
+                        "bigNumber3": "select count(distinct(district_id)) as total_districts from datasets.pm_poshan_meal_served_Daily_district",
                         "bigNumber4": "",
                     },
                     "level": "district"
