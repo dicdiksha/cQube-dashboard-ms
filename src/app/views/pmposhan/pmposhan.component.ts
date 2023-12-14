@@ -4,6 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { CommonService } from 'src/app/core/services/common/common.service';
 import { RbacService } from 'src/app/core/services/rbac-service.service';
 import { config } from './config/pmposhan_config';
+import { environment } from 'src/environments/environment';
 
 @Component({
     selector: 'app-pmposhan',
@@ -18,7 +19,7 @@ export class PmPoshanComponent implements OnInit {
     tabs: any = [];
     programName = 'pmPoshan'
     bigNumberMetrics: any = [];
-    
+    NVSK: boolean = true;
 constructor(private route: ActivatedRoute, private _rbacService: RbacService, private _commonService: CommonService) { 
     this.route.queryParams.subscribe((param: any) => {
         this.tabIndex = param.tab ? Number(param.tab) : 0;
@@ -38,6 +39,11 @@ constructor(private route: ActivatedRoute, private _rbacService: RbacService, pr
         return true
         })
     })
+
+    if(environment.config === 'VSK') {
+        this.NVSK = false
+    }
+
     }
 
     ngOnInit(): void {
@@ -72,6 +78,12 @@ constructor(private route: ActivatedRoute, private _rbacService: RbacService, pr
 
     importBigNumberMetrics(bigNumberMetric: any) {
         this.bigNumberMetrics[bigNumberMetric.ind] = bigNumberMetric.data
+    }
+
+    getMetricsArray() {
+      return this.bigNumberMetrics.filter((data) => {
+        return data.averagePercentage !== null || data.averagePercentage !== undefined
+      }) 
     }
 
 }

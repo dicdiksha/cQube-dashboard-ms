@@ -91,14 +91,6 @@ export class ImplementationStatusTabComponent implements OnInit {
         }
     }
 
-    importBigNumberMetrics(bigNumberMetric: any) {
-        this.bigNumberMetrics[bigNumberMetric.ind] = bigNumberMetric.data
-    }
-
-    getMetricsArray() {
-      return this.bigNumberMetrics.filter((data) => {
-        return data.averagePercentage !== null || data.averagePercentage !== undefined
-      }) 
-    }
+   
 }
 

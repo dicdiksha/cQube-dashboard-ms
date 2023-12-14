@@ -9,7 +9,14 @@
         </div>
     </div>
 </div>
-
+<div class="row-wrapper grid grid-cols-5 gap-4" *ngIf="NVSK">
+    <div class="col-span-2 xmd:col-span-1  bignumber-container" id="bignumber1"
+        *ngFor="let bigNumberData of getMetricsArray(); let index = index">
+        <div *ngIf="checkReport('pmposhan_metrics', 'bigNumber'+(index+1))">
+            <app-big-number [bigNumberReportData]="bigNumberData"></app-big-number>
+        </div>
+    </div>
+</div>
 <div class="custom-tab-group-wrapper">
     <mat-tab-group [selectedIndex]="tabIndex" mat-align-tabs="start" animationDuration="0ms"
         (selectedTabChange)="onTabChanged($event)" appFullScreen>
