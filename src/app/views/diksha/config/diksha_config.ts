@@ -520,7 +520,7 @@ export const config = {
             "actions": {
                 "queries": {
                     "bigNumber1": "339000",
-                    "bigNumber2": "select sum(sum) as total_etbs from datasets.diksha_total_energized_textbooks_state",
+                    "bigNumber2": "select count(*) as total_etbs from dimensions.textbookdiksha",
                     },
                 "level": "state"
             }
@@ -544,7 +544,7 @@ export const config = {
                 "actions": {
                     "queries": {
                         "bigNumber1": "select count(distinct state_id) as total_states from datasets.diksha_energized_textbooks_state where sum > 0",
-                        "bigNumber2": "select sum(sum) as total_etbs from datasets.diksha_total_energized_textbooks_state",
+                        "bigNumber2": "select count(*) as total_etbs from dimensions.textbookdiksha",
                         "bigNumber3": "1.07",
                         "bigNumber4": "3.39",
                          "bigNumber5": "select (sum(sum)) as total_time_spent from datasets.diksha_totalplays_bm9wanljxyeydndkywrr"
