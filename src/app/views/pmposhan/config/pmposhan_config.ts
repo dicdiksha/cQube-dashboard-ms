@@ -200,9 +200,9 @@ export const config = {
                         "bigNumber1": "select count(distinct state_id) as total_states from datasets.pm_poshan_started_state where sum > 0",
                         "bigNumber2": `select sum(sum) as total_schools from datasets.pm_poshan_category_daily_state0categorypm 
                         where category_name = 'total_schools'`,                     
-                        "bigNumber3": "select sum(sum) as total_meals_served from datasets.pm_poshan_meal_served_Daily_district",
-                        "bigNumber4":"select round(cast(sum(t1.sum) / sum(t2.sum) as numeric) * 100, 2) as school_meal_served from datasets.pm_poshan_total_schools_meals_served_daily_district t1 join datasets.pm_poshan_category_qak2ldjgag5jmhn0yxrl t2 on t1.district_id = t2.district_id where t2.category_name = 'total_schools'",
-                        "bigNumber5":"select round(cast(sum(t1.sum) / sum(t2.sum) as numeric) * 100, 2) as meal_served from datasets.pm_poshan_meal_served_daily_district t1 join datasets.pm_poshan_category_qak2ldjgag5jmhn0yxrl t2 on t1.district_id = t2.district_id where t2.category_name = 'meals_enrolled'"
+                        "bigNumber3": "select sum(sum) as total_meals_served from datasets.pm_poshan_total_meals_served_daily_district",
+                        "bigNumber4":"select round(cast(sum(t1.sum) / sum(t2.sum) as numeric) * 100, 2) as total_school_meal_served_percent from datasets.pm_poshan_total_schools_meals_served_daily_district t1 join datasets.pm_poshan_category_qak2ldjgag5jmhn0yxrl t2 on t1.district_id = t2.district_id where t2.category_name = 'total_schools'",
+                        "bigNumber5":"select round(cast(sum(t1.sum) / sum(t2.sum) as numeric) * 100, 2) as meal_served_percent from datasets.pm_poshan_total_meals_served_daily_district t1 join datasets.pm_poshan_category_qak2ldjgag5jmhn0yxrl t2 on t1.district_id = t2.district_id where t2.category_name = 'meals_enrolled'"
                        },
                     "level": "state"
                 }
@@ -213,14 +213,14 @@ export const config = {
                 "valueProp": "state_id",
                 "hierarchyLevel": "1",
                 "actions": {
-                    "queries": {
-                        "bigNumber1": "select count(distinct state_id) as total_states from datasets.pm_poshan_started_state where sum > 0",
-                        "bigNumber2": `select sum(sum) as total_schools from datasets.pm_poshan_category_daily_state0categorypm 
-                        where category_name = 'total_schools'`,                     
-                        "bigNumber3": "select sum(sum) as total_meals_served from datasets.pm_poshan_meal_served_Daily_district",
-                        "bigNumber4":"select round(cast(sum(t1.sum) / sum(t2.sum) as numeric) * 100, 2) as school_meal_served from datasets.pm_poshan_total_schools_meals_served_daily_district t1 join datasets.pm_poshan_category_qak2ldjgag5jmhn0yxrl t2 on t1.district_id = t2.district_id where t2.category_name = 'total_schools'",
-                        "bigNumber5":"select round(cast(sum(t1.sum) / sum(t2.sum) as numeric) * 100, 2) as meal_served from datasets.pm_poshan_meal_served_daily_district t1 join datasets.pm_poshan_category_qak2ldjgag5jmhn0yxrl t2 on t1.district_id = t2.district_id where t2.category_name = 'meals_enrolled'"
-                       },
+                    "queries": { 
+                    "bigNumber1": "select count(distinct state_id) as total_states from datasets.pm_poshan_started_state where sum > 0",
+                    "bigNumber2": `select sum(sum) as total_schools from datasets.pm_poshan_category_daily_state0categorypm 
+                    where category_name = 'total_schools'`,                     
+                    "bigNumber3": "select sum(sum) as total_meals_served from datasets.pm_poshan_total_meals_served_daily_district",
+                    "bigNumber4":"select round(cast(sum(t1.sum) / sum(t2.sum) as numeric) * 100, 2) as total_school_meal_served_percent from datasets.pm_poshan_total_schools_meals_served_daily_district t1 join datasets.pm_poshan_category_qak2ldjgag5jmhn0yxrl t2 on t1.district_id = t2.district_id where t2.category_name = 'total_schools'",
+                    "bigNumber5":"select round(cast(sum(t1.sum) / sum(t2.sum) as numeric) * 100, 2) as meal_served_percent from datasets.pm_poshan_total_meals_served_daily_district t1 join datasets.pm_poshan_category_qak2ldjgag5jmhn0yxrl t2 on t1.district_id = t2.district_id where t2.category_name = 'meals_enrolled'"
+                    },
                     "level": "district"
                 }
             },
@@ -229,7 +229,7 @@ export const config = {
             "bigNumber": {
                 "title": ['Total States/UTs Participating','Total Schools','Total Meals Served','% Schools meals served (Reported)','% Meals served (Reported)'],
                 "valueSuffix": ['','','','%','%'],
-                "property": ['total_states','total_schools','total_meals_served','school_meal_served','meal_served']
+                "property": ['total_states','total_schools','total_meals_served','total_school_meal_served_percent','meal_served_percent']
             }
         }
     }
