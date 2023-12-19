@@ -34,7 +34,7 @@ export const config = {
                 "metricFilterNeeded": false,
                 "indicator": "status",
                 "legend": {
-                    "title": "NCERT Quizes Started"
+                    "title": "NCERT Quizzes Started"
                 },
                 "tooltipMetrics": [
                     {
@@ -43,7 +43,7 @@ export const config = {
                         "valueSuffix": "\n"
                     },
                     {
-                        "valuePrefix": "NCERT Quizes Started :",
+                        "valuePrefix": "NCERT Quizzes Started :",
                         "value": "status",
                         "valueSuffix": "\n"
                     }
