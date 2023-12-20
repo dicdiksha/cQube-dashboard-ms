@@ -52,7 +52,8 @@ export const programFolderNames = {
   quiz:'quiz',
   microImprovement:'microImprovement',
   pmShri: 'pm_shri',
-  nipunBharat: 'nipun-bharat'
+  nipunBharat: 'nipun-bharat',
+  prashast: 'prashast'
 }
 
 export const stateProgramsFolderNames = {
@@ -70,5 +71,6 @@ export const stateProgramsFolderNames = {
   quiz:'',
   microImprovement:'',
   pmShri: '',
-  nipunBharat: ''
+  nipunBharat: '',
+  prashast: ''
 }

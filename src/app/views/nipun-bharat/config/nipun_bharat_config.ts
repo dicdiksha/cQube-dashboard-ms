@@ -228,52 +228,52 @@ export const config = {
         }
     },
     summary_metrics: {
-            "filters": [
-            {
-                "name": "National",
-                "hierarchyLevel": "0",
-                "actions": {
-                    "queries": {
-                        "bigNumber1": "select sum(sum) as total_learning_sessions from datasets.nipun_bharat_totallearningsessions_grade0subject",
-                        "bigNumber2": "select sum(count) as total_content from datasets.nipun_bharat_total_no_of_learning_sessions_grade",
-                      },
-                    "level": "state"
-                }
-            },
-        ],
-        "options": {
-            "bigNumber": {
-                "title": ['Total Learning Sessions','Total Content'],
-                "valueSuffix": ['',''],
-                "property": ['total_learning_sessions','total_content']
-          
+        "filters": [
+        {
+            "name": "National",
+            "hierarchyLevel": "0",
+            "actions": {
+                "queries": {
+                    "bigNumber1": "select dm.metric_value as total_learning_sessions from datasets.dashboard_mainmetrics dm where  dm.program_id='nib' and dm.metric_name ='Total Learning Sessions' and dm.metric_type ='Key Metric'",
+                    "bigNumber2": "select dm.metric_value as total_content from datasets.dashboard_mainmetrics dm where  dm.program_id='nib' and dm.metric_name ='Total Content' and dm.metric_type ='Key Metric'",
+                  },
+                "level": "state"
             }
-        }
-    },
-    nipun_bharat_metrics: {
-            "filters": [
-            {
-                "name": "National",
-                "labelProp": "state_name",
-                "valueProp": "state_id",
-                "hierarchyLevel": "0",
-                "actions": {
-                    "queries": {
-                        "bigNumber1": "select sum(sum) as total_los_covered from datasets.nipun_bharat_los_covered_textbooknipun",
-                        "bigNumber2": "select count(*) as total_digital_books from datasets.nipun_bharat_total_los_textbooknipun",
-                        "bigNumber3": "select sum(count) as total_content from datasets.nipun_bharat_total_no_of_learning_sessions_grade",
-                        "bigNumber4": "select sum(sum) as total_learning_sessions from datasets.nipun_bharat_totallearningsessions_grade0subject",
-                        },
-                    "level": "state"
-                }
-            },
-        ],
-        "options": {
-            "bigNumber": {
-                "title": ['Total Learning Outcomes (LOs) Covered','Total Digital Books','Total Content','Total Learning Sessions' ],
-                "valueSuffix": ['','','',''],
-                "property": ['total_los_covered','total_digital_books','total_content','total_learning_sessions']
-            }
+        },
+    ],
+    "options": {
+        "bigNumber": {
+            "title": ['Total Learning Sessions','Total Content'],
+            "valueSuffix": ['L', ''],
+            "property": ['total_learning_sessions','total_content']
+      
         }
     }
+},
+nipun_bharat_metrics: {
+        "filters": [
+        {
+            "name": "National",
+            "labelProp": "state_name",
+            "valueProp": "state_id",
+            "hierarchyLevel": "0",
+            "actions": {
+                "queries": {
+                    "bigNumber1": "select sum(sum) as total_los_covered from datasets.nipun_bharat_los_covered_textbooknipun",
+                    "bigNumber2": "select count(*) as total_digital_books from datasets.nipun_bharat_total_los_textbooknipun",
+                    "bigNumber3": "select dm.metric_value as total_content from datasets.dashboard_mainmetrics dm where  dm.program_id='nib' and dm.metric_name ='Total Content' and dm.metric_type ='Vanity Metric'",
+                    "bigNumber4": "select dm.metric_value as total_learning_sessions from datasets.dashboard_mainmetrics dm where  dm.program_id='nib' and dm.metric_name ='Total Learning Sessions' and dm.metric_type ='Vanity Metric'",
+                    },
+                "level": "state"
+            }
+        },
+    ],
+    "options": {
+        "bigNumber": {
+            "title": ['Total Learning Outcomes (LOs) Covered','Total Digital Books','Total Content','Total Learning Sessions' ],
+            "valueSuffix": ['', '','','L'],
+            "property": ['total_los_covered','total_digital_books','total_content','total_learning_sessions']
+        }
+    }
+}
 }

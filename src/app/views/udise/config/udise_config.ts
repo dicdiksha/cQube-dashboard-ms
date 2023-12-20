@@ -182,8 +182,8 @@ export const config = {
                 "hierarchyLevel": "0",
                 "actions": {
                     "queries": {
-                        "bigNumber1": `select 15.1 as total_school_surveyed from datasets.udise_category_state0categoryudise`,
-                        "bigNumber2": "select 97 as total_teachers from datasets.udise_category_state0categoryudise"
+                        "bigNumber1": "select dm.metric_value as total_school_surveyed from datasets.dashboard_mainmetrics dm where  dm.program_id='udise' and dm.metric_name ='Total Schools Surveyed' and dm.metric_type ='Key Metric'",
+                        "bigNumber2": "select dm.metric_value as total_teachers from datasets.dashboard_mainmetrics dm where  dm.program_id='udise' and dm.metric_name ='Total Teachers' and dm.metric_type ='Key Metric'",
                     },
                     "level": "state"
                 }
@@ -205,14 +205,14 @@ export const config = {
                 "hierarchyLevel": "0",
                 "actions": {
                     "queries": {
-                        "bigNumber1": "select sum(sum) as total_students from datasets.udise_no_of_students_state",
-                        "bigNumber2": "select round(cast (avg(sum) as numeric),2) as ptr from datasets.udise_category_state0categoryudise where category_name = 'ptr'",
-                        "bigNumber3": "select round(cast (avg(avg) as numeric),2) as schs_having_electricity from datasets.udise_category_state0categoryudise where category_name = '%_schools_having_electricity'",
-                        "bigNumber4": "select round(cast (avg(avg) as numeric),2) as schs_having_library from datasets.udise_category_state0categoryudise where category_name = '%_schools_having_library'",
-                        "bigNumber5": "select round(cast (avg(avg) as numeric),2) as schs_with_toilet from datasets.udise_category_state0categoryudise where category_name = '%_schools_having_toilet'",
-                        "bigNumber6": "select round(cast (avg(avg) as numeric),2) as schs_having_water from datasets.udise_category_state0categoryudise where category_name = '%_schools_having_drinking_water'",
-                        "bigNumber7": "select round(cast (avg(avg) as numeric),2) as schs_with_ramp from datasets.udise_category_state0categoryudise where category_name = '%_schools_with_ramp'",
-                    },
+                        "bigNumber1": "select dm.metric_value as total_students from datasets.dashboard_mainmetrics dm where  dm.program_id='udise' and dm.metric_name ='Total Students' and dm.metric_type ='Vanity Metric'",
+                        "bigNumber2": "select dm.metric_value as ptr from datasets.dashboard_mainmetrics dm where  dm.program_id='udise' and dm.metric_name ='PTR' and dm.metric_type ='Vanity Metric'",
+                        "bigNumber3": "select dm.metric_value as schs_having_electricity from datasets.dashboard_mainmetrics dm where  dm.program_id='udise' and dm.metric_name ='% schools with electricity connection' and dm.metric_type ='Vanity Metric'",
+                        "bigNumber4": "select dm.metric_value as schs_having_library  from datasets.dashboard_mainmetrics dm where  dm.program_id='udise' and dm.metric_name ='% schools with Library' and dm.metric_type ='Vanity Metric'",
+                        "bigNumber5": "select dm.metric_value as schs_with_toilet  from datasets.dashboard_mainmetrics dm where  dm.program_id='udise' and dm.metric_name ='% schools with toilets' and dm.metric_type ='Vanity Metric'",
+                        "bigNumber6": "select dm.metric_value as schs_having_water from datasets.dashboard_mainmetrics dm where  dm.program_id='udise' and dm.metric_name ='% schools with drinking water' and dm.metric_type ='Vanity Metric'",
+                        "bigNumber7": "select dm.metric_value as schs_with_ramp from datasets.dashboard_mainmetrics dm where  dm.program_id='udise' and dm.metric_name ='% schools with ramp' and dm.metric_type ='Vanity Metric'",
+                     },
                     "level": "state"
                 }
             },
@@ -223,13 +223,13 @@ export const config = {
                 "hierarchyLevel": "1",
                 "actions": {
                     "queries": {
-                        "bigNumber1": "select sum(sum) as total_students from datasets.udise_no_of_students_district",
-                        "bigNumber2": "select round(cast (avg(sum) as numeric),2) as ptr from datasets.udise_category_district0categoryudise where category_name = 'ptr'",
-                        "bigNumber3": "select round(cast (avg(avg) as numeric),2) as schs_having_electricity from datasets.udise_category_district0categoryudise where category_name = '%_schools_having_electricity'",
-                        "bigNumber4": "select round(cast (avg(avg) as numeric),2) as schs_having_library from datasets.udise_category_district0categoryudise where category_name = '%_schools_having_library'",
-                        "bigNumber5": "select round(cast (avg(avg) as numeric),2) as schs_with_toilet from datasets.udise_category_district0categoryudise where category_name = '%_schools_having_toilet'",
-                        "bigNumber6": "select round(cast (avg(avg) as numeric),2) as schs_having_water from datasets.udise_category_district0categoryudise where category_name = '%_schools_having_drinking_water'",
-                        "bigNumber7": "select round(cast (avg(avg) as numeric),2) as schs_with_ramp from datasets.udise_category_district0categoryudise where category_name = '%_schools_with_ramp'",
+                        "bigNumber1": "select dm.metric_value as total_students from datasets.dashboard_mainmetrics dm where  dm.program_id='udise' and dm.metric_name ='Total Students' and dm.metric_type ='Vanity Metric'",
+                        "bigNumber2": "select dm.metric_value as ptr from datasets.dashboard_mainmetrics dm where  dm.program_id='udise' and dm.metric_name ='PTR' and dm.metric_type ='Vanity Metric'",
+                        "bigNumber3": "select dm.metric_value as schs_having_electricity from datasets.dashboard_mainmetrics dm where  dm.program_id='udise' and dm.metric_name ='% schools with electricity connection' and dm.metric_type ='Vanity Metric'",
+                        "bigNumber4": "select dm.metric_value as schs_having_library  from datasets.dashboard_mainmetrics dm where  dm.program_id='udise' and dm.metric_name ='% schools with Library' and dm.metric_type ='Vanity Metric'",
+                        "bigNumber5": "select dm.metric_value as schs_with_toilet  from datasets.dashboard_mainmetrics dm where  dm.program_id='udise' and dm.metric_name ='% schools with toilets' and dm.metric_type ='Vanity Metric'",
+                        "bigNumber6": "select dm.metric_value as schs_having_water from datasets.dashboard_mainmetrics dm where  dm.program_id='udise' and dm.metric_name ='% schools with drinking water' and dm.metric_type ='Vanity Metric'",
+                        "bigNumber7": "select dm.metric_value as schs_with_ramp from datasets.dashboard_mainmetrics dm where  dm.program_id='udise' and dm.metric_name ='% schools with ramp' and dm.metric_type ='Vanity Metric'",
                     },
                     "level": "district"
                 }
@@ -238,7 +238,7 @@ export const config = {
         "options": {
             "bigNumber": {
                 "title": ['Total Students', 'PTR', '% Schools with electricity connection', '% Schools with Library', '% Schools with toilets', '% Schools with drinking water', '% Schools with ramp'],
-                "valueSuffix": ['', '', '%', '%', '%', '%', '%'],
+                "valueSuffix": ['Cr', '', '%', '%', '%', '%', '%'],
                 "property": ['total_students', 'ptr', 'schs_having_electricity', 'schs_having_library', 'schs_with_toilet', 'schs_having_water', 'schs_with_ramp']
             }
         }

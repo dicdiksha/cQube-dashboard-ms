@@ -1,43 +1,57 @@
 import { Component, OnInit } from '@angular/core';
 import { RbacService } from 'src/app/core/services/rbac-service.service';
 import { config } from 'src/app/views/prashast/config/prashast_config';
-
+import { CommonService } from 'src/app/core/services/common/common.service';
+import { ActivatedRoute } from '@angular/router';
 @Component({
   selector: 'app-prashast',
   templateUrl: './prashast.component.html',
   styleUrls: ['./prashast.component.scss']
+  
 })
 export class PrashastComponent implements OnInit {
   rbacDetails: any;
   bigNumberMetrics: any = [];
+  programName: any = 'prashast';
 
-  constructor(private _rbacService: RbacService) { 
+  constructor(private route: ActivatedRoute, private _rbacService: RbacService, private _commonService: CommonService) { 
+    
     this._rbacService.getRbacDetails().subscribe((rbacDetails: any) => {
-      this.rbacDetails = rbacDetails;
+        this.rbacDetails = rbacDetails;
     })
-  }
+    
+    }
 
-  ngOnInit(): void {
-    this.bigNumberMetrics = [{ "valueSuffix": "", "reportName": "Total Registered Users", "averagePercentage": 699041 }, 
-    { "valueSuffix": "", "reportName": "Total Students", "averagePercentage": 3418908 }, 
-    { "valueSuffix": "", "reportName": "Total Schools", "averagePercentage": 259611 }, 
-    { "valueSuffix": "", "reportName": "Total Teachers", "averagePercentage": 429170 },
-    { "valueSuffix": "", "reportName": "Total Principal/Headmaster", "averagePercentage": 188249 }, 
-    { "valueSuffix": "", "reportName": "Total Special Educators", "averagePercentage": 15683 }, 
-    { "valueSuffix": "", "reportName": "Total Survey Part-1", "averagePercentage": 2051823 }, 
-    { "valueSuffix": "", "reportName": "Total Survey Part-2", "averagePercentage": 1675259 }, ]
+    ngOnInit(): void {
+        this._commonService.getMetaData(this.programName).subscribe()
+    }
 
-  }
+    ngAfterViewInit(): void {
+    
+    }
+
 
   checkReport(key: string, reportType: string): Boolean {
-    let reportConfig = config;
-    let flag = false;
-    reportConfig[key]?.filters?.forEach((filter: any) => {
-      if (Number(filter.hierarchyLevel) === Number(this.rbacDetails?.role) && Object.keys(filter?.actions?.queries).includes(reportType)) {
-        flag = true
-      }
-    })
-    return flag
+    debugger
+      let reportConfig = config;
+      let flag = false;
+      reportConfig[key]?.filters?.forEach((filter: any) => {
+          if (Number(filter.hierarchyLevel) === Number(this.rbacDetails?.role) && Object.keys(filter?.actions?.queries).includes(reportType)) {
+          flag = true
+          }
+      })
+      return flag
+    }
+
+  importBigNumberMetrics(bigNumberMetric: any) {
+    debugger
+      this.bigNumberMetrics[bigNumberMetric.ind] = bigNumberMetric.data
   }
 
+  getMetricsArray() {
+    return this.bigNumberMetrics.filter((data) => {
+      debugger
+      return data.averagePercentage !== null || data.averagePercentage !== undefined
+    }) 
+  }
 }

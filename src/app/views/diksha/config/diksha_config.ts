@@ -519,9 +519,9 @@ export const config = {
             "hierarchyLevel": "0",
             "actions": {
                 "queries": {
-                    "bigNumber1": "339000",
-                    "bigNumber2": "select count(*) as total_etbs from dimensions.textbookdiksha",
-                    },
+                    "bigNumber1": `select dm.metric_value as total_content from datasets.dashboard_mainmetrics dm where  dm.program_id='etb' and dm.metric_name ='Total Content' and dm.metric_type ='Key Metric'`,
+                    "bigNumber2": "select distinct CONCAT(dm.metric_value, dm.metric_value_suffix) as total_etbs from datasets.dashboard_mainmetrics dm where  dm.program_id='etb' and dm.metric_name ='Total ETBs' and dm.metric_type ='Key Metric'"
+                },
                 "level": "state"
             }
         },
@@ -529,9 +529,8 @@ export const config = {
     "options": {
         "bigNumber": {
             "title": ['Total Content','Total ETBs'],
-            "property": ['', 'total_etbs'],
-            "valueSuffix": ['', ''],
-            "formatter": { locale: 'en-IN', format: "short" }
+            "property": ['total_content', 'total_etbs'],
+            "valueSuffix": ['L', '']
         }
     }
 },

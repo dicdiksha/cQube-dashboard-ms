@@ -290,6 +290,28 @@ export const config = {
         }
     },
 
+    summary_metrics: {
+        "filters": [
+        {
+            "name": "National",
+            "hierarchyLevel": "0",
+            "actions": {
+                "queries": {
+                    "bigNumber1": "select dm.metric_value as total_school_served from datasets.dashboard_mainmetrics dm where  dm.program_id='nas' and dm.metric_name ='Total Schools Surveyed' and dm.metric_type ='Key Metric'",
+                    "bigNumber2": "select dm.metric_value as total_student_served from datasets.dashboard_mainmetrics dm where  dm.program_id='nas' and dm.metric_name ='Total Students Surveyed' and dm.metric_type ='Key Metric'",
+                    },
+                "level": "state"
+            }
+        },
+    ],
+    "options": {
+        "bigNumber": {
+            "title": ['Total Schools Surveyed','Total Students Surveyed'],
+            "valueSuffix": ['L', 'L'],
+            "property": ['total_school_served', 'total_student_served'],          
+        }
+    }
+},
     nas_metrics: {
         "label": "District Wise Performance",
         "filters": [
@@ -298,12 +320,10 @@ export const config = {
                 "hierarchyLevel": "0",
                 "actions": {
                     "queries": {
-                        "bigNumber1": "select sum(a.sum) as total_schools from datasets.nas_schools_fmfdoxoqhb0gdwdvfaya as a",
-                        "bigNumber2": "select sum(a.sum) as students_surveyed from datasets.nas_students_surveyed_state as a",
-                        "bigNumber3": "select sum(sum) as total_teachers from datasets.nas_no_of_teachers_state",
-                        "bigNumber4": "select count(distinct state_id) as total_states from datasets.nas_started_state where sum > 0",
-                        "bigNumber5": "select count(lo_code) as total_lo_tested from datasets.nas_no_of_teachers_lonas"
-                    },
+                        "bigNumber1": "select count(distinct state_id) as total_states from datasets.nas_started_state where sum > 0",
+                        "bigNumber2": "select count(lo_code) as total_lo_tested from datasets.nas_no_of_teachers_lonas",
+                        "bigNumber3": "select dm.metric_value as total_teachers from datasets.dashboard_mainmetrics dm where  dm.program_id='nas' and dm.metric_name ='Total Teachers' and dm.metric_type ='Vanity Metric'"
+                        },
                     "level": "State"
                 }
             },
@@ -312,19 +332,19 @@ export const config = {
                 "hierarchyLevel": "1",
                 "actions": {
                     "queries": {
-                        "bigNumber1": "select sum(a.sum) as total_schools from datasets.nas_schools_fmfdoxoqhb0gdwdvfaya as a",
-                        "bigNumber2": "select sum(a.sum) as students_surveyed from datasets.nas_students_surveyed_state as a",
-                        "bigNumber3": "select sum(a.sum) as total_teachers from datasets.nas_teachers_bnfzbxamehcadbehbxqg as a",
-                    },
+                        "bigNumber1": "select count(distinct state_id) as total_states from datasets.nas_started_state where sum > 0",
+                        "bigNumber2": "select count(lo_code) as total_lo_tested from datasets.nas_no_of_teachers_lonas",
+                        "bigNumber3": "select dm.metric_value as total_teachers from datasets.dashboard_mainmetrics dm where  dm.program_id='nas' and dm.metric_name ='Total Teachers' and dm.metric_type ='Vanity Metric'"
+                        },
                     "level": "district"
                 }
             },
         ],
         "options": {
             "bigNumber": {
-                "title": ['Total Schools', 'Total Students Surveyed', 'Total Teachers', 'Total States/UTs Participating', 'Total LOs Tested'],
-                "valueSuffix": ['', '', '', '', ''],
-                "property": ['total_schools', 'students_surveyed', 'total_teachers', 'total_states', 'total_lo_tested']
+                "title": ['Total States/UTs Participating', 'Total LOs Tested', 'Total Teachers'],
+				"valueSuffix": ['', '',''],
+                "property": ['total_states', 'total_lo_tested','total_teachers']
             }
         }
     },
