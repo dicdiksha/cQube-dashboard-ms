@@ -520,7 +520,7 @@ export const config = {
             "actions": {
                 "queries": {
                     "bigNumber1": `select dm.metric_value as total_content from datasets.dashboard_mainmetrics dm where  dm.program_id='etb' and dm.metric_name ='Total Content' and dm.metric_type ='Key Metric'`,
-                    "bigNumber2": "select distinct CONCAT(dm.metric_value, dm.metric_value_suffix) as total_etbs from datasets.dashboard_mainmetrics dm where  dm.program_id='etb' and dm.metric_name ='Total ETBs' and dm.metric_type ='Key Metric'"
+                    "bigNumber2": "select dm.metric_value  as total_etbs from datasets.dashboard_mainmetrics dm where  dm.program_id='etb' and dm.metric_name ='Total ETBs' and dm.metric_type ='Key Metric'"
                 },
                 "level": "state"
             }
@@ -542,12 +542,12 @@ export const config = {
                 "hierarchyLevel": "0",
                 "actions": {
                     "queries": {
-                        "bigNumber1": "select count(distinct state_id) as total_states from datasets.diksha_energized_textbooks_state where sum > 0",
-                        "bigNumber2": "select count(*) as total_etbs from dimensions.textbookdiksha",
-                        "bigNumber3": "1.07",
-                        "bigNumber4": "3.39",
-                         "bigNumber5": "select (sum(sum)) as total_time_spent from datasets.diksha_totalplays_bm9wanljxyeydndkywrr"
-                    },
+                        "bigNumber1": "select dm.metric_value  as total_states from datasets.dashboard_mainmetrics dm where  dm.program_id='etb' and dm.metric_name ='Total States/UTs Participating' and dm.metric_type ='Vanity Metric'",
+                        "bigNumber2": "select dm.metric_value  as total_etbs from datasets.dashboard_mainmetrics dm where  dm.program_id='etb' and dm.metric_name ='Total ETBs' and dm.metric_type ='Vanity Metric'",
+                        "bigNumber3": "select dm.metric_value  as total_qr_codes from datasets.dashboard_mainmetrics dm where  dm.program_id='etb' and dm.metric_name ='Total QR Codes' and dm.metric_type ='Vanity Metric'",
+                        "bigNumber4": "select dm.metric_value  as total_content from datasets.dashboard_mainmetrics dm where  dm.program_id='etb' and dm.metric_name ='Total Content' and dm.metric_type ='Vanity Metric'",
+                        "bigNumber5": "select dm.metric_value  as total_time_spent from datasets.dashboard_mainmetrics dm where  dm.program_id='etb' and dm.metric_name ='Total Time Spent (mins)'"
+                   },
                     "level": "district"
                 }
             },
@@ -558,11 +558,12 @@ export const config = {
                 "hierarchyLevel": "1",
                 "actions": {
                     "queries": {
-                        "bigNumber1": "select sum(sum) as total_etbs from datasets.diksha_resourcecount_textbookdiksha0grade0subject0medium",
-                        "bigNumber2": "select sum(sum) as total_qr_codes from datasets.diksha_totalqrcodes_textbookdiksha0grade0subject0medium",
-                        "bigNumber3": "select round(cast(avg(sum) as numeric),2) as content_coverage from datasets.diksha_qrcoverage_textbookdiksha0grade0subject0medium",
-                        "bigNumber4": ""
-                    },
+                        "bigNumber1": "select dm.metric_value  as total_states from datasets.dashboard_mainmetrics dm where  dm.program_id='etb' and dm.metric_name ='Total States/UTs Participating' and dm.metric_type ='Vanity Metric'",
+                        "bigNumber2": "select dm.metric_value  as total_etbs from datasets.dashboard_mainmetrics dm where  dm.program_id='etb' and dm.metric_name ='Total ETBs' and dm.metric_type ='Vanity Metric'",
+                        "bigNumber3": "select dm.metric_value  as total_qr_codes from datasets.dashboard_mainmetrics dm where  dm.program_id='etb' and dm.metric_name ='Total QR Codes' and dm.metric_type ='Vanity Metric'",
+                        "bigNumber4": "select dm.metric_value  as total_content from datasets.dashboard_mainmetrics dm where  dm.program_id='etb' and dm.metric_name ='Total Content' and dm.metric_type ='Vanity Metric'",
+                        "bigNumber5": "select dm.metric_value  as total_time_spent from datasets.dashboard_mainmetrics dm where  dm.program_id='etb' and dm.metric_name ='Total Time Spent (mins)'"
+                   },
                     "level": "district"
                 }
             },
@@ -570,8 +571,9 @@ export const config = {
         "options": {
             "bigNumber": [ {
                 "title": ['Total States/UTs Participating', 'Total ETBs', 'Total QR Codes', 'Total Content', 'Total Time Spent (mins)'],
-                "valueSuffix": ['', '', 'L', 'L', ''],
-                "property": ['total_states', 'total_etbs', '', '', 'total_time_spent']
+                "property": ['total_states', 'total_etbs', 'total_qr_codes', 'total_content', 'total_time_spent'],
+                "valueSuffix": ['', '', 'L', 'L', 'Cr+']
+                
             }]
         }
     }
