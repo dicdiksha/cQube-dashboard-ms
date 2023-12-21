@@ -87,7 +87,7 @@ export const config = {
                     {
                         "queries":
                         {
-                            "map": "select t2.district_name, t1.district_id ,latitude, longitude, t1.category_name,round(cast(sum(t1.sum) as numeric ),2) as percentage from datasets.udise_category_district0categoryudise as t1 join dimensions.district as t2 on t2.district_id = t1.district_id group by t1.district_id, t2.district_name,t1.category_name, latitude, longitude"
+                            "map": "select t2.district_name, t1.district_id ,latitude, longitude, t1.category_name,round(cast(sum(t1.sum) as numeric ),2) as percentage from datasets.udise_category_district0categoryudise as t1 join dimensions.district as t2 on t2.district_id = t1.district_id group by t1.district_id, t2.district_name,t1.category_name, latitude, longitude order by t1.category_name"
                         },
                         "level": "state",
                         "nextLevel": "district"
@@ -100,7 +100,7 @@ export const config = {
                     {
                         "queries":
                         {
-                            "map": "select t2.district_name, t1.district_id , t1.category_name,latitude, longitude,round(cast(sum(t1.sum) as numeric ),2) as percentage from datasets.udise_category_district0categoryudise as t1 join dimensions.district as t2 on t2.district_id = t1.district_id group by t1.district_id, t2.district_name,t1.category_name, latitude, longitude"
+                            "map": "select t2.district_name, t1.district_id , t1.category_name,latitude, longitude,round(cast(sum(t1.sum) as numeric ),2) as percentage from datasets.udise_category_district0categoryudise as t1 join dimensions.district as t2 on t2.district_id = t1.district_id group by t1.district_id, t2.district_name,t1.category_name, latitude, longitude order by t1.category_name"
                         },
                         "level": "district",
                         "nextLevel": "block"
@@ -254,7 +254,7 @@ export const config = {
                     {
                         "queries":
                         {
-                            "map": "select t2.latitude, t2.longitude, t2.state_name, t1.state_id, t1.state_id as level, t1.category_name, sum(t1.sum) as category_value, round(cast(sum(t1.avg) as numeric ),2) as percentage from datasets.udise_category_state0categoryudise as t1 join dimensions.state as t2 on t2.state_id = t1.state_id group by t1.state_id, t2.state_name,t1.category_name, t2.latitude, t2.longitude"
+                            "map": "select t2.latitude, t2.longitude, t2.state_name, t1.state_id, t1.state_id as level, t1.category_name, sum(t1.sum) as category_value, round(cast(sum(t1.avg) as numeric ),2) as percentage from datasets.udise_category_state0categoryudise as t1 join dimensions.state as t2 on t2.state_id = t1.state_id group by t1.state_id, t2.state_name,t1.category_name, t2.latitude, t2.longitude order by t1.category_name"
                         },
                         "level": "state",
                         "nextLevel": "district"
@@ -267,7 +267,7 @@ export const config = {
                     {
                         "queries":
                         {
-                            "map": "select t2.district_name, t1.district_id, t1.district_id as level , t1.category_name,latitude, longitude,round(cast(sum(t1.sum) as numeric ),2) as percentage from datasets.udise_category_district0categoryudise as t1 join dimensions.district as t2 on t2.district_id = t1.district_id where t2.state_id = {state_id} group by t1.district_id, t2.district_name,t1.category_name, latitude, longitude"
+                            "map": "select t2.district_name, t1.district_id, t1.district_id as level , t1.category_name,latitude, longitude,round(cast(sum(t1.sum) as numeric ),2) as percentage from datasets.udise_category_district0categoryudise as t1 join dimensions.district as t2 on t2.district_id = t1.district_id where t2.state_id = {state_id} group by t1.district_id, t2.district_name,t1.category_name, latitude, longitude order by t1.category_name"
                         },
                         "level": "district",
                         "nextLevel": "block"

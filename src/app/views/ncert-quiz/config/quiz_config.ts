@@ -7,7 +7,7 @@ export const config = {
             "id": "",
             "labelProp": "quiz_name",
             "valueProp": "quiz_name",
-            "query": "SELECT quiz_name FROM dimensions.quizncert ORDER BY id ASC "
+            "query": "SELECT distinct quiz_name FROM dimensions.quizncert ORDER BY quiz_name ASC "
         },
     ],
     implementation_status: {

@@ -201,8 +201,8 @@ export const config = {
                         "bigNumber2": `select sum(sum) as total_schools from datasets.pm_poshan_category_daily_state0categorypm 
                         where category_name = 'total_schools'`,                     
                         "bigNumber3": "select sum(sum) as total_meals_served from datasets.pm_poshan_total_meals_served_daily_district",
-                        "bigNumber4":"select round(cast(sum(t1.sum) / sum(t2.sum) as numeric) * 100, 2) as total_school_meal_served_percent from datasets.pm_poshan_total_schools_meals_served_daily_district t1 join datasets.pm_poshan_category_qak2ldjgag5jmhn0yxrl t2 on t1.district_id = t2.district_id where t2.category_name = 'total_schools'",
-                        "bigNumber5":"select round(cast(sum(t1.sum) / sum(t2.sum) as numeric) * 100, 2) as meal_served_percent from datasets.pm_poshan_total_meals_served_daily_district t1 join datasets.pm_poshan_category_qak2ldjgag5jmhn0yxrl t2 on t1.district_id = t2.district_id where t2.category_name = 'meals_enrolled'"
+                        "bigNumber4":"select round(cast(avg(t1.sum) / avg(t2.sum) as numeric) * 100, 2) as total_school_meal_served_percent from datasets.pm_poshan_total_schools_meals_served_daily_district t1 join datasets.pm_poshan_category_qak2ldjgag5jmhn0yxrl t2 on t1.district_id = t2.district_id where t2.category_name = 'total_schools'",
+                        "bigNumber5":"select round(cast(avg(t1.sum) / avg(t2.sum) as numeric) * 100, 2) as meal_served_percent from datasets.pm_poshan_total_meals_served_daily_district t1 join datasets.pm_poshan_category_qak2ldjgag5jmhn0yxrl t2 on t1.district_id = t2.district_id where t2.category_name = 'meals_enrolled'"
                        },
                     "level": "state"
                 }
@@ -218,8 +218,8 @@ export const config = {
                     "bigNumber2": `select sum(sum) as total_schools from datasets.pm_poshan_category_daily_state0categorypm 
                     where category_name = 'total_schools'`,                     
                     "bigNumber3": "select sum(sum) as total_meals_served from datasets.pm_poshan_total_meals_served_daily_district",
-                    "bigNumber4":"select round(cast(sum(t1.sum) / sum(t2.sum) as numeric) * 100, 2) as total_school_meal_served_percent from datasets.pm_poshan_total_schools_meals_served_daily_district t1 join datasets.pm_poshan_category_qak2ldjgag5jmhn0yxrl t2 on t1.district_id = t2.district_id where t2.category_name = 'total_schools'",
-                    "bigNumber5":"select round(cast(sum(t1.sum) / sum(t2.sum) as numeric) * 100, 2) as meal_served_percent from datasets.pm_poshan_total_meals_served_daily_district t1 join datasets.pm_poshan_category_qak2ldjgag5jmhn0yxrl t2 on t1.district_id = t2.district_id where t2.category_name = 'meals_enrolled'"
+                    "bigNumber4":"select round(avg(sum(t1.sum) / avg(t2.sum) as numeric) * 100, 2) as total_school_meal_served_percent from datasets.pm_poshan_total_schools_meals_served_daily_district t1 join datasets.pm_poshan_category_qak2ldjgag5jmhn0yxrl t2 on t1.district_id = t2.district_id where t2.category_name = 'total_schools'",
+                    "bigNumber5":"select round(avg(sum(t1.sum) / avg(t2.sum) as numeric) * 100, 2) as meal_served_percent from datasets.pm_poshan_total_meals_served_daily_district t1 join datasets.pm_poshan_category_qak2ldjgag5jmhn0yxrl t2 on t1.district_id = t2.district_id where t2.category_name = 'meals_enrolled'"
                     },
                     "level": "district"
                 }

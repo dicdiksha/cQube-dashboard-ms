@@ -20,14 +20,14 @@
             <app-implementation-status-tab [bigNumberMetrics]="bigNumberMetrics" *ngIf="selectedTabLabel === 'Implementation Status'"></app-implementation-status-tab>
         </mat-tab>
 
-        <mat-tab label='District Wise Performance' *ngIf="tabs.includes('District Wise Performance')">
-            <app-district-wise-performance-tab [bigNumberMetrics]="bigNumberMetrics"
-                *ngIf="selectedTabLabel === 'District Wise Performance'"></app-district-wise-performance-tab>
-        </mat-tab>
-
         <mat-tab label='State Wise Performance' *ngIf="tabs.includes('State Wise Performance') && NVSK">
             <app-state-wise-performance-tab
                 *ngIf="selectedTabLabel === 'State Wise Performance'"></app-state-wise-performance-tab>
+        </mat-tab>
+
+        <mat-tab label='District Wise Performance' *ngIf="tabs.includes('District Wise Performance')">
+            <app-district-wise-performance-tab [bigNumberMetrics]="bigNumberMetrics"
+                *ngIf="selectedTabLabel === 'District Wise Performance'"></app-district-wise-performance-tab>
         </mat-tab>
 
         <mat-tab label='Correlation' *ngIf="tabs.includes('Correlation')">

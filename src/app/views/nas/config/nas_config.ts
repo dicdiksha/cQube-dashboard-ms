@@ -343,7 +343,7 @@ export const config = {
         "options": {
             "bigNumber": {
                 "title": ['Total States/UTs Participating', 'Total LOs Tested', 'Total Teachers'],
-				"valueSuffix": ['', '',''],
+				"valueSuffix": ['', '','L'],
                 "property": ['total_states', 'total_lo_tested','total_teachers']
             }
         }
