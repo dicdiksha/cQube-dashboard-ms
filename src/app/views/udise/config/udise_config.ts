@@ -59,7 +59,7 @@ export const config = {
                 "metricFilterNeeded": false,
                 "indicator": "status",
                 "legend": {
-                    "title": "Implemented Udise"
+                    "title": "Implemented UDISE+"
                 },
                 "tooltipMetrics": [
                     {
@@ -68,7 +68,7 @@ export const config = {
                         "valueSuffix": "\n"
                     },
                     {
-                        "valuePrefix": "Implemented NAS: ",
+                        "valuePrefix": "Implemented UDISE+: ",
                         "value": "status",
                         "valueSuffix": "\n"
                     }
@@ -284,7 +284,7 @@ export const config = {
             {
                 "indicatorType": "percent",
                 "metricLabelProp": "category_name",
-                "metricValueProp": "category_value",
+                "metricValueProp": "percentage",
                 "groupByColumn": "level",
                 "indicator": "percentage",
                 "metricFilterNeeded": true,

@@ -68,7 +68,7 @@ export const config = {
                 {
                     "queries":
                     {
-                        "map": "select t2.district_name, t1.district_id ,latitude, longitude, t1.category_name,round(cast(sum(t1.sum) as numeric ),2) as performance from datasets.pgi_category_district0categorypgi as t1 join dimensions.district as t2 on t2.district_id = t1.district_id group by t1.district_id, t2.district_name,t1.category_name, latitude, longitude"
+                        "map": "select t2.district_name, t1.district_id ,latitude, longitude, t1.category_name,round(cast(sum(t1.sum) as numeric ),2) as performance from datasets.pgi_category_district0categorypgi as t1 join dimensions.district as t2 on t2.district_id = t1.district_id group by t1.district_id, t2.district_name,t1.category_name, latitude, longitude order by t1.category_name"
                     },
                     "level": "state",
                     "nextLevel": "district"
@@ -80,7 +80,7 @@ export const config = {
                 "actions": {
                     "queries":
                     {
-                        "map": "select category_name, d.district_name,latitude, longitude,t.district_id, cast(sum(t.sum) as numeric) as performance FROM datasets.pgi_category_district0categorypgi as t join dimensions.district as d on t.district_id = d.district_id group by t.district_id, d.district_name, category_name, latitude, longitude"
+                        "map": "select category_name, d.district_name,latitude, longitude,t.district_id, cast(sum(t.sum) as numeric) as performance FROM datasets.pgi_category_district0categorypgi as t join dimensions.district as d on t.district_id = d.district_id group by t.district_id, d.district_name, category_name, latitude, longitude order by category_name"
                     },
                     "level": "district",
                     "nextLevel": "block"
@@ -189,7 +189,7 @@ export const config = {
                 "actions": {
                     "queries":
                     {
-                        "map": "SELECT s.latitude, s.longitude, s.state_name, s.state_id, s.state_id as level, c.category_name, sum(c.sum) as performance FROM dimensions.state s JOIN datasets.pgi_category_state0categorypgi c ON s.state_id = c.state_id GROUP BY s.state_id,s.state_name, c.category_name, s.latitude, s.longitude"
+                        "map": "SELECT s.latitude, s.longitude, s.state_name, s.state_id, s.state_id as level, c.category_name, sum(c.sum) as performance FROM dimensions.state s JOIN datasets.pgi_category_state0categorypgi c ON s.state_id = c.state_id GROUP BY s.state_id,s.state_name, c.category_name, s.latitude, s.longitude  order by c.category_name"
                     },
                     "level": "state",
                     "nextLevel": "district"
@@ -201,7 +201,7 @@ export const config = {
                 "actions": {
                     "queries":
                     {
-                        "map": "select category_name, d.district_name,latitude, longitude,t.district_id, t.district_id as level, cast(sum(t.sum) as numeric) as performance FROM datasets.pgi_category_district0categorypgi as t join dimensions.district as d on t.district_id = d.district_id where d.state_id = {state_id} group by t.district_id, d.district_name, category_name, latitude, longitude"
+                        "map": "select category_name, d.district_name,latitude, longitude,t.district_id, t.district_id as level, cast(sum(t.sum) as numeric) as performance FROM datasets.pgi_category_district0categorypgi as t join dimensions.district as d on t.district_id = d.district_id where d.state_id = {state_id} group by t.district_id, d.district_name, category_name, latitude, longitude order by category_name"
                     },
                     "level": "district",
                     "nextLevel": "block"
