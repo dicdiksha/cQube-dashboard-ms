@@ -37,7 +37,7 @@ export class LayoutComponent implements OnInit {
   // @ViewChild('darkModeToggle') darkModeToggle: ElementRef;
   @ViewChild('contentElement', { static: true }) contentElementRef!: ElementRef;
   // @ViewChild('darkModeToggle') darkModeToggle: ElementRef;
-  tempPrashast: any = { "label": "PRASHAST", "path": "/prashast", "icon": "prashast.png", "isSelected": false }
+  //tempPrashast: any = { "label": "PRASHAST", "path": "/prashast", "icon": "prashast.png", "isSelected": false }
   constructor(private readonly _commonService: CommonService, private renderer: Renderer2, private _router: Router, private rbac: RbacService, private _authService: AuthenticationService,
     private pdfDownloadService: PdfDownloadService, private cdr: ChangeDetectorRef) {
 
@@ -117,7 +117,7 @@ export class LayoutComponent implements OnInit {
 
       });
       //Prashast static changes
-      this.menu.push(this.tempPrashast);
+      //this.menu.push(this.tempPrashast);
       //Prashast static changes
       
       this.fetchMenu();
