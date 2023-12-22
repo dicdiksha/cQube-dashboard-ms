@@ -9,6 +9,14 @@ export const config = {
             "query": "select category_name from dimensions.categoryudise"
         },
         {
+            "label": "District Wise Performance",
+            "name": "State",
+            "labelProp": "state_name",
+            "valueProp": "state_id",
+            "id": "state_name",
+            "query": "select state_id,state_name from dimensions.state order by state_name"
+        },
+        {
             "label": "State Wise Performance",
             "name": "Metric",
             "labelProp": "category_name",
@@ -120,7 +128,7 @@ export const config = {
                 "metricValueProp": "percentage",
                 "groupByColumn": "district_id",
                 "metricFilterNeeded": true,
-                "legend": { "title": "District Wise Performance" },
+                "legend": { "title": "District Wise Performance " },
                 "tooltipMetrics": [
                     {
                         "valuePrefix": "District Name: ",
@@ -288,7 +296,7 @@ export const config = {
                 "groupByColumn": "level",
                 "indicator": "percentage",
                 "metricFilterNeeded": true,
-                "legend": { "title": "District Wise Performance" },
+                "legend": { "title": "State Wise Performance " },
                 "drillDownConfig": {
                     "enableDrillDown": true,
                     "allowedLevels": [0]
