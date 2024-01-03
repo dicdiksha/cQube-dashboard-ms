@@ -88,10 +88,7 @@ export class DetailedStatusComponent implements OnInit {
       })
 
       filterValues.forEach((filterParams: any) => {
-        if(filterParams.id ==='quarter' &&  (filterParams.value === null || filterParams.value === undefined )){
-          filterParams.value='2021-22 Q4';
-        }
-        query = parseFilterToQuery(query, filterParams)
+         query = parseFilterToQuery(query, filterParams)
       });
 
       if (query && key === 'table') {

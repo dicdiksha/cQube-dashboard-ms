@@ -44,7 +44,11 @@ export class BigNumberComponent implements OnInit, OnChanges {
   }
 
   formatNumber(input: any) {
-    return formatNumberForReport(Number(input), this.formatter);
+     if(isNaN(input)){
+      return input;
+      }else{
+        return formatNumberForReport(Number(input), this.formatter);
+      }
   }
 
 }

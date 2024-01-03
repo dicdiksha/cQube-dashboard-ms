@@ -297,8 +297,8 @@ export const config = {
             "hierarchyLevel": "0",
             "actions": {
                 "queries": {
-                    "bigNumber1": "select dm.metric_value as total_school_served from datasets.dashboard_mainmetrics dm where  dm.program_id='nas' and dm.metric_name ='Total Schools Surveyed' and dm.metric_type ='Key Metric'",
-                    "bigNumber2": "select dm.metric_value as total_student_served from datasets.dashboard_mainmetrics dm where  dm.program_id='nas' and dm.metric_name ='Total Students Surveyed' and dm.metric_type ='Key Metric'",
+                    "bigNumber1": "select dm.metric_value as total_school_served from dimensions.mainmetrics dm where  dm.program_id='nas' and dm.metric_name ='Total Schools Surveyed' and dm.metric_type ='Key Metric'",
+                    "bigNumber2": "select dm.metric_value as total_student_served from dimensions.mainmetrics dm where  dm.program_id='nas' and dm.metric_name ='Total Students Surveyed' and dm.metric_type ='Key Metric'",
                     },
                 "level": "state"
             }
@@ -307,7 +307,8 @@ export const config = {
     "options": {
         "bigNumber": {
             "title": ['Total Schools Surveyed','Total Students Surveyed'],
-            "valueSuffix": ['L', 'L'],
+            //"valueSuffix": ['L', 'L'],
+            "valueSuffix": ['', ''],
             "property": ['total_school_served', 'total_student_served'],          
         }
     }
@@ -322,7 +323,7 @@ export const config = {
                     "queries": {
                         "bigNumber1": "select count(distinct state_id) as total_states from datasets.nas_started_state where sum > 0",
                         "bigNumber2": "select count(lo_code) as total_lo_tested from datasets.nas_no_of_teachers_lonas",
-                        "bigNumber3": "select dm.metric_value as total_teachers from datasets.dashboard_mainmetrics dm where  dm.program_id='nas' and dm.metric_name ='Total Teachers' and dm.metric_type ='Vanity Metric'"
+                        "bigNumber3": "select dm.metric_value as total_teachers from dimensions.mainmetrics dm where  dm.program_id='nas' and dm.metric_name ='Total Teachers' and dm.metric_type ='Vanity Metric'"
                         },
                     "level": "State"
                 }
@@ -334,7 +335,7 @@ export const config = {
                     "queries": {
                         "bigNumber1": "select count(distinct state_id) as total_states from datasets.nas_started_state where sum > 0",
                         "bigNumber2": "select count(lo_code) as total_lo_tested from datasets.nas_no_of_teachers_lonas",
-                        "bigNumber3": "select dm.metric_value as total_teachers from datasets.dashboard_mainmetrics dm where  dm.program_id='nas' and dm.metric_name ='Total Teachers' and dm.metric_type ='Vanity Metric'"
+                        "bigNumber3": "select dm.metric_value as total_teachers from dimensions.mainmetrics dm where  dm.program_id='nas' and dm.metric_name ='Total Teachers' and dm.metric_type ='Vanity Metric'"
                         },
                     "level": "district"
                 }
@@ -343,7 +344,8 @@ export const config = {
         "options": {
             "bigNumber": {
                 "title": ['Total States/UTs Participating', 'Total LOs Tested', 'Total Teachers'],
-				"valueSuffix": ['', '','L'],
+				//"valueSuffix": ['', '','L'],
+                "valueSuffix": ['', '',''],
                 "property": ['total_states', 'total_lo_tested','total_teachers']
             }
         }

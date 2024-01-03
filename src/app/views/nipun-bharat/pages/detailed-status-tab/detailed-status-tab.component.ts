@@ -46,7 +46,7 @@ export class DetailedStatusTabComponent implements OnInit {
 
   async ngAfterViewInit(): Promise<void> {
     if (this.hasCommonFilters) {
-      this.filters = await this._wrapperService.constructCommonFilters(config.filters, this.tabLabel ,undefined,undefined,true);
+      this.filters = await this._wrapperService.constructCommonFilters(config.filters, this.tabLabel);
       this.detailedStatus?.getReportData({ filterValues: this.filters.map((filter) => { return { ...filter, columnName: filter.valueProp, filterType: filter.id } }) });
 
     }

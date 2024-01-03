@@ -1,7 +1,10 @@
 import { environment } from "src/environments/environment";
+import { FormControl } from '@angular/forms';
 
-function formatNumber(number: number, formatter: any): string {
-
+function formatNumber(number: number, formatter: any): string {    
+    if(isNaN(number)){
+        return `${number}`;
+    }
     if (formatter.format === 'short') {
         if (formatter.locale === 'en-IN') {
             if (number < 1000) {

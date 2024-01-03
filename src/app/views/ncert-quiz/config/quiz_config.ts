@@ -176,7 +176,7 @@ export const config = {
             "hierarchyLevel": "0",
             "actions": {
                 "queries": {
-                    "bigNumber1": "select dm.metric_value as total_enrolment from datasets.dashboard_mainmetrics dm where  dm.program_id='quiz' and dm.metric_name ='Total Enrolment' and dm.metric_type ='Key Metric';",
+                    "bigNumber1": "select dm.metric_value as total_enrolment from dimensions.mainmetrics dm where  dm.program_id='quiz' and dm.metric_name ='Total Enrolment' and dm.metric_type ='Key Metric';",
                     "bigNumber2": "select sum(sum) as total_certification from datasets.ncert_quiz_certificate_issued_100_perc_completion_medium",
                     },
                 "level": "state"
@@ -204,7 +204,7 @@ export const config = {
                         "bigNumber1": "select count(distinct quiz_name) as total_quizzes from dimensions.quizncert",
                         "bigNumber2": "select count(distinct medium) as total_medium from datasets.ncert_quiz_completion_perc_medium;",
                         "bigNumber3": "select count(distinct state_id) as total_states from datasets.ncert_quiz_started_state where sum > 0;",
-                        "bigNumber4": "select dm.metric_value as total_enrolment from datasets.dashboard_mainmetrics dm where  dm.program_id='quiz' and dm.metric_name ='Total Enrolment' and dm.metric_type ='Vanity Metric';",
+                        "bigNumber4": "select dm.metric_value as total_enrolment from dimensions.mainmetrics dm where  dm.program_id='quiz' and dm.metric_name ='Total Enrolment' and dm.metric_type ='Vanity Metric';",
                         "bigNumber5": "select sum(sum) as total_certification from datasets.ncert_quiz_certificate_issued_100_perc_completion_medium",
                     },
                     "level": "state"

@@ -519,8 +519,8 @@ export const config = {
             "hierarchyLevel": "0",
             "actions": {
                 "queries": {
-                    "bigNumber1": `select dm.metric_value as total_content from datasets.dashboard_mainmetrics dm where  dm.program_id='etb' and dm.metric_name ='Total Content' and dm.metric_type ='Key Metric'`,
-                    "bigNumber2": "select dm.metric_value  as total_etbs from datasets.dashboard_mainmetrics dm where  dm.program_id='etb' and dm.metric_name ='Total ETBs' and dm.metric_type ='Key Metric'"
+                    "bigNumber1": `select dm.metric_value as total_content from dimensions.mainmetrics dm where  dm.program_id='etb' and dm.metric_name ='Total Content' and dm.metric_type ='Key Metric'`,
+                    "bigNumber2": "select dm.metric_value  as total_etbs from dimensions.mainmetrics dm where  dm.program_id='etb' and dm.metric_name ='Total ETBs' and dm.metric_type ='Key Metric'"
                 },
                 "level": "state"
             }
@@ -530,7 +530,7 @@ export const config = {
         "bigNumber": {
             "title": ['Total Content','Total ETBs'],
             "property": ['total_content', 'total_etbs'],
-            "valueSuffix": ['L', '']
+            "valueSuffix": ['', '']
         }
     }
 },
@@ -542,11 +542,11 @@ export const config = {
                 "hierarchyLevel": "0",
                 "actions": {
                     "queries": {
-                        "bigNumber1": "select dm.metric_value  as total_states from datasets.dashboard_mainmetrics dm where  dm.program_id='etb' and dm.metric_name ='Total States/UTs Participating' and dm.metric_type ='Vanity Metric'",
-                        "bigNumber2": "select dm.metric_value  as total_etbs from datasets.dashboard_mainmetrics dm where  dm.program_id='etb' and dm.metric_name ='Total ETBs' and dm.metric_type ='Vanity Metric'",
-                        "bigNumber3": "select dm.metric_value  as total_qr_codes from datasets.dashboard_mainmetrics dm where  dm.program_id='etb' and dm.metric_name ='Total QR Codes' and dm.metric_type ='Vanity Metric'",
-                        "bigNumber4": "select dm.metric_value  as total_content from datasets.dashboard_mainmetrics dm where  dm.program_id='etb' and dm.metric_name ='Total Content' and dm.metric_type ='Vanity Metric'",
-                        "bigNumber5": "select dm.metric_value  as total_time_spent from datasets.dashboard_mainmetrics dm where  dm.program_id='etb' and dm.metric_name ='Total Time Spent (mins)'"
+                        "bigNumber1": "select dm.metric_value  as total_states from dimensions.mainmetrics dm where  dm.program_id='etb' and dm.metric_name ='Total States/UTs Participating' and dm.metric_type ='Vanity Metric'",
+                        "bigNumber2": "select dm.metric_value  as total_etbs from dimensions.mainmetrics dm where  dm.program_id='etb' and dm.metric_name ='Total ETBs' and dm.metric_type ='Vanity Metric'",
+                        "bigNumber3": "select dm.metric_value  as total_qr_codes from dimensions.mainmetrics dm where  dm.program_id='etb' and dm.metric_name ='Total QR Codes' and dm.metric_type ='Vanity Metric'",
+                        "bigNumber4": "select dm.metric_value  as total_content from dimensions.mainmetrics dm where  dm.program_id='etb' and dm.metric_name ='Total Content' and dm.metric_type ='Vanity Metric'",
+                        "bigNumber5": "select dm.metric_value  as total_time_spent from dimensions.mainmetrics dm where  dm.program_id='etb' and dm.metric_name ='Total Time Spent (mins)'"
                    },
                     "level": "district"
                 }
@@ -558,12 +558,12 @@ export const config = {
                 "hierarchyLevel": "1",
                 "actions": {
                     "queries": {
-                        "bigNumber1": "select dm.metric_value  as total_states from datasets.dashboard_mainmetrics dm where  dm.program_id='etb' and dm.metric_name ='Total States/UTs Participating' and dm.metric_type ='Vanity Metric'",
-                        "bigNumber2": "select dm.metric_value  as total_etbs from datasets.dashboard_mainmetrics dm where  dm.program_id='etb' and dm.metric_name ='Total ETBs' and dm.metric_type ='Vanity Metric'",
-                        "bigNumber3": "select dm.metric_value  as total_qr_codes from datasets.dashboard_mainmetrics dm where  dm.program_id='etb' and dm.metric_name ='Total QR Codes' and dm.metric_type ='Vanity Metric'",
-                        "bigNumber4": "select dm.metric_value  as total_content from datasets.dashboard_mainmetrics dm where  dm.program_id='etb' and dm.metric_name ='Total Content' and dm.metric_type ='Vanity Metric'",
-                        "bigNumber5": "select dm.metric_value  as total_time_spent from datasets.dashboard_mainmetrics dm where  dm.program_id='etb' and dm.metric_name ='Total Time Spent (mins)'"
-                   },
+                        "bigNumber1": "select dm.metric_value  as total_states from dimensions.mainmetrics dm where  dm.program_id='etb' and dm.metric_name ='Total States/UTs Participating' and dm.metric_type ='Vanity Metric'",
+                        "bigNumber2": "select dm.metric_value  as total_etbs from dimensions.mainmetrics dm where  dm.program_id='etb' and dm.metric_name ='Total ETBs' and dm.metric_type ='Vanity Metric'",
+                        "bigNumber3": "select dm.metric_value  as total_qr_codes from dimensions.mainmetrics dm where  dm.program_id='etb' and dm.metric_name ='Total QR Codes' and dm.metric_type ='Vanity Metric'",
+                        "bigNumber4": "select dm.metric_value  as total_content from dimensions.mainmetrics dm where  dm.program_id='etb' and dm.metric_name ='Total Content' and dm.metric_type ='Vanity Metric'",
+                        "bigNumber5": "select dm.metric_value  as total_time_spent from dimensions.mainmetrics dm where  dm.program_id='etb' and dm.metric_name ='Total Time Spent (mins)'"
+                       },
                     "level": "district"
                 }
             },
@@ -572,7 +572,7 @@ export const config = {
             "bigNumber": [ {
                 "title": ['Total States/UTs Participating', 'Total ETBs', 'Total QR Codes', 'Total Content', 'Total Time Spent (mins)'],
                 "property": ['total_states', 'total_etbs', 'total_qr_codes', 'total_content', 'total_time_spent'],
-                "valueSuffix": ['', '', 'L', 'L', 'Cr+']
+                "valueSuffix": ['', '', '', '', '']
                 
             }]
         }
