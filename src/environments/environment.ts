@@ -6,8 +6,8 @@ export const environment = {
   production: false,
   google_analytics_tracking_id: "UA-260554959-3",
   // apiURL: 'https://qr.staging.cqube.samagra.io',
-  // apiURL: 'http://localhost:3008',
-  'apiURL': 'https://vidyaskendra.diksha.gov.in/api/queryBuilder',
+  apiURL: 'http://localhost:3008',
+  // 'apiURL': 'https://vidyaskendra.diksha.gov.in/api/queryBuilder',
   stateCode: "NA",
   numberFormat: {
     reports: {
