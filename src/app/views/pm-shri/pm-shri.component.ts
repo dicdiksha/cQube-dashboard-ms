@@ -22,7 +22,7 @@ export class PmShriComponent implements OnInit {
   bigNumberMetrics: any = [];
   NVSK: boolean = true;
   //url:string = 'https://g120d41e0b7eddc-vskdevdb.adb.ap-mumbai-1.oraclecloudapps.com/ords/r/vskdev/udise/home?session=110658119291029';
-  url:string = 'https://g120d41e0b7eddc-vskdatabase.adb.ap-mumbai-1.oraclecloudapps.com/ords/r/pmshri/pm-shri/home';
+  url:string = 'https://g120d41e0b7eddc-vskdevdb.adb.ap-mumbai-1.oraclecloudapps.com/ords/r/vskdev/pm-shri';
   urlSafe: SafeResourceUrl;
 
   constructor(private route: ActivatedRoute, private sanitizer: DomSanitizer, private _rbacService: RbacService, private _commonService: CommonService) {
