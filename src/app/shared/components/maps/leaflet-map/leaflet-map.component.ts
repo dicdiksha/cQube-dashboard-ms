@@ -115,7 +115,7 @@ export class LeafletMapComponent implements OnInit, AfterViewInit, OnChanges {
       }
       else if (Number(lev) > 1 || this.hierarchyLevel > 1) {
         this.map?.removeLayer(this.layerGroup);
-        // await this.applyStateBorder();
+        await this.applyStateBorder();
         this.applyDistrictBorder();
         this.createMarkers(this.mapData);
       }
@@ -362,6 +362,7 @@ export class LeafletMapComponent implements OnInit, AfterViewInit, OnChanges {
     return new Promise(async (resolve, reject) => {
       try {
         const data = await this._mapService.getCountryGeoJSON();
+        console.log(data, 'data')
         const geoJSON = data.features.find(feature => {
           let state_code = feature.properties.state_code_2 || feature.properties.state_code;
           return state_code === this.rbacDetails.state;
@@ -376,13 +377,14 @@ export class LeafletMapComponent implements OnInit, AfterViewInit, OnChanges {
           //   dashArray: '0',
           //   fillOpacity: 1
           // },
-          color: "#6e6d6d",
+          data: data,
+          color: "blue",
           weight: 2,
           fillOpacity: 0,
           fontWeight: "bold"
         });
         this.stateGeoJSON.addTo(this.map);
-        resolve('State borders are applied successfully!');
+        resolve({ message: 'State borders are applied successfully!', data: this.stateGeoJSON });
       } catch (e) {
         reject(e);
       }
@@ -485,11 +487,54 @@ export class LeafletMapComponent implements OnInit, AfterViewInit, OnChanges {
     }
   }
 
-  createMarkers(mapData: any, prevValues?: any): void {
+  // new code for higlight marker according to geojosn 
+  async createMarkers(mapData: any, prevValues?: any): Promise<void> {
     let reportTypeIndicator = this.mapData?.options && this.mapData.options.reportIndicatorType ? this.mapData.options.reportIndicatorType : (typeof this.mapData.data[0].indicator === 'string') ? 'boolean' : 'value'
+
     mapData.data = mapData.data.filter(data => data.indicator !== undefined && data.indicator !== null)
+
+    console.log(mapData.data)
     if (mapData) {
+      // 
+      const mapdataArry = mapData.data
+
+      const stateBorderResult = await this.applyStateBorder();
+
+      const stateBorder = stateBorderResult.data.options.data
+      // console.log(mapdataArry, 'mapdataArry');
+      console.log(stateBorder.features, 'stateborder')
+      const newArray = [];
+      if (this.markers) {
+        this.markers.clearLayers();
+      }
+      this.markers = L.layerGroup().addTo(this.map);
+
+      mapdataArry.forEach(obj1 => {
+        console.log(obj1, 'obj1')
+        // Find the corresponding object in array2 based on state_id and state_code
+        // console.log(stateBorder.features.find(item => item.properties.state_code.toString() === obj1.state_id))
+        const obj2 = stateBorder.features.find(item => item.properties.state_code.toString() === obj1.state_id);
+        console.log(obj2)
+        // If a matching object is found, replace latitude and longitude
+        if (obj2) {
+          const updatedObject = {
+            ...obj1,
+            coordinates: obj2.geometry,
+
+
+          };
+          // Add the updated object to the new array
+          newArray.push(updatedObject);
+        } else {
+          // If no matching object is found, add the original object to the new array
+          newArray.push(obj1);
+        }
+      });
+      // Now, array1 has updated latitude and longitude for matching state_id and state_code
+      console.log(newArray,);
+      // 
       let min!: number, max!: number, values: any[] = [];
+      // % boolen=an {yes,NO}
       if (reportTypeIndicator === 'value' && !prevValues) {
         mapData.data.forEach((data: any, index: number) => {
           if (index === 0) {
@@ -550,104 +595,80 @@ export class LeafletMapComponent implements OnInit, AfterViewInit, OnChanges {
           idProp = 'cluster_id'
           break;
       }
-      mapData.data.forEach((data: any) => {
-        let re = new RegExp("_id$");
-        // let filterIds = {};
-        var id;
 
-
-        // Object.keys(data).forEach((prop: any) => {
-        //   // if(re.test(prop)){
-        //   //   idProp = prop;
-        //   //   return false;
-        //   // }
-        //   // return true;
-        //   // if (prop.match(re)) {
-        //   //   id = data[prop.match(re)?.input]
-        //   // filterIds = {
-        //   //   ...filterIds,
-        //   //   [prop.match(re).input]: data[prop.match(re)?.input]
-        //   // }
-        //   // }
-        //   id = data[idProp]
-        //   console.log(data[nameProp])
-        // })
-		let fillColor
-		if(String(data.program_status).toLowerCase() === "yes. implemented in only online mode"){
-          fillColor = "#29c0c2"
-		} else if(String(data.program_status).toLowerCase() === "yes. implemented in only face-to-face mode"){
-			fillColor = "#705000"
-		} else if(String(data.program_status).toLowerCase() === "no. not applicable"){
-			fillColor = "#fff400"
-		} else{
-          fillColor = this.getZoneColor(reportTypeIndicator, data.indicator, values)
-		}
-        let markerIcon = L.circleMarker([data.Latitude, data.Longitude], {
-          id: data[idProp],
-          name: data[nameProp],
-          hierarchyLevel: data.hierarchyLevel,
-          color: "gray",
-          // fillColor: this.getZoneColor(reportTypeIndicator, data.indicator >= 1 ? (max - min ? (data.indicator - min) / (max - min) * 100 : data.indicator) : -1),
-          fillColor: fillColor,
-          fillOpacity: 1,
-          strokeWeight: 0.01,
-          weight: 1
-        }).addTo(this.map);
-
-        markerIcon._path.id = StateCodes[Number(data.state_code)];
-
-        markerIcon.setRadius(5);
-
-        const popup = R.responsivePopup({
-          hasTip: false,
-          autoPan: true,
-          offset: [15, 20],
-        }).setContent(
-          data.tooltip
-        );
-
-        markerIcon.on("mouseover", (e: any) => {
-          e.target.openPopup();
-        });
-
-        markerIcon.on("mouseout", (e: any) => {
-          e.target.closePopup();
-        });
-
-        markerIcon.on("click", async (e: any) => {
-          // if (Number(lev) == 1) {
-          //   let stateGeoJSON = await this._mapService.getStateGeoJSON();
-
-          //   this.districtGeoJSON = stateGeoJSON.features.find(feature => {
-          //     return feature.properties['ID_2'] == e.target.options.id;
-          //   });
-          //   this.applyDrillDown({ id: e.target.options.id, hierarchyLevel: this.rbacDetails.role + 1, name: e.target.options.name })
-          // }
-          console.log(mapData?.options?.drillDownConfig?.allowedLevels.includes(level))
-          if (level < 4 && mapData?.options?.drillDownConfig?.enableDrillDown && mapData?.options?.drillDownConfig?.allowedLevels.includes(level)) {
-            console.log(mapData?.options?.drillDownConfig?.enableDrillDown)
-            this.applyDrillDown({ name: e.target.options.name, id: e.target.options.id, hierarchyLevel: this.drillDownLevel ? this.drillDownLevel + 1 : this.rbacDetails.role + 1 })
+      newArray.forEach((data: any) => {
+        // Create a GeoJSON object for the state.
+        console.log(data.coordinates.coordinates, data, 'data')
+        const stateGeoJSON = {
+          type: 'Feature',
+          geometry: {
+            type: data.coordinates.type,
+            coordinates: data.coordinates.coordinates
+          },
+          properties: {
+            state_id: data.state_id,
+            state_name: data.state_name
           }
-        })
+        };
+        // Determine the color of the state.
+        let fillColor;
+        if (String(data.program_status).toLowerCase() === "yes. implemented in only online mode") {
+          fillColor = "#29c0c2";
+        } else if (String(data.program_status).toLowerCase() === "yes. implemented in only face-to-face mode") {
+          fillColor = "#705000";
+        } else if (String(data.program_status).toLowerCase() === "no. not applicable") {
+          fillColor = "#fff400";
+        } else {
+          fillColor = this.getZoneColor(reportTypeIndicator, data.indicator, values);
+        }
+        // Create a GeoJSON layer for the state and add it to the map.
+        L.geoJSON(stateGeoJSON, {
+          style: {
+            color: "blue",
+            fillColor: fillColor,
+            fillOpacity: 1,
+            weight: 1
+          },
+          onEachFeature: (feature, layer) => {
+            layer.on({
+              mouseover: (e) => {
+                e.target.openPopup();
+              },
+              mouseout: (e) => {
+                e.target.closePopup();
+              },
+              click: async (e) => {
+                if (level < 4 && mapData?.options?.drillDownConfig?.enableDrillDown && mapData?.options?.drillDownConfig?.allowedLevels.includes(level)) {
+                  this.applyDrillDown({ name: e.target.options.name, id: e.target.options.id, hierarchyLevel: this.drillDownLevel ? this.drillDownLevel + 1 : this.rbacDetails.role + 1 });
+                }
+              }
+            });
 
-        markerIcon.addTo(this.map).bindPopup(popup, { closeButton: false });
+            const popup = R.responsivePopup({
+              hasTip: false,
+              autoPan: true,
+              offset: [15, 20],
+            }).setContent(data.tooltip);
 
-        this.markers.addLayer(markerIcon);
+            layer.bindPopup(popup, { closeButton: false });
+          }
+        }).addTo(this.markers);
       });
 
-      this.map.addLayer(this.markers);
+      // this.map.addLayer(this.markers);
       if (!prevValues) {
         if (this.config === 'VSK' || level > 0) {
-          if(level === 1) {
+          if (level === 1) {
             this.fitToStateBorder();
           }
           else {
             this.fitToMarkers()
           }
-          
+
         }
         else if (this.config === 'NVSK' && level === 0) {
           this.fitBoundsToCountryBorder();
+          this.applyStateBorder()
         }
         this.createLegend(reportTypeIndicator, this.mapData, values);
       }
@@ -671,6 +692,193 @@ export class LeafletMapComponent implements OnInit, AfterViewInit, OnChanges {
     }
   }
 
+  // old function circle marker
+  // createMarkers(mapData: any, prevValues?: any): void {
+  //   let reportTypeIndicator = this.mapData?.options && this.mapData.options.reportIndicatorType ? this.mapData.options.reportIndicatorType : (typeof this.mapData.data[0].indicator === 'string') ? 'boolean' : 'value'
+  //   mapData.data = mapData.data.filter(data => data.indicator !== undefined && data.indicator !== null)
+  //   if (mapData) {
+  //     let min!: number, max!: number, values: any[] = [];
+  //     if (reportTypeIndicator === 'value' && !prevValues) {
+  //       mapData.data.forEach((data: any, index: number) => {
+  //         if (index === 0) {
+  //           min = data.indicator;
+  //           max = data.indicator;
+  //           return;
+  //         }
+
+  //         min = min <= data.indicator ? min : data.indicator;
+  //         max = max >= data.indicator ? max : data.indicator;
+  //       });
+
+  //       let parts = 3;
+  //       max = max > 0 ? max : parts;
+  //       let range = max - min;
+
+  //       if (range == 0) {
+  //         values.push(min)
+  //       }
+  //       else {
+  //         let partSize = (range / parts % 1 === 0) ? range / parts : Number((range / parts).toFixed(0));
+  //         for (let i = 0; i < parts; i++) {
+  //           if (i === 0) {
+  //             values.push(max);
+  //           }
+  //           else {
+  //             let value = Number((max - partSize * i).toFixed(0));
+  //             values.push(value);
+  //           }
+  //         }
+
+  //         values.push(0);
+  //       }
+  //     } else if (reportTypeIndicator === 'percent') {
+  //       values = [100, 70, 40, 0];
+  //     }
+  //     else if (prevValues) {
+  //       values = prevValues
+  //     }
+  //     let level = this.drillDownLevel ? this.drillDownLevel : this.hierarchyLevel
+  //     var idProp;
+  //     var nameProp;
+  //     switch (Number(level)) {
+  //       case 0:
+  //         nameProp = 'state_name'
+  //         idProp = 'state_id'
+  //         break;
+  //       case 1:
+  //         nameProp = 'district_name'
+  //         idProp = 'district_id'
+  //         break;
+  //       case 2:
+  //         nameProp = 'block_name'
+  //         idProp = 'block_id'
+  //         break;
+  //       case 3:
+  //         nameProp = 'cluster_name'
+  //         idProp = 'cluster_id'
+  //         break;
+  //     }
+  //     mapData.data.forEach((data: any) => {
+  //       let re = new RegExp("_id$");
+  //       // let filterIds = {};
+  //       var id;
+
+
+  //       // Object.keys(data).forEach((prop: any) => {
+  //       //   // if(re.test(prop)){
+  //       //   //   idProp = prop;
+  //       //   //   return false;
+  //       //   // }
+  //       //   // return true;
+  //       //   // if (prop.match(re)) {
+  //       //   //   id = data[prop.match(re)?.input]
+  //       //   // filterIds = {
+  //       //   //   ...filterIds,
+  //       //   //   [prop.match(re).input]: data[prop.match(re)?.input]
+  //       //   // }
+  //       //   // }
+  //       //   id = data[idProp]
+  //       //   console.log(data[nameProp])
+  //       // })
+  // 	let fillColor
+  // 	if(String(data.program_status).toLowerCase() === "yes. implemented in only online mode"){
+  //         fillColor = "#29c0c2"
+  // 	} else if(String(data.program_status).toLowerCase() === "yes. implemented in only face-to-face mode"){
+  // 		fillColor = "#705000"
+  // 	} else if(String(data.program_status).toLowerCase() === "no. not applicable"){
+  // 		fillColor = "#fff400"
+  // 	} else{
+  //         fillColor = this.getZoneColor(reportTypeIndicator, data.indicator, values)
+  // 	}
+  //       let markerIcon = L.circleMarker([data.Latitude, data.Longitude], {
+  //         id: data[idProp],
+  //         name: data[nameProp],
+  //         hierarchyLevel: data.hierarchyLevel,
+  //         color: "gray",
+  //         // fillColor: this.getZoneColor(reportTypeIndicator, data.indicator >= 1 ? (max - min ? (data.indicator - min) / (max - min) * 100 : data.indicator) : -1),
+  //         fillColor: fillColor,
+  //         fillOpacity: 1,
+  //         strokeWeight: 0.01,
+  //         weight: 1
+  //       }).addTo(this.map);
+
+  //       markerIcon._path.id = StateCodes[Number(data.state_code)];
+
+  //       markerIcon.setRadius(5);
+
+  //       const popup = R.responsivePopup({
+  //         hasTip: false,
+  //         autoPan: true,
+  //         offset: [15, 20],
+  //       }).setContent(
+  //         data.tooltip
+  //       );
+
+  //       markerIcon.on("mouseover", (e: any) => {
+  //         e.target.openPopup();
+  //       });
+
+  //       markerIcon.on("mouseout", (e: any) => {
+  //         e.target.closePopup();
+  //       });
+
+  //       markerIcon.on("click", async (e: any) => {
+  //         // if (Number(lev) == 1) {
+  //         //   let stateGeoJSON = await this._mapService.getStateGeoJSON();
+
+  //         //   this.districtGeoJSON = stateGeoJSON.features.find(feature => {
+  //         //     return feature.properties['ID_2'] == e.target.options.id;
+  //         //   });
+  //         //   this.applyDrillDown({ id: e.target.options.id, hierarchyLevel: this.rbacDetails.role + 1, name: e.target.options.name })
+  //         // }
+  //         console.log(mapData?.options?.drillDownConfig?.allowedLevels.includes(level))
+  //         if (level < 4 && mapData?.options?.drillDownConfig?.enableDrillDown && mapData?.options?.drillDownConfig?.allowedLevels.includes(level)) {
+  //           console.log(mapData?.options?.drillDownConfig?.enableDrillDown)
+  //           this.applyDrillDown({ name: e.target.options.name, id: e.target.options.id, hierarchyLevel: this.drillDownLevel ? this.drillDownLevel + 1 : this.rbacDetails.role + 1 })
+  //         }
+  //       })
+
+  //       markerIcon.addTo(this.map).bindPopup(popup, { closeButton: false });
+
+  //       this.markers.addLayer(markerIcon);
+  //     });
+
+  //     this.map.addLayer(this.markers);
+  //     if (!prevValues) {
+  //       if (this.config === 'VSK' || level > 0) {
+  //         if(level === 1) {
+  //           this.fitToStateBorder();
+  //         }
+  //         else {
+  //           this.fitToMarkers()
+  //         }
+
+  //       }
+  //       else if (this.config === 'NVSK' && level === 0) {
+  //         this.fitBoundsToCountryBorder();
+  //       }
+  //       this.createLegend(reportTypeIndicator, this.mapData, values);
+  //     }
+  //     else if (prevValues && mapData?.data?.length === 0) {
+  //       const NotificationControl = L.Control.extend({
+  //         onAdd: function (map) {
+  //           const container = L.DomUtil.create('div', 'leaflet-notification');
+  //           container.innerHTML = 'No Data for selected legends !';
+  //           return container;
+  //         },
+
+  //         onRemove: function (map) {
+  //         }
+  //       });
+  //       const notificationControl = new NotificationControl({ position: 'topright' });
+  //       notificationControl.addTo(this.map);
+  //       setTimeout(() => {
+  //         notificationControl.remove()
+  //       }, 2000);
+  //     }
+  //   }
+  // }
+
   createLegend(reportTypeIndicator: string, mapData: any, values: any): void {
     let mapOptions = mapData.options;
     let legend = L.control({ position: 'topright' });
@@ -685,9 +893,9 @@ export class LeafletMapComponent implements OnInit, AfterViewInit, OnChanges {
       }
 
       if (reportTypeIndicator === 'boolean') {
-		
-		// console.log('mapData.data[0].program', mapData.data[0].program_name)
-		// console.log('mapOptions.legend.title', mapOptions.legend)
+
+        // console.log('mapData.data[0].program', mapData.data[0].program_name)
+        // console.log('mapOptions.legend.title', mapOptions.legend)
         // if (mapOptions.legend && mapOptions.legend.title && mapOptions.legend.title == 'Implemented Nishtha'){
         //   if(mapData.data[0].program == 'NISHTHA Elementary'){
         //     values = ["Implemented in only online mode","Implemented in only face-to-face mode","Implemented in both face-to-face and online modes","Not implemented"];
@@ -697,16 +905,16 @@ export class LeafletMapComponent implements OnInit, AfterViewInit, OnChanges {
         //     values = ["Implemented in only online mode","Not implemented"];
         //   }else{}
         // }
-		if(mapData.data[0].program_name == 'NISHTHA Elementary (Online)'){
-            mapData.data[0].program_name = 'NISHTHA Elementary';
-            values = ["Implemented in only online mode","Implemented in only face-to-face mode","Implemented in both face-to-face and online modes","Not implemented", "Not applicable"];
-          }else if(mapData.data[0].program_name == 'NISHTHA Secondary' || mapData.data[0].program_name == 'NISHTHA FLN'){
-            values = ["Implemented in only online mode","Implemented in only face-to-face mode","Not implemented"];
-          }else if(mapData.data[0].program_name == 'NISHTHA ECCE'){
-            values = ["Implemented in only online mode","Not implemented"];
-		  }
-		 else {
-          values = ["Yes", "No"]; 
+        if (mapData.data[0].program_name == 'NISHTHA Elementary (Online)') {
+          mapData.data[0].program_name = 'NISHTHA Elementary';
+          values = ["Implemented in only online mode", "Implemented in only face-to-face mode", "Implemented in both face-to-face and online modes", "Not implemented", "Not applicable"];
+        } else if (mapData.data[0].program_name == 'NISHTHA Secondary' || mapData.data[0].program_name == 'NISHTHA FLN') {
+          values = ["Implemented in only online mode", "Implemented in only face-to-face mode", "Not implemented"];
+        } else if (mapData.data[0].program_name == 'NISHTHA ECCE') {
+          values = ["Implemented in only online mode", "Not implemented"];
+        }
+        else {
+          values = ["Yes", "No"];
         }
         for (let i = 0; i < values.length; i++) {
           // labels.push(`<i class="fa fa-square" style="color:${ref.getLayerColor(values[i])}"></i> ${values[i]}`);
@@ -789,15 +997,15 @@ export class LeafletMapComponent implements OnInit, AfterViewInit, OnChanges {
     if (reportTypeIndicator === 'boolean') {
       if (String(value).toLowerCase() == "yes") {
         return "#007000";
-      }else if (String(value).toLowerCase() == "implemented in only online mode") {
+      } else if (String(value).toLowerCase() == "implemented in only online mode") {
         return "#29c0c2";
-      }else if (String(value).toLowerCase() == "implemented in only face-to-face mode") {
+      } else if (String(value).toLowerCase() == "implemented in only face-to-face mode") {
         return "#705000";
-      }else if (String(value).toLowerCase() == "implemented in both face-to-face and online modes") {
+      } else if (String(value).toLowerCase() == "implemented in both face-to-face and online modes") {
         return "#007000";
-      }else if (String(value).toLowerCase() == "not implemented") {
+      } else if (String(value).toLowerCase() == "not implemented") {
         return "#D2222D";
-      }else if (String(value).toLowerCase() == "not applicable") {
+      } else if (String(value).toLowerCase() == "not applicable") {
         return "#fff400";
       } else {
         return "#D2222D";
