@@ -488,7 +488,7 @@ export class LeafletMapComponent implements OnInit, AfterViewInit, OnChanges {
   }
 
   // new code for higlight marker according to geojosn 
-  async createMarkers(mapData: any, prevValues?: any): Promise<void> {
+/*   async createMarkers(mapData: any, prevValues?: any): Promise<void> {
     let reportTypeIndicator = this.mapData?.options && this.mapData.options.reportIndicatorType ? this.mapData.options.reportIndicatorType : (typeof this.mapData.data[0].indicator === 'string') ? 'boolean' : 'value'
 
     mapData.data = mapData.data.filter(data => data.indicator !== undefined && data.indicator !== null)
@@ -690,194 +690,194 @@ export class LeafletMapComponent implements OnInit, AfterViewInit, OnChanges {
         }, 2000);
       }
     }
-  }
+  } */
 
   // old function circle marker
-  // createMarkers(mapData: any, prevValues?: any): void {
-  //   let reportTypeIndicator = this.mapData?.options && this.mapData.options.reportIndicatorType ? this.mapData.options.reportIndicatorType : (typeof this.mapData.data[0].indicator === 'string') ? 'boolean' : 'value'
-  //   mapData.data = mapData.data.filter(data => data.indicator !== undefined && data.indicator !== null)
-  //   if (mapData) {
-  //     let min!: number, max!: number, values: any[] = [];
-  //     if (reportTypeIndicator === 'value' && !prevValues) {
-  //       mapData.data.forEach((data: any, index: number) => {
-  //         if (index === 0) {
-  //           min = data.indicator;
-  //           max = data.indicator;
-  //           return;
-  //         }
+  createMarkers(mapData: any, prevValues?: any): void {
+    let reportTypeIndicator = this.mapData?.options && this.mapData.options.reportIndicatorType ? this.mapData.options.reportIndicatorType : (typeof this.mapData.data[0].indicator === 'string') ? 'boolean' : 'value'
+    mapData.data = mapData.data.filter(data => data.indicator !== undefined && data.indicator !== null)
+    if (mapData) {
+      let min!: number, max!: number, values: any[] = [];
+      if (reportTypeIndicator === 'value' && !prevValues) {
+        mapData.data.forEach((data: any, index: number) => {
+          if (index === 0) {
+            min = data.indicator;
+            max = data.indicator;
+            return;
+          }
 
-  //         min = min <= data.indicator ? min : data.indicator;
-  //         max = max >= data.indicator ? max : data.indicator;
-  //       });
+          min = min <= data.indicator ? min : data.indicator;
+          max = max >= data.indicator ? max : data.indicator;
+        });
 
-  //       let parts = 3;
-  //       max = max > 0 ? max : parts;
-  //       let range = max - min;
+        let parts = 3;
+        max = max > 0 ? max : parts;
+        let range = max - min;
 
-  //       if (range == 0) {
-  //         values.push(min)
-  //       }
-  //       else {
-  //         let partSize = (range / parts % 1 === 0) ? range / parts : Number((range / parts).toFixed(0));
-  //         for (let i = 0; i < parts; i++) {
-  //           if (i === 0) {
-  //             values.push(max);
-  //           }
-  //           else {
-  //             let value = Number((max - partSize * i).toFixed(0));
-  //             values.push(value);
-  //           }
-  //         }
+        if (range == 0) {
+          values.push(min)
+        }
+        else {
+          let partSize = (range / parts % 1 === 0) ? range / parts : Number((range / parts).toFixed(0));
+          for (let i = 0; i < parts; i++) {
+            if (i === 0) {
+              values.push(max);
+            }
+            else {
+              let value = Number((max - partSize * i).toFixed(0));
+              values.push(value);
+            }
+          }
 
-  //         values.push(0);
-  //       }
-  //     } else if (reportTypeIndicator === 'percent') {
-  //       values = [100, 70, 40, 0];
-  //     }
-  //     else if (prevValues) {
-  //       values = prevValues
-  //     }
-  //     let level = this.drillDownLevel ? this.drillDownLevel : this.hierarchyLevel
-  //     var idProp;
-  //     var nameProp;
-  //     switch (Number(level)) {
-  //       case 0:
-  //         nameProp = 'state_name'
-  //         idProp = 'state_id'
-  //         break;
-  //       case 1:
-  //         nameProp = 'district_name'
-  //         idProp = 'district_id'
-  //         break;
-  //       case 2:
-  //         nameProp = 'block_name'
-  //         idProp = 'block_id'
-  //         break;
-  //       case 3:
-  //         nameProp = 'cluster_name'
-  //         idProp = 'cluster_id'
-  //         break;
-  //     }
-  //     mapData.data.forEach((data: any) => {
-  //       let re = new RegExp("_id$");
-  //       // let filterIds = {};
-  //       var id;
+          values.push(0);
+        }
+      } else if (reportTypeIndicator === 'percent') {
+        values = [100, 70, 40, 0];
+      }
+      else if (prevValues) {
+        values = prevValues
+      }
+      let level = this.drillDownLevel ? this.drillDownLevel : this.hierarchyLevel
+      var idProp;
+      var nameProp;
+      switch (Number(level)) {
+        case 0:
+          nameProp = 'state_name'
+          idProp = 'state_id'
+          break;
+        case 1:
+          nameProp = 'district_name'
+          idProp = 'district_id'
+          break;
+        case 2:
+          nameProp = 'block_name'
+          idProp = 'block_id'
+          break;
+        case 3:
+          nameProp = 'cluster_name'
+          idProp = 'cluster_id'
+          break;
+      }
+      mapData.data.forEach((data: any) => {
+        let re = new RegExp("_id$");
+        // let filterIds = {};
+        var id;
 
 
-  //       // Object.keys(data).forEach((prop: any) => {
-  //       //   // if(re.test(prop)){
-  //       //   //   idProp = prop;
-  //       //   //   return false;
-  //       //   // }
-  //       //   // return true;
-  //       //   // if (prop.match(re)) {
-  //       //   //   id = data[prop.match(re)?.input]
-  //       //   // filterIds = {
-  //       //   //   ...filterIds,
-  //       //   //   [prop.match(re).input]: data[prop.match(re)?.input]
-  //       //   // }
-  //       //   // }
-  //       //   id = data[idProp]
-  //       //   console.log(data[nameProp])
-  //       // })
-  // 	let fillColor
-  // 	if(String(data.program_status).toLowerCase() === "yes. implemented in only online mode"){
-  //         fillColor = "#29c0c2"
-  // 	} else if(String(data.program_status).toLowerCase() === "yes. implemented in only face-to-face mode"){
-  // 		fillColor = "#705000"
-  // 	} else if(String(data.program_status).toLowerCase() === "no. not applicable"){
-  // 		fillColor = "#fff400"
-  // 	} else{
-  //         fillColor = this.getZoneColor(reportTypeIndicator, data.indicator, values)
-  // 	}
-  //       let markerIcon = L.circleMarker([data.Latitude, data.Longitude], {
-  //         id: data[idProp],
-  //         name: data[nameProp],
-  //         hierarchyLevel: data.hierarchyLevel,
-  //         color: "gray",
-  //         // fillColor: this.getZoneColor(reportTypeIndicator, data.indicator >= 1 ? (max - min ? (data.indicator - min) / (max - min) * 100 : data.indicator) : -1),
-  //         fillColor: fillColor,
-  //         fillOpacity: 1,
-  //         strokeWeight: 0.01,
-  //         weight: 1
-  //       }).addTo(this.map);
+        // Object.keys(data).forEach((prop: any) => {
+        //   // if(re.test(prop)){
+        //   //   idProp = prop;
+        //   //   return false;
+        //   // }
+        //   // return true;
+        //   // if (prop.match(re)) {
+        //   //   id = data[prop.match(re)?.input]
+        //   // filterIds = {
+        //   //   ...filterIds,
+        //   //   [prop.match(re).input]: data[prop.match(re)?.input]
+        //   // }
+        //   // }
+        //   id = data[idProp]
+        //   console.log(data[nameProp])
+        // })
+  	let fillColor
+  	if(String(data.program_status).toLowerCase() === "yes. implemented in only online mode"){
+          fillColor = "#29c0c2"
+  	} else if(String(data.program_status).toLowerCase() === "yes. implemented in only face-to-face mode"){
+  		fillColor = "#705000"
+  	} else if(String(data.program_status).toLowerCase() === "no. not applicable"){
+  		fillColor = "#fff400"
+  	} else{
+          fillColor = this.getZoneColor(reportTypeIndicator, data.indicator, values)
+  	}
+        let markerIcon = L.circleMarker([data.Latitude, data.Longitude], {
+          id: data[idProp],
+          name: data[nameProp],
+          hierarchyLevel: data.hierarchyLevel,
+          color: "gray",
+          // fillColor: this.getZoneColor(reportTypeIndicator, data.indicator >= 1 ? (max - min ? (data.indicator - min) / (max - min) * 100 : data.indicator) : -1),
+          fillColor: fillColor,
+          fillOpacity: 1,
+          strokeWeight: 0.01,
+          weight: 1
+        }).addTo(this.map);
 
-  //       markerIcon._path.id = StateCodes[Number(data.state_code)];
+        markerIcon._path.id = StateCodes[Number(data.state_code)];
 
-  //       markerIcon.setRadius(5);
+        markerIcon.setRadius(5);
 
-  //       const popup = R.responsivePopup({
-  //         hasTip: false,
-  //         autoPan: true,
-  //         offset: [15, 20],
-  //       }).setContent(
-  //         data.tooltip
-  //       );
+        const popup = R.responsivePopup({
+          hasTip: false,
+          autoPan: true,
+          offset: [15, 20],
+        }).setContent(
+          data.tooltip
+        );
 
-  //       markerIcon.on("mouseover", (e: any) => {
-  //         e.target.openPopup();
-  //       });
+        markerIcon.on("mouseover", (e: any) => {
+          e.target.openPopup();
+        });
 
-  //       markerIcon.on("mouseout", (e: any) => {
-  //         e.target.closePopup();
-  //       });
+        markerIcon.on("mouseout", (e: any) => {
+          e.target.closePopup();
+        });
 
-  //       markerIcon.on("click", async (e: any) => {
-  //         // if (Number(lev) == 1) {
-  //         //   let stateGeoJSON = await this._mapService.getStateGeoJSON();
+        markerIcon.on("click", async (e: any) => {
+          // if (Number(lev) == 1) {
+          //   let stateGeoJSON = await this._mapService.getStateGeoJSON();
 
-  //         //   this.districtGeoJSON = stateGeoJSON.features.find(feature => {
-  //         //     return feature.properties['ID_2'] == e.target.options.id;
-  //         //   });
-  //         //   this.applyDrillDown({ id: e.target.options.id, hierarchyLevel: this.rbacDetails.role + 1, name: e.target.options.name })
-  //         // }
-  //         console.log(mapData?.options?.drillDownConfig?.allowedLevels.includes(level))
-  //         if (level < 4 && mapData?.options?.drillDownConfig?.enableDrillDown && mapData?.options?.drillDownConfig?.allowedLevels.includes(level)) {
-  //           console.log(mapData?.options?.drillDownConfig?.enableDrillDown)
-  //           this.applyDrillDown({ name: e.target.options.name, id: e.target.options.id, hierarchyLevel: this.drillDownLevel ? this.drillDownLevel + 1 : this.rbacDetails.role + 1 })
-  //         }
-  //       })
+          //   this.districtGeoJSON = stateGeoJSON.features.find(feature => {
+          //     return feature.properties['ID_2'] == e.target.options.id;
+          //   });
+          //   this.applyDrillDown({ id: e.target.options.id, hierarchyLevel: this.rbacDetails.role + 1, name: e.target.options.name })
+          // }
+          console.log(mapData?.options?.drillDownConfig?.allowedLevels.includes(level))
+          if (level < 4 && mapData?.options?.drillDownConfig?.enableDrillDown && mapData?.options?.drillDownConfig?.allowedLevels.includes(level)) {
+            console.log(mapData?.options?.drillDownConfig?.enableDrillDown)
+            this.applyDrillDown({ name: e.target.options.name, id: e.target.options.id, hierarchyLevel: this.drillDownLevel ? this.drillDownLevel + 1 : this.rbacDetails.role + 1 })
+          }
+        })
 
-  //       markerIcon.addTo(this.map).bindPopup(popup, { closeButton: false });
+        markerIcon.addTo(this.map).bindPopup(popup, { closeButton: false });
 
-  //       this.markers.addLayer(markerIcon);
-  //     });
+        this.markers.addLayer(markerIcon);
+      });
 
-  //     this.map.addLayer(this.markers);
-  //     if (!prevValues) {
-  //       if (this.config === 'VSK' || level > 0) {
-  //         if(level === 1) {
-  //           this.fitToStateBorder();
-  //         }
-  //         else {
-  //           this.fitToMarkers()
-  //         }
+      this.map.addLayer(this.markers);
+      if (!prevValues) {
+        if (this.config === 'VSK' || level > 0) {
+          if(level === 1) {
+            this.fitToStateBorder();
+          }
+          else {
+            this.fitToMarkers()
+          }
 
-  //       }
-  //       else if (this.config === 'NVSK' && level === 0) {
-  //         this.fitBoundsToCountryBorder();
-  //       }
-  //       this.createLegend(reportTypeIndicator, this.mapData, values);
-  //     }
-  //     else if (prevValues && mapData?.data?.length === 0) {
-  //       const NotificationControl = L.Control.extend({
-  //         onAdd: function (map) {
-  //           const container = L.DomUtil.create('div', 'leaflet-notification');
-  //           container.innerHTML = 'No Data for selected legends !';
-  //           return container;
-  //         },
+        }
+        else if (this.config === 'NVSK' && level === 0) {
+          this.fitBoundsToCountryBorder();
+        }
+        this.createLegend(reportTypeIndicator, this.mapData, values);
+      }
+      else if (prevValues && mapData?.data?.length === 0) {
+        const NotificationControl = L.Control.extend({
+          onAdd: function (map) {
+            const container = L.DomUtil.create('div', 'leaflet-notification');
+            container.innerHTML = 'No Data for selected legends !';
+            return container;
+          },
 
-  //         onRemove: function (map) {
-  //         }
-  //       });
-  //       const notificationControl = new NotificationControl({ position: 'topright' });
-  //       notificationControl.addTo(this.map);
-  //       setTimeout(() => {
-  //         notificationControl.remove()
-  //       }, 2000);
-  //     }
-  //   }
-  // }
+          onRemove: function (map) {
+          }
+        });
+        const notificationControl = new NotificationControl({ position: 'topright' });
+        notificationControl.addTo(this.map);
+        setTimeout(() => {
+          notificationControl.remove()
+        }, 2000);
+      }
+    }
+  }
 
   createLegend(reportTypeIndicator: string, mapData: any, values: any): void {
     let mapOptions = mapData.options;
