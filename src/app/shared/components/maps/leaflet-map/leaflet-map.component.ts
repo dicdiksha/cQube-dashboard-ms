@@ -152,7 +152,8 @@ export class LeafletMapComponent implements OnInit, AfterViewInit, OnChanges {
     }
     else {
       let value = e;
-      let colors = ["#007000", "#FFBF00", "#D2222D"];
+      // let colors = ["#007000", "#FFBF00", "#D2222D"];
+      let colors = ["#4169E1", "#1E90FF", "#0000FF"];
       let color = "#fff";
       value = Number(value);
       for (let i = 0; i < values.length - 1; i++) {
@@ -378,7 +379,7 @@ export class LeafletMapComponent implements OnInit, AfterViewInit, OnChanges {
           //   fillOpacity: 1
           // },
           data: data,
-          color: "blue",
+          color: "black",
           weight: 2,
           fillOpacity: 0,
           fontWeight: "bold"
@@ -486,14 +487,14 @@ export class LeafletMapComponent implements OnInit, AfterViewInit, OnChanges {
       });
     }
   }
-
+/*
   // new code for higlight marker according to geojosn 
-/*   async createMarkers(mapData: any, prevValues?: any): Promise<void> {
+   async createMarkers(mapData: any, prevValues?: any): Promise<void> {
     let reportTypeIndicator = this.mapData?.options && this.mapData.options.reportIndicatorType ? this.mapData.options.reportIndicatorType : (typeof this.mapData.data[0].indicator === 'string') ? 'boolean' : 'value'
 
     mapData.data = mapData.data.filter(data => data.indicator !== undefined && data.indicator !== null)
 
-    console.log(mapData.data)
+    // console.log(mapData.data)
     if (mapData) {
       // 
       const mapdataArry = mapData.data
@@ -502,7 +503,7 @@ export class LeafletMapComponent implements OnInit, AfterViewInit, OnChanges {
 
       const stateBorder = stateBorderResult.data.options.data
       // console.log(mapdataArry, 'mapdataArry');
-      console.log(stateBorder.features, 'stateborder')
+      // console.log(stateBorder.features, 'stateborder')
       const newArray = [];
       if (this.markers) {
         this.markers.clearLayers();
@@ -510,11 +511,11 @@ export class LeafletMapComponent implements OnInit, AfterViewInit, OnChanges {
       this.markers = L.layerGroup().addTo(this.map);
 
       mapdataArry.forEach(obj1 => {
-        console.log(obj1, 'obj1')
+        // console.log(obj1, 'obj1')
         // Find the corresponding object in array2 based on state_id and state_code
         // console.log(stateBorder.features.find(item => item.properties.state_code.toString() === obj1.state_id))
         const obj2 = stateBorder.features.find(item => item.properties.state_code.toString() === obj1.state_id);
-        console.log(obj2)
+        // console.log(obj2)
         // If a matching object is found, replace latitude and longitude
         if (obj2) {
           const updatedObject = {
@@ -531,7 +532,7 @@ export class LeafletMapComponent implements OnInit, AfterViewInit, OnChanges {
         }
       });
       // Now, array1 has updated latitude and longitude for matching state_id and state_code
-      console.log(newArray,);
+      // console.log(newArray,);
       // 
       let min!: number, max!: number, values: any[] = [];
       // % boolen=an {yes,NO}
@@ -598,7 +599,7 @@ export class LeafletMapComponent implements OnInit, AfterViewInit, OnChanges {
 
       newArray.forEach((data: any) => {
         // Create a GeoJSON object for the state.
-        console.log(data.coordinates.coordinates, data, 'data')
+        // console.log(data.coordinates.coordinates, data, 'data')
         const stateGeoJSON = {
           type: 'Feature',
           geometry: {
@@ -613,18 +614,21 @@ export class LeafletMapComponent implements OnInit, AfterViewInit, OnChanges {
         // Determine the color of the state.
         let fillColor;
         if (String(data.program_status).toLowerCase() === "yes. implemented in only online mode") {
-          fillColor = "#29c0c2";
+          // fillColor = "#29c0c2";
+          fillColor='#0932b7'
         } else if (String(data.program_status).toLowerCase() === "yes. implemented in only face-to-face mode") {
-          fillColor = "#705000";
+          // fillColor = "#705000";
+          fillColor:'#6b81c5'
         } else if (String(data.program_status).toLowerCase() === "no. not applicable") {
-          fillColor = "#fff400";
+          // fillColor = "#fff400";
+          fillColor='#4d73eb'
         } else {
           fillColor = this.getZoneColor(reportTypeIndicator, data.indicator, values);
         }
         // Create a GeoJSON layer for the state and add it to the map.
         L.geoJSON(stateGeoJSON, {
           style: {
-            color: "blue",
+            color: "black",
             fillColor: fillColor,
             fillOpacity: 1,
             weight: 1
@@ -690,8 +694,8 @@ export class LeafletMapComponent implements OnInit, AfterViewInit, OnChanges {
         }, 2000);
       }
     }
-  } */
-
+  } 
+*/
   // old function circle marker
   createMarkers(mapData: any, prevValues?: any): void {
     let reportTypeIndicator = this.mapData?.options && this.mapData.options.reportIndicatorType ? this.mapData.options.reportIndicatorType : (typeof this.mapData.data[0].indicator === 'string') ? 'boolean' : 'value'
@@ -879,6 +883,7 @@ export class LeafletMapComponent implements OnInit, AfterViewInit, OnChanges {
     }
   }
 
+  /* new changes create lenged
   createLegend(reportTypeIndicator: string, mapData: any, values: any): void {
     let mapOptions = mapData.options;
     let legend = L.control({ position: 'topright' });
@@ -992,30 +997,182 @@ export class LeafletMapComponent implements OnInit, AfterViewInit, OnChanges {
     this.legend?.remove();
     this.legend = legend;
   }
+*/
 
+createLegend(reportTypeIndicator: string, mapData: any, values: any): void {
+  let mapOptions = mapData.options;
+  let legend = L.control({ position: 'topright' });
+  let ref = this;
+  let labels: any[] = [];
+
+  legend.onAdd = function (map: any) {
+    let div = L.DomUtil.create('div', 'info legend text-center');
+    let clickable = false;
+    if (mapOptions.legend && mapOptions.legend.title) {
+      labels.push(`<strong>${mapOptions.selectedMetric ? mapOptions.legend.title + mapOptions.selectedMetric : mapOptions.legend.title}:</strong>`)
+    }
+
+    if (reportTypeIndicator === 'boolean') {
+
+      // console.log('mapData.data[0].program', mapData.data[0].program_name)
+      // console.log('mapOptions.legend.title', mapOptions.legend)
+      // if (mapOptions.legend && mapOptions.legend.title && mapOptions.legend.title == 'Implemented Nishtha'){
+      //   if(mapData.data[0].program == 'NISHTHA Elementary'){
+      //     values = ["Implemented in only online mode","Implemented in only face-to-face mode","Implemented in both face-to-face and online modes","Not implemented"];
+      //   }else if(mapData.data[0].program == 'NISHTHA Secondary' || mapData.data[0].program == 'NISHTHA FLN'){
+      //     values = ["Implemented in only online mode","Implemented in only face-to-face mode","Not implemented"];
+      //   }else if(mapData.data[0].program == 'NISHTHA ECCE'){
+      //     values = ["Implemented in only online mode","Not implemented"];
+      //   }else{}
+      // }
+      if (mapData.data[0].program_name == 'NISHTHA Elementary (Online)') {
+        mapData.data[0].program_name = 'NISHTHA Elementary';
+        values = ["Implemented in only online mode", "Implemented in only face-to-face mode", "Implemented in both face-to-face and online modes", "Not implemented", "Not applicable"];
+      } else if (mapData.data[0].program_name == 'NISHTHA Secondary' || mapData.data[0].program_name == 'NISHTHA FLN') {
+        values = ["Implemented in only online mode", "Implemented in only face-to-face mode", "Not implemented"];
+      } else if (mapData.data[0].program_name == 'NISHTHA ECCE') {
+        values = ["Implemented in only online mode", "Not implemented"];
+      }
+      else {
+        values = ["Yes", "No"];
+      }
+      for (let i = 0; i < values.length; i++) {
+        // labels.push(`<i class="fa fa-square" style="color:${ref.getLayerColor(values[i])}"></i> ${values[i]}`);
+        labels.push(`<button class="legend-range" style="background-color: ${ref.getZoneColor(reportTypeIndicator, values[i], values)}; color: ${invert(ref.getZoneColor(reportTypeIndicator, values[i], values), true)}">
+        <div class="button-content">
+       <span class="value">${values[i]}</span>
+      </div>
+   </button>`);
+      }
+    }
+    else if (values.length <= 1 && reportTypeIndicator !== 'boolean') {
+      // labels.push(`<i class="fa fa-square" style="color:${ref.getLayerColor(values[0] ? values[0] : -1, true)}"></i> ${formatNumberForReport(values[0])}`);
+      labels.push(`<button class="legend-range" style="background-color: ${ref.getLayerColor(values[0], true, values)}; color: ${invert(ref.getLayerColor(values[0], true, values), true)}">
+        <div class="button-content">
+        <span class="value">${values[0] ? values[0] : 0}${reportTypeIndicator === 'percent' ? '%' : ''}</span>
+        </div>
+        </button><br>`)
+    }
+    else {
+      ref.legendForm = {
+        range1: true,
+        range2: true,
+        range3: true
+      };
+      values = values && values.length > 0 && reportTypeIndicator !== 'percent' ? values : [100, 70, 40, 0];
+      // div.innerHTML = labels[0] + '</br>';
+      div.innerHTML = labels[0];
+
+      // Create the reset button element
+      const resetButton = L.DomUtil.create('button', 'legend-range-reset pull-right');
+      resetButton.innerHTML = '<i class="fa fa-refresh"></i>';
+      L.DomEvent.addListener(resetButton, 'click', () => {
+        ref.resetRange();
+      });
+      div.insertBefore(resetButton, div.previousSibling);
+
+      // for (let i = 0; i < values.length - 1; i++) {
+      //   let span = L.DomUtil.create('span', 'clickable-range');
+      //   span.innerHTML = `<button class="legend-range" style="background-color: ${ref.getLayerColor(values[i], true, values)}; color: ${invert(ref.getLayerColor(values[i], true, values), true)}"><div class="button-content"><input type="checkbox" id="checkbox-${i + 1}" class="legend-checkbox" checked />${values[i + 1]} &dash; ${values[i] ? values[i] : 0}${reportTypeIndicator === 'percent' ? '%' : ''}</div></button><br>`;
+      //   L.DomEvent.addListener(span, 'click', () => {
+      //     // ref.applyRange(Number(values[i] ? values[i] : 0), Number(values[i + 1]), Number(values[values.length - 1]), ref.getLayerColor(values[i], true, values));
+      //     ref.applyRange(i + 1, Number(values[values.length - 1]), ref.getLayerColor(values[i], true, values), Number(values[i] ? values[i] : 0), Number(values[i + 1]))
+      //   });
+      //   div.appendChild(span);
+      //   clickable = true;
+      // }
+
+      for (let i = 0; i < values.length - 1; i++) {
+        let span = L.DomUtil.create('span', 'clickable-range');
+        const lowerValue = values[i + 1];
+        const upperValue = values[i] ? values[i] : 0;
+        const formattedLowerValue = formatNumberForReport(lowerValue);
+        const formattedUpperValue = formatNumberForReport(upperValue);
+        span.innerHTML = `
+          <button class="legend-range" style="background-color: ${ref.getLayerColor(values[i], true, values)}; color: ${invert(ref.getLayerColor(values[i], true, values), true)}">
+               <div class="button-content">
+              <input type="checkbox" id="checkbox-${i + 1}" class="legend-checkbox" checked />
+              <span class="value">${formattedLowerValue} &ndash; ${formattedUpperValue}${reportTypeIndicator === 'percent' ? '%' : ''}</span>
+             </div>
+          </button><br>`;
+
+        L.DomEvent.addListener(span, 'click', () => {
+          ref.applyRange(i + 1, Number(values[values.length - 1]), ref.getLayerColor(values[i], true, values), values)
+        });
+        div.appendChild(span);
+        clickable = true;
+      }
+    }
+    if (!clickable) {
+      div.innerHTML = labels.join('<br>');
+    }
+    return div;
+  };
+  legend.addTo(this.map);
+  this.legend?.remove();
+  this.legend = legend;
+}
+  // getZoneColor(reportTypeIndicator: string, value: string | number, values?: number[]) {
+  //   if (reportTypeIndicator === 'boolean') {
+  //     if (String(value).toLowerCase() == "yes") {
+  //       return "#0932b7";
+  //     } else if (String(value).toLowerCase() == "implemented in only online mode") {
+  //       return "#29c0c2";
+  //     } else if (String(value).toLowerCase() == "implemented in only face-to-face mode") {
+  //       return "#705000";
+  //     } else if (String(value).toLowerCase() == "implemented in both face-to-face and online modes") {
+  //       return "#007000";
+  //     } else if (String(value).toLowerCase() == "not implemented") {
+  //       return "#D2222D";
+  //     } else if (String(value).toLowerCase() == "not applicable") {
+  //       return "#fff400";
+  //     } else {
+  //       return "#D2222D";
+  //     }
+  //   }
+  //   else if (values && values.length === 1) {
+  //     return "#007000"
+  //   }
+  //   else {
+  //     let colors = ["#007000", "#FFBF00", "#D2222D"];
+  //     let color = "#fff";
+  //     value = Number(value);
+  //     for (let i = 0; i < values.length - 1; i++) {
+  //       if (value <= values[i] && value >= values[i + 1]) {
+  //         color = colors[i];
+  //       }
+  //     }
+
+  //     return color;
+  //   }
+  // }
+
+  // change color of blue
+
+  /* new get zonecolor 
   getZoneColor(reportTypeIndicator: string, value: string | number, values?: number[]) {
     if (reportTypeIndicator === 'boolean') {
       if (String(value).toLowerCase() == "yes") {
-        return "#007000";
+        return "#0000FF"; // Blue
       } else if (String(value).toLowerCase() == "implemented in only online mode") {
-        return "#29c0c2";
+        return "#00BFFF"; // Deep Sky Blue
       } else if (String(value).toLowerCase() == "implemented in only face-to-face mode") {
-        return "#705000";
+        return "#1E90FF"; // Dodger Blue
       } else if (String(value).toLowerCase() == "implemented in both face-to-face and online modes") {
-        return "#007000";
+        return "#4169E1"; // Royal Blue
       } else if (String(value).toLowerCase() == "not implemented") {
-        return "#D2222D";
+        return "#00008B"; // Dark Blue
       } else if (String(value).toLowerCase() == "not applicable") {
-        return "#fff400";
+        return "#87CEFA"; // Light Sky Blue
       } else {
-        return "#D2222D";
+        return "#00008B"; // Dark Blue
       }
     }
     else if (values && values.length === 1) {
-      return "#007000"
+      return "#4169E1"; // Royal Blue
     }
     else {
-      let colors = ["#007000", "#FFBF00", "#D2222D"];
+      let colors = ["#4169E1", "#1E90FF", "#0000FF"]; // Shades of Blue
       let color = "#fff";
       value = Number(value);
       for (let i = 0; i < values.length - 1; i++) {
@@ -1027,7 +1184,42 @@ export class LeafletMapComponent implements OnInit, AfterViewInit, OnChanges {
       return color;
     }
   }
+*/
 
+getZoneColor(reportTypeIndicator: string, value: string | number, values?: number[]) {
+  if (reportTypeIndicator === 'boolean') {
+    if (String(value).toLowerCase() == "yes") {
+      return "#007000";
+    } else if (String(value).toLowerCase() == "implemented in only online mode") {
+      return "#29c0c2";
+    } else if (String(value).toLowerCase() == "implemented in only face-to-face mode") {
+      return "#705000";
+    } else if (String(value).toLowerCase() == "implemented in both face-to-face and online modes") {
+      return "#007000";
+    } else if (String(value).toLowerCase() == "not implemented") {
+      return "#D2222D";
+    } else if (String(value).toLowerCase() == "not applicable") {
+      return "#fff400";
+    } else {
+      return "#D2222D";
+    }
+  }
+  else if (values && values.length === 1) {
+    return "#007000"
+  }
+  else {
+    let colors = ["#007000", "#FFBF00", "#D2222D"];
+    let color = "#fff";
+    value = Number(value);
+    for (let i = 0; i < values.length - 1; i++) {
+      if (value <= values[i] && value >= values[i + 1]) {
+        color = colors[i];
+      }
+    }
+
+    return color;
+  }
+}
   resetRange() {
     // this.applyCountryBorder(this.mapData)
     this.createMarkers(this.mapData)
