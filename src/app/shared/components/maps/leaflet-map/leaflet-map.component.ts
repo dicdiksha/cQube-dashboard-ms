@@ -143,7 +143,7 @@ export class LeafletMapComponent implements OnInit, AfterViewInit, OnChanges {
     this.createMarkers(this.mapData);
   }
 
-  getLayerColor(e: any, legend?: boolean, values?: number[]) {
+  getLayerColor(e: any, legend?: boolean, values?: number[] ,program ?: string) {
     if (((this.config === 'NVSK' && this.hierarchyLevel === 0) && this.level === 'district' && !legend) || (this.hierarchyLevel > 1 || this.drillDownLevel > 1) && !legend) {
       return '#fff'
     }
@@ -152,8 +152,13 @@ export class LeafletMapComponent implements OnInit, AfterViewInit, OnChanges {
     }
     else {
       let value = e;
-      // let colors = ["#007000", "#FFBF00", "#D2222D"];
-      let colors = ["#4169E1", "#1E90FF", "#0000FF"];
+      let colors ;
+      if(program !== undefined && program!== null && program === 'microimprovement'){
+        colors = ["#007000", "#4CBB17", "#0BDA51"];
+      }else{
+       colors = ["#007000", "#FFBF00", "#D2222D"];
+     }
+     // let colors = ["#4169E1", "#1E90FF", "#0000FF"];
       let color = "#fff";
       value = Number(value);
       for (let i = 0; i < values.length - 1; i++) {
@@ -792,7 +797,7 @@ export class LeafletMapComponent implements OnInit, AfterViewInit, OnChanges {
   	} else if(String(data.program_status).toLowerCase() === "no. not applicable"){
   		fillColor = "#fff400"
   	} else{
-          fillColor = this.getZoneColor(reportTypeIndicator, data.indicator, values)
+          fillColor = this.getZoneColor(reportTypeIndicator, data.indicator, values,data)
   	}
         let markerIcon = L.circleMarker([data.Latitude, data.Longitude], {
           id: data[idProp],
@@ -1004,14 +1009,13 @@ createLegend(reportTypeIndicator: string, mapData: any, values: any): void {
   let legend = L.control({ position: 'topright' });
   let ref = this;
   let labels: any[] = [];
-
+  let program ;
   legend.onAdd = function (map: any) {
     let div = L.DomUtil.create('div', 'info legend text-center');
     let clickable = false;
     if (mapOptions.legend && mapOptions.legend.title) {
       labels.push(`<strong>${mapOptions.selectedMetric ? mapOptions.legend.title + mapOptions.selectedMetric : mapOptions.legend.title}:</strong>`)
     }
-
     if (reportTypeIndicator === 'boolean') {
 
       // console.log('mapData.data[0].program', mapData.data[0].program_name)
@@ -1038,7 +1042,7 @@ createLegend(reportTypeIndicator: string, mapData: any, values: any): void {
       }
       for (let i = 0; i < values.length; i++) {
         // labels.push(`<i class="fa fa-square" style="color:${ref.getLayerColor(values[i])}"></i> ${values[i]}`);
-        labels.push(`<button class="legend-range" style="background-color: ${ref.getZoneColor(reportTypeIndicator, values[i], values)}; color: ${invert(ref.getZoneColor(reportTypeIndicator, values[i], values), true)}">
+        labels.push(`<button class="legend-range" style="background-color: ${ref.getZoneColor(reportTypeIndicator, values[i], values ,mapData.data[0])}; color: ${invert(ref.getZoneColor(reportTypeIndicator, values[i], values), true)}">
         <div class="button-content">
        <span class="value">${values[i]}</span>
       </div>
@@ -1046,14 +1050,20 @@ createLegend(reportTypeIndicator: string, mapData: any, values: any): void {
       }
     }
     else if (values.length <= 1 && reportTypeIndicator !== 'boolean') {
+      if(String(mapData.data[0].category_name)!== undefined && String(mapData.data[0].category_name)!== null && String(mapData.data[0].category_name).includes("microimprovement")){
+        program = "microimprovement";       
+     }
       // labels.push(`<i class="fa fa-square" style="color:${ref.getLayerColor(values[0] ? values[0] : -1, true)}"></i> ${formatNumberForReport(values[0])}`);
-      labels.push(`<button class="legend-range" style="background-color: ${ref.getLayerColor(values[0], true, values)}; color: ${invert(ref.getLayerColor(values[0], true, values), true)}">
+      labels.push(`<button class="legend-range" style="background-color: ${ref.getLayerColor(values[0], true, values,program)}; color: ${invert(ref.getLayerColor(values[0], true, values,program), true)}">
         <div class="button-content">
         <span class="value">${values[0] ? values[0] : 0}${reportTypeIndicator === 'percent' ? '%' : ''}</span>
         </div>
         </button><br>`)
     }
     else {
+      if(String(mapData.data[0].category_name)!== undefined && String(mapData.data[0].category_name)!== null && String(mapData.data[0].category_name).includes("microimprovement")){
+        program = "microimprovement";       
+     }
       ref.legendForm = {
         range1: true,
         range2: true,
@@ -1089,7 +1099,7 @@ createLegend(reportTypeIndicator: string, mapData: any, values: any): void {
         const formattedLowerValue = formatNumberForReport(lowerValue);
         const formattedUpperValue = formatNumberForReport(upperValue);
         span.innerHTML = `
-          <button class="legend-range" style="background-color: ${ref.getLayerColor(values[i], true, values)}; color: ${invert(ref.getLayerColor(values[i], true, values), true)}">
+          <button class="legend-range" style="background-color: ${ref.getLayerColor(values[i], true, values,program)}; color: ${invert(ref.getLayerColor(values[i], true, values,program), true)}">
                <div class="button-content">
               <input type="checkbox" id="checkbox-${i + 1}" class="legend-checkbox" checked />
               <span class="value">${formattedLowerValue} &ndash; ${formattedUpperValue}${reportTypeIndicator === 'percent' ? '%' : ''}</span>
@@ -1186,8 +1196,8 @@ createLegend(reportTypeIndicator: string, mapData: any, values: any): void {
   }
 */
 
-getZoneColor(reportTypeIndicator: string, value: string | number, values?: number[]) {
-  if (reportTypeIndicator === 'boolean') {
+getZoneColor(reportTypeIndicator: string, value: string | number, values?: number[] ,data ?: any) {
+    if (reportTypeIndicator === 'boolean') {
     if (String(value).toLowerCase() == "yes") {
       return "#007000";
     } else if (String(value).toLowerCase() == "implemented in only online mode") {
@@ -1208,7 +1218,12 @@ getZoneColor(reportTypeIndicator: string, value: string | number, values?: numbe
     return "#007000"
   }
   else {
-    let colors = ["#007000", "#FFBF00", "#D2222D"];
+    let colors;
+    if(String(data.category_name)!== undefined && String(data.category_name)!== null && String(data.category_name).includes("microimprovement")){
+     colors = ["#007000", "#4CBB17", "#0BDA51"];
+    }else{
+     colors = ["#007000", "#FFBF00", "#D2222D"];
+    }
     let color = "#fff";
     value = Number(value);
     for (let i = 0; i < values.length - 1; i++) {
