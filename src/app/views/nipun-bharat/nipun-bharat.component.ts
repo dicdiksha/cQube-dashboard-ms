@@ -46,7 +46,9 @@ export class NipunBharatComponent implements OnInit {
   ngAfterViewInit(): void {
     console.log("this.selectedTabLabel",this.selectedTabLabel)
     setTimeout(() => {
-      this.selectedTabLabel = this.tabs.length > 0 ? this.tabs[0] : undefined
+      // making textbook status tab as default
+      //this.selectedTabLabel = this.tabs.length > 0 ? this.tabs[0] : undefined
+      this.selectedTabLabel = this.tabs.length > 0 ? this.tabs[2] : undefined
     });
   }
 

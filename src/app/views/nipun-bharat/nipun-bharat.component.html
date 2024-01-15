@@ -24,8 +24,9 @@
 <div class="custom-tab-group-wrapper">
     <mat-tab-group [selectedIndex]="tabIndex" mat-align-tabs="start" animationDuration="0ms"
         (selectedTabChange)="onTabChanged($event)" appFullScreen>
-               
-        <mat-tab label='Module-wide Status' *ngIf="tabs.includes('Module-wide Status')">
+          
+        <!-- Removed below two tabs as requested by NCERT on 15-jan-2024 -->
+        <!-- <mat-tab label='Module-wide Status' *ngIf="tabs.includes('Module-wide Status')">
             <app-module-wide-status-tab
                 *ngIf="selectedTabLabel === 'Module-wide Status'"></app-module-wide-status-tab>
         </mat-tab>
@@ -33,7 +34,7 @@
         <mat-tab label='Detailed Status' *ngIf="tabs.includes('Detailed Status')">
             <app-detailed-status-tab
                 *ngIf="selectedTabLabel === 'Detailed Status'"></app-detailed-status-tab>
-        </mat-tab>
+        </mat-tab> -->
         
         <mat-tab label='Textbook Status' *ngIf="tabs.includes('Textbook Status')">
             <app-textbook-status-tab
