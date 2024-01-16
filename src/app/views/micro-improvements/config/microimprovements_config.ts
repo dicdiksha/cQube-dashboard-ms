@@ -106,9 +106,11 @@ export const config = {
             "hierarchyLevel": "0",
             "actions": {
                 "queries": {
-                    "bigNumber1": "select sum(sum) as total_states_uts from datasets.micro_improvements_started_state",
-                    "bigNumber2": "select sum(sum) as total_mi_ongoing from datasets.micro_improvements_categorymicro_state0categorymicro where category_name = 'total_microimprovement_projects'",
-                  },
+                    // "bigNumber1": "select sum(sum) as total_states_uts from datasets.micro_improvements_started_state",
+                    "bigNumber1": "select dm.metric_value as total_states_uts from dimensions.mainmetrics dm where  dm.program_id='mip' and dm.metric_name ='Total States/UTs Participating' and dm.metric_type ='Key Metric'",
+                    // "bigNumber2": "select sum(sum) as total_mi_ongoing from datasets.micro_improvements_categorymicro_state0categorymicro where category_name = 'total_microimprovement_projects'",
+                    "bigNumber2": "select dm.metric_value as total_mi_ongoing from dimensions.mainmetrics dm where  dm.program_id='mip' and dm.metric_name ='Total Micro-Improvement Projects' and dm.metric_type ='Key Metric'",
+                },
                 "level": "state"
             }
         },
@@ -130,11 +132,18 @@ export const config = {
                 "hierarchyLevel": "0",
                 "actions": {
                     "queries": {
-                        "bigNumber1": "select sum(sum) as total_mi_ongoing from datasets.micro_improvements_categorymicro_state0categorymicro where category_name = 'total_microimprovement_projects'",
-                        "bigNumber2": "select sum(sum) as total_mi_started from datasets.micro_improvements_categorymicro_state0categorymicro where category_name = 'total_microimprovement_started'",
-                        "bigNumber3": "select sum(sum) as total_mi_inprogress from datasets.micro_improvements_categorymicro_state0categorymicro where category_name = 'total_microimprovement_inprogress'",
-                        "bigNumber4": "select sum(sum) as total_mi_submitted from datasets.micro_improvements_categorymicro_state0categorymicro where category_name = 'total_microimprovement_submitted'",
-                        "bigNumber5": "select sum(sum) as total_mi_submitted_with_evidence from datasets.micro_improvements_categorymicro_state0categorymicro where category_name = 'total_microimprovement_submitted_with_evidence'",
+                        // "bigNumber1": "select sum(sum) as total_mi_ongoing from datasets.micro_improvements_categorymicro_state0categorymicro where category_name = 'total_microimprovement_projects'",
+                        // "bigNumber2": "select sum(sum) as total_mi_started from datasets.micro_improvements_categorymicro_state0categorymicro where category_name = 'total_microimprovement_started'",
+                        // "bigNumber3": "select sum(sum) as total_mi_inprogress from datasets.micro_improvements_categorymicro_state0categorymicro where category_name = 'total_microimprovement_inprogress'",
+                        // "bigNumber4": "select sum(sum) as total_mi_submitted from datasets.micro_improvements_categorymicro_state0categorymicro where category_name = 'total_microimprovement_submitted'",
+                        // "bigNumber5": "select sum(sum) as total_mi_submitted_with_evidence from datasets.micro_improvements_categorymicro_state0categorymicro where category_name = 'total_microimprovement_submitted_with_evidence'",
+
+                        "bigNumber1": "select dm.metric_value as total_mi_ongoing from dimensions.mainmetrics dm where  dm.program_id='mip' and dm.metric_name ='Total Micro Improvements Ongoing' and dm.metric_type ='Vanity Metric'",
+                        "bigNumber2": "select dm.metric_value as total_mi_started from dimensions.mainmetrics dm where  dm.program_id='mip' and dm.metric_name ='Total Micro Improvements Started' and dm.metric_type ='Vanity Metric'",
+                        "bigNumber3": "select dm.metric_value as total_mi_inprogress from dimensions.mainmetrics dm where  dm.program_id='mip' and dm.metric_name ='Total Micro Improvements In Progress' and dm.metric_type ='Vanity Metric'",
+                        "bigNumber4": "select dm.metric_value as total_mi_submitted from dimensions.mainmetrics dm where  dm.program_id='mip' and dm.metric_name ='Total Micro Improvements Submitted' and dm.metric_type ='Vanity Metric'",
+                        "bigNumber5": "select dm.metric_value as total_mi_submitted_with_evidence from dimensions.mainmetrics dm where  dm.program_id='mip' and dm.metric_name ='Total Micro Improvements Submitted with Evidence' and dm.metric_type ='Vanity Metric'",
+
                     },
                     "level": "state"
                 }
