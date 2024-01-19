@@ -152,13 +152,13 @@ export class LeafletMapComponent implements OnInit, AfterViewInit, OnChanges {
     }
     else {
       let value = e;
-      let colors ;
-      if(program !== undefined && program!== null && program === 'microimprovement'){
-        colors = ["#007000", "#4CBB17", "#0BDA51"];
-      }else{
-       colors = ["#007000", "#FFBF00", "#D2222D"];
-     }
-     // let colors = ["#4169E1", "#1E90FF", "#0000FF"];
+    //   let colors ; //Uncomment for circle on map
+    //   if(program !== undefined && program!== null && program === 'microimprovement'){
+    //     colors = ["#007000", "#4CBB17", "#0BDA51"];
+    //   }else{
+    //    colors = ["#007000", "#FFBF00", "#D2222D"];
+    //  }
+     let colors = ["#1D4586", "#1156CC", "#6D9FEB"];
       let color = "#fff";
       value = Number(value);
       for (let i = 0; i < values.length - 1; i++) {
@@ -492,403 +492,463 @@ export class LeafletMapComponent implements OnInit, AfterViewInit, OnChanges {
       });
     }
   }
-/*
-  // new code for higlight marker according to geojosn 
-   async createMarkers(mapData: any, prevValues?: any): Promise<void> {
-    let reportTypeIndicator = this.mapData?.options && this.mapData.options.reportIndicatorType ? this.mapData.options.reportIndicatorType : (typeof this.mapData.data[0].indicator === 'string') ? 'boolean' : 'value'
+// new code for higlight marker according to geojosn 
+async createMarkers(mapData: any, prevValues?: any): Promise<void> {
+  let reportTypeIndicator = this.mapData?.options && this.mapData.options.reportIndicatorType ? this.mapData.options.reportIndicatorType : (typeof this.mapData.data[0].indicator === 'string') ? 'boolean' : 'value'
 
-    mapData.data = mapData.data.filter(data => data.indicator !== undefined && data.indicator !== null)
+  mapData.data = mapData.data.filter(data => data.indicator !== undefined && data.indicator !== null)
 
-    // console.log(mapData.data)
-    if (mapData) {
-      // 
-      const mapdataArry = mapData.data
+  // console.log(mapData.data)
+  if (mapData) {
+    // 
+    const mapdataArry = mapData.data
 
-      const stateBorderResult = await this.applyStateBorder();
+    const stateBorderResult = await this.applyStateBorder();
 
-      const stateBorder = stateBorderResult.data.options.data
-      // console.log(mapdataArry, 'mapdataArry');
-      // console.log(stateBorder.features, 'stateborder')
-      const newArray = [];
-      if (this.markers) {
-        this.markers.clearLayers();
-      }
-      this.markers = L.layerGroup().addTo(this.map);
+    const stateBorder = stateBorderResult.data.options.data
+    // console.log(mapdataArry, 'mapdataArry');
+    // console.log(stateBorder.features, 'stateborder')
+    const newArray = [];
+    if (this.markers) {
+      this.markers.clearLayers();
+    }
+    this.markers = L.layerGroup().addTo(this.map);
 
-      mapdataArry.forEach(obj1 => {
-        // console.log(obj1, 'obj1')
-        // Find the corresponding object in array2 based on state_id and state_code
-        // console.log(stateBorder.features.find(item => item.properties.state_code.toString() === obj1.state_id))
-        const obj2 = stateBorder.features.find(item => item.properties.state_code.toString() === obj1.state_id);
-        // console.log(obj2)
-        // If a matching object is found, replace latitude and longitude
-        if (obj2) {
-          const updatedObject = {
-            ...obj1,
-            coordinates: obj2.geometry,
+    mapdataArry.forEach(obj1 => {
+      // console.log(obj1, 'obj1')
+      // Find the corresponding object in array2 based on state_id and state_code
+      // console.log(stateBorder.features.find(item => item.properties.state_code.toString() === obj1.state_id))
+      const obj2 = stateBorder.features.find(item => item.properties.state_code.toString() === obj1.state_id);
+      // console.log(obj2)
+      // If a matching object is found, replace latitude and longitude
+      if (obj2) {
+        const updatedObject = {
+          ...obj1,
+          coordinates: obj2.geometry,
 
 
-          };
-          // Add the updated object to the new array
-          newArray.push(updatedObject);
-        } else {
-          // If no matching object is found, add the original object to the new array
-          newArray.push(obj1);
-        }
-      });
-      // Now, array1 has updated latitude and longitude for matching state_id and state_code
-      // console.log(newArray,);
-      // 
-      let min!: number, max!: number, values: any[] = [];
-      // % boolen=an {yes,NO}
-      if (reportTypeIndicator === 'value' && !prevValues) {
-        mapData.data.forEach((data: any, index: number) => {
-          if (index === 0) {
-            min = data.indicator;
-            max = data.indicator;
-            return;
-          }
-
-          min = min <= data.indicator ? min : data.indicator;
-          max = max >= data.indicator ? max : data.indicator;
-        });
-
-        let parts = 3;
-        max = max > 0 ? max : parts;
-        let range = max - min;
-
-        if (range == 0) {
-          values.push(min)
-        }
-        else {
-          let partSize = (range / parts % 1 === 0) ? range / parts : Number((range / parts).toFixed(0));
-          for (let i = 0; i < parts; i++) {
-            if (i === 0) {
-              values.push(max);
-            }
-            else {
-              let value = Number((max - partSize * i).toFixed(0));
-              values.push(value);
-            }
-          }
-
-          values.push(0);
-        }
-      } else if (reportTypeIndicator === 'percent') {
-        values = [100, 70, 40, 0];
-      }
-      else if (prevValues) {
-        values = prevValues
-      }
-      let level = this.drillDownLevel ? this.drillDownLevel : this.hierarchyLevel
-      var idProp;
-      var nameProp;
-      switch (Number(level)) {
-        case 0:
-          nameProp = 'state_name'
-          idProp = 'state_id'
-          break;
-        case 1:
-          nameProp = 'district_name'
-          idProp = 'district_id'
-          break;
-        case 2:
-          nameProp = 'block_name'
-          idProp = 'block_id'
-          break;
-        case 3:
-          nameProp = 'cluster_name'
-          idProp = 'cluster_id'
-          break;
-      }
-
-      newArray.forEach((data: any) => {
-        // Create a GeoJSON object for the state.
-        // console.log(data.coordinates.coordinates, data, 'data')
-        const stateGeoJSON = {
-          type: 'Feature',
-          geometry: {
-            type: data.coordinates.type,
-            coordinates: data.coordinates.coordinates
-          },
-          properties: {
-            state_id: data.state_id,
-            state_name: data.state_name
-          }
         };
-        // Determine the color of the state.
-        let fillColor;
-        if (String(data.program_status).toLowerCase() === "yes. implemented in only online mode") {
-          // fillColor = "#29c0c2";
-          fillColor='#0932b7'
-        } else if (String(data.program_status).toLowerCase() === "yes. implemented in only face-to-face mode") {
-          // fillColor = "#705000";
-          fillColor:'#6b81c5'
-        } else if (String(data.program_status).toLowerCase() === "no. not applicable") {
-          // fillColor = "#fff400";
-          fillColor='#4d73eb'
-        } else {
-          fillColor = this.getZoneColor(reportTypeIndicator, data.indicator, values);
+        // Add the updated object to the new array
+        newArray.push(updatedObject);
+      } else {
+        // If no matching object is found, add the original object to the new array
+        newArray.push(obj1);
+      }
+    });
+    // Now, array1 has updated latitude and longitude for matching state_id and state_code
+    // console.log(newArray,);
+    // 
+    let min!: number, max!: number, values: any[] = [];
+    // % boolen=an {yes,NO}
+    if (reportTypeIndicator === 'value' && !prevValues) {
+      mapData.data.forEach((data: any, index: number) => {
+        if (index === 0) {
+          min = data.indicator;
+          max = data.indicator;
+          return;
         }
-        // Create a GeoJSON layer for the state and add it to the map.
-        L.geoJSON(stateGeoJSON, {
-          style: {
-            color: "black",
-            fillColor: fillColor,
-            fillOpacity: 1,
-            weight: 1
-          },
-          onEachFeature: (feature, layer) => {
-            layer.on({
-              mouseover: (e) => {
-                e.target.openPopup();
-              },
-              mouseout: (e) => {
-                e.target.closePopup();
-              },
-              click: async (e) => {
-                if (level < 4 && mapData?.options?.drillDownConfig?.enableDrillDown && mapData?.options?.drillDownConfig?.allowedLevels.includes(level)) {
-                  this.applyDrillDown({ name: e.target.options.name, id: e.target.options.id, hierarchyLevel: this.drillDownLevel ? this.drillDownLevel + 1 : this.rbacDetails.role + 1 });
-                }
-              }
-            });
 
-            const popup = R.responsivePopup({
-              hasTip: false,
-              autoPan: true,
-              offset: [15, 20],
-            }).setContent(data.tooltip);
-
-            layer.bindPopup(popup, { closeButton: false });
-          }
-        }).addTo(this.markers);
+        min = min <= data.indicator ? min : data.indicator;
+        max = max >= data.indicator ? max : data.indicator;
       });
 
-      // this.map.addLayer(this.markers);
-      if (!prevValues) {
-        if (this.config === 'VSK' || level > 0) {
-          if (level === 1) {
-            this.fitToStateBorder();
+      let parts = 3;
+      max = max > 0 ? max : parts;
+      let range = max - min;
+
+      if (range == 0) {
+        values.push(min)
+      }
+      else {
+        let partSize = (range / parts % 1 === 0) ? range / parts : Number((range / parts).toFixed(0));
+        for (let i = 0; i < parts; i++) {
+          if (i === 0) {
+            values.push(max);
           }
           else {
-            this.fitToMarkers()
+            let value = Number((max - partSize * i).toFixed(0));
+            values.push(value);
           }
-
         }
-        else if (this.config === 'NVSK' && level === 0) {
-          this.fitBoundsToCountryBorder();
-          this.applyStateBorder()
-        }
-        this.createLegend(reportTypeIndicator, this.mapData, values);
-      }
-      else if (prevValues && mapData?.data?.length === 0) {
-        const NotificationControl = L.Control.extend({
-          onAdd: function (map) {
-            const container = L.DomUtil.create('div', 'leaflet-notification');
-            container.innerHTML = 'No Data for selected legends !';
-            return container;
-          },
 
-          onRemove: function (map) {
-          }
-        });
-        const notificationControl = new NotificationControl({ position: 'topright' });
-        notificationControl.addTo(this.map);
-        setTimeout(() => {
-          notificationControl.remove()
-        }, 2000);
+        values.push(0);
       }
+    } else if (reportTypeIndicator === 'percent') {
+      values = [100, 70, 40, 0];
     }
-  } 
-*/
-  // old function circle marker
-  createMarkers(mapData: any, prevValues?: any): void {
-    let reportTypeIndicator = this.mapData?.options && this.mapData.options.reportIndicatorType ? this.mapData.options.reportIndicatorType : (typeof this.mapData.data[0].indicator === 'string') ? 'boolean' : 'value'
-    mapData.data = mapData.data.filter(data => data.indicator !== undefined && data.indicator !== null)
-    if (mapData) {
-      let min!: number, max!: number, values: any[] = [];
-      if (reportTypeIndicator === 'value' && !prevValues) {
-        mapData.data.forEach((data: any, index: number) => {
-          if (index === 0) {
-            min = data.indicator;
-            max = data.indicator;
-            return;
-          }
+    else if (prevValues) {
+      values = prevValues
+    }
+    let level = this.drillDownLevel ? this.drillDownLevel : this.hierarchyLevel
+    var idProp;
+    var nameProp;
+    switch (Number(level)) {
+      case 0:
+        nameProp = 'state_name'
+        idProp = 'state_id'
+        break;
+      case 1:
+        nameProp = 'district_name'
+        idProp = 'district_id'
+        break;
+      case 2:
+        nameProp = 'block_name'
+        idProp = 'block_id'
+        break;
+      case 3:
+        nameProp = 'cluster_name'
+        idProp = 'cluster_id'
+        break;
+    }
 
-          min = min <= data.indicator ? min : data.indicator;
-          max = max >= data.indicator ? max : data.indicator;
-        });
-
-        let parts = 3;
-        max = max > 0 ? max : parts;
-        let range = max - min;
-
-        if (range == 0) {
-          values.push(min)
-        }
-        else {
-          let partSize = (range / parts % 1 === 0) ? range / parts : Number((range / parts).toFixed(0));
-          for (let i = 0; i < parts; i++) {
-            if (i === 0) {
-              values.push(max);
-            }
-            else {
-              let value = Number((max - partSize * i).toFixed(0));
-              values.push(value);
-            }
-          }
-
-          values.push(0);
-        }
-      } else if (reportTypeIndicator === 'percent') {
-        values = [100, 70, 40, 0];
+    newArray.forEach((data: any) => {
+      if(data.state_id != undefined && data.state_name!=null){
+      // Create a GeoJSON object for the state.
+      // console.log(data.coordinates.coordinates, data, 'data')
+      const stateGeoJSON = {
+        type: 'Feature',
+        geometry: {
+          type: data.coordinates.type,
+          coordinates: data.coordinates.coordinates
+        },
+        properties: {
+          state_id: data.state_id,
+          state_name: data.state_name,
+         }
+      };
+      
+      // Determine the color of the state.
+      let fillColor;
+      if (String(data.program_status).toLowerCase() === "yes. implemented in only online mode") {
+        // fillColor = "#29c0c2";
+        fillColor='#1D4586'
+      } else if (String(data.program_status).toLowerCase() === "yes. implemented in only face-to-face mode") {
+        // fillColor = "#705000";
+        fillColor='#6D9FEB'
+      } else if (String(data.program_status).toLowerCase() === "no. not applicable") {
+        // fillColor = "#fff400";
+        fillColor='#EBF0F9'
+      } 
+      else if (String(data.program_status).toLowerCase() === "yes. implemented in both face-to-face and online modes") {
+        // fillColor = "#705000";
+        fillColor='#1156CC'
       }
-      else if (prevValues) {
-        values = prevValues
+      else {
+        fillColor = this.getZoneColor(reportTypeIndicator, data.indicator, values);
       }
-      let level = this.drillDownLevel ? this.drillDownLevel : this.hierarchyLevel
-      var idProp;
-      var nameProp;
-      switch (Number(level)) {
-        case 0:
-          nameProp = 'state_name'
-          idProp = 'state_id'
-          break;
-        case 1:
-          nameProp = 'district_name'
-          idProp = 'district_id'
-          break;
-        case 2:
-          nameProp = 'block_name'
-          idProp = 'block_id'
-          break;
-        case 3:
-          nameProp = 'cluster_name'
-          idProp = 'cluster_id'
-          break;
-      }
-      mapData.data.forEach((data: any) => {
-        let re = new RegExp("_id$");
-        // let filterIds = {};
-        var id;
-
-
-        // Object.keys(data).forEach((prop: any) => {
-        //   // if(re.test(prop)){
-        //   //   idProp = prop;
-        //   //   return false;
-        //   // }
-        //   // return true;
-        //   // if (prop.match(re)) {
-        //   //   id = data[prop.match(re)?.input]
-        //   // filterIds = {
-        //   //   ...filterIds,
-        //   //   [prop.match(re).input]: data[prop.match(re)?.input]
-        //   // }
-        //   // }
-        //   id = data[idProp]
-        //   console.log(data[nameProp])
-        // })
-  	let fillColor
-  	if(String(data.program_status).toLowerCase() === "yes. implemented in only online mode"){
-          fillColor = "#29c0c2"
-  	} else if(String(data.program_status).toLowerCase() === "yes. implemented in only face-to-face mode"){
-  		fillColor = "#705000"
-  	} else if(String(data.program_status).toLowerCase() === "no. not applicable"){
-  		fillColor = "#fff400"
-  	} else{
-          fillColor = this.getZoneColor(reportTypeIndicator, data.indicator, values,data)
-  	}
-        let markerIcon = L.circleMarker([data.Latitude, data.Longitude], {
-          id: data[idProp],
-          name: data[nameProp],
-          hierarchyLevel: data.hierarchyLevel,
-          color: "gray",
-          // fillColor: this.getZoneColor(reportTypeIndicator, data.indicator >= 1 ? (max - min ? (data.indicator - min) / (max - min) * 100 : data.indicator) : -1),
+      // Create a GeoJSON layer for the state and add it to the map.
+      L.geoJSON(stateGeoJSON, {
+        style: {
+          color: "black",
           fillColor: fillColor,
           fillOpacity: 1,
-          strokeWeight: 0.01,
           weight: 1
-        }).addTo(this.map);
+        },
+        onEachFeature: (feature, layer) => {
+          layer.on({
+            mouseover: (e) => {
+              e.target.openPopup();
+            },
+            mouseout: (e) => {
+              e.target.closePopup();
+            },
+            click: async (e) => {
+              if (level < 4 && mapData?.options?.drillDownConfig?.enableDrillDown && mapData?.options?.drillDownConfig?.allowedLevels.includes(level)) {
+                this.applyDrillDown({ name: e.target.options.name, id: e.target.options.id, hierarchyLevel: this.drillDownLevel ? this.drillDownLevel + 1 : this.rbacDetails.role + 1 });
+              }
+            }
+          });
 
-        markerIcon._path.id = StateCodes[Number(data.state_code)];
+          const popup = R.responsivePopup({
+            hasTip: false,
+            autoPan: true,
+            offset: [15, 20],
+          }).setContent(data.tooltip);
 
-        markerIcon.setRadius(5);
+          layer.bindPopup(popup, { closeButton: false });
+        }
+      }).addTo(this.markers);
+    }
+    
+    });
 
-        const popup = R.responsivePopup({
-          hasTip: false,
-          autoPan: true,
-          offset: [15, 20],
-        }).setContent(
-          data.tooltip
-        );
+    mapData.data.forEach((data: any) => {
+      if (data.district_id != undefined && data.district_name != null){
+      let re = new RegExp("_id$");
+      var id;
+      let fillColor = this.getZoneColor(reportTypeIndicator, data.indicator, values)
+      
+      let markerIcon = L.circleMarker([data.Latitude, data.Longitude], {
+        id: data[idProp],
+        name: data[nameProp],
+        hierarchyLevel: data.hierarchyLevel,
+        color: "black",
+        fillColor: fillColor,
+        fillOpacity: 1,
+        strokeWeight: 0.01,
+        weight: 1
+      }).addTo(this.map);
 
-        markerIcon.on("mouseover", (e: any) => {
-          e.target.openPopup();
-        });
+      markerIcon._path.id = StateCodes[Number(data.state_code)];
 
-        markerIcon.on("mouseout", (e: any) => {
-          e.target.closePopup();
-        });
+      markerIcon.setRadius(5);
 
-        markerIcon.on("click", async (e: any) => {
-          // if (Number(lev) == 1) {
-          //   let stateGeoJSON = await this._mapService.getStateGeoJSON();
+      const popup = R.responsivePopup({
+        hasTip: false,
+        autoPan: true,
+        offset: [15, 20],
+      }).setContent(
+        data.tooltip
+      );
 
-          //   this.districtGeoJSON = stateGeoJSON.features.find(feature => {
-          //     return feature.properties['ID_2'] == e.target.options.id;
-          //   });
-          //   this.applyDrillDown({ id: e.target.options.id, hierarchyLevel: this.rbacDetails.role + 1, name: e.target.options.name })
-          // }
-          console.log(mapData?.options?.drillDownConfig?.allowedLevels.includes(level))
-          if (level < 4 && mapData?.options?.drillDownConfig?.enableDrillDown && mapData?.options?.drillDownConfig?.allowedLevels.includes(level)) {
-            console.log(mapData?.options?.drillDownConfig?.enableDrillDown)
-            this.applyDrillDown({ name: e.target.options.name, id: e.target.options.id, hierarchyLevel: this.drillDownLevel ? this.drillDownLevel + 1 : this.rbacDetails.role + 1 })
-          }
-        })
-
-        markerIcon.addTo(this.map).bindPopup(popup, { closeButton: false });
-
-        this.markers.addLayer(markerIcon);
+      markerIcon.on("mouseover", (e: any) => {
+        e.target.openPopup();
       });
 
-      this.map.addLayer(this.markers);
-      if (!prevValues) {
-        if (this.config === 'VSK' || level > 0) {
-          if(level === 1) {
-            this.fitToStateBorder();
-          }
-          else {
-            this.fitToMarkers()
-          }
+      markerIcon.on("mouseout", (e: any) => {
+        e.target.closePopup();
+      });
 
+      markerIcon.on("click", async (e: any) => {
+         console.log(mapData?.options?.drillDownConfig?.allowedLevels.includes(level))
+        if (level < 4 && mapData?.options?.drillDownConfig?.enableDrillDown && mapData?.options?.drillDownConfig?.allowedLevels.includes(level)) {
+          console.log(mapData?.options?.drillDownConfig?.enableDrillDown)
+          this.applyDrillDown({ name: e.target.options.name, id: e.target.options.id, hierarchyLevel: this.drillDownLevel ? this.drillDownLevel + 1 : this.rbacDetails.role + 1 })
         }
-        else if (this.config === 'NVSK' && level === 0) {
-          this.fitBoundsToCountryBorder();
-        }
-        this.createLegend(reportTypeIndicator, this.mapData, values);
-      }
-      else if (prevValues && mapData?.data?.length === 0) {
-        const NotificationControl = L.Control.extend({
-          onAdd: function (map) {
-            const container = L.DomUtil.create('div', 'leaflet-notification');
-            container.innerHTML = 'No Data for selected legends !';
-            return container;
-          },
+      })
 
-          onRemove: function (map) {
-          }
-        });
-        const notificationControl = new NotificationControl({ position: 'topright' });
-        notificationControl.addTo(this.map);
-        setTimeout(() => {
-          notificationControl.remove()
-        }, 2000);
+      markerIcon.addTo(this.map).bindPopup(popup, { closeButton: false });
+
+      this.markers.addLayer(markerIcon);
+    }
+   });
+
+    this.map.addLayer(this.markers);
+       
+    if (!prevValues) {
+      if (this.config === 'VSK' || level > 0) {
+        if (level === 1) {
+          this.fitToStateBorder();
+        }
+        else {
+          this.fitToMarkers()
+        }
+
       }
+      else if (this.config === 'NVSK' && level === 0) {
+        this.fitBoundsToCountryBorder();
+        this.applyStateBorder()
+      }
+      this.createLegend(reportTypeIndicator, this.mapData, values);
+    }
+    else if (prevValues && mapData?.data?.length === 0) {
+      const NotificationControl = L.Control.extend({
+        onAdd: function (map) {
+          const container = L.DomUtil.create('div', 'leaflet-notification');
+          container.innerHTML = 'No Data for selected legends !';
+          return container;
+        },
+
+        onRemove: function (map) {
+        }
+      });
+      const notificationControl = new NotificationControl({ position: 'topright' });
+      notificationControl.addTo(this.map);
+      setTimeout(() => {
+        notificationControl.remove()
+      }, 2000);
     }
   }
+} 
+  // old function circle marker 
+  //Uncomment for circle on map
+  // createMarkers(mapData: any, prevValues?: any): void {
+  //   let reportTypeIndicator = this.mapData?.options && this.mapData.options.reportIndicatorType ? this.mapData.options.reportIndicatorType : (typeof this.mapData.data[0].indicator === 'string') ? 'boolean' : 'value'
+  //   mapData.data = mapData.data.filter(data => data.indicator !== undefined && data.indicator !== null)
+  //   if (mapData) {
+  //     let min!: number, max!: number, values: any[] = [];
+  //     if (reportTypeIndicator === 'value' && !prevValues) {
+  //       mapData.data.forEach((data: any, index: number) => {
+  //         if (index === 0) {
+  //           min = data.indicator;
+  //           max = data.indicator;
+  //           return;
+  //         }
 
-  /* new changes create lenged
+  //         min = min <= data.indicator ? min : data.indicator;
+  //         max = max >= data.indicator ? max : data.indicator;
+  //       });
+
+  //       let parts = 3;
+  //       max = max > 0 ? max : parts;
+  //       let range = max - min;
+
+  //       if (range == 0) {
+  //         values.push(min)
+  //       }
+  //       else {
+  //         let partSize = (range / parts % 1 === 0) ? range / parts : Number((range / parts).toFixed(0));
+  //         for (let i = 0; i < parts; i++) {
+  //           if (i === 0) {
+  //             values.push(max);
+  //           }
+  //           else {
+  //             let value = Number((max - partSize * i).toFixed(0));
+  //             values.push(value);
+  //           }
+  //         }
+
+  //         values.push(0);
+  //       }
+  //     } else if (reportTypeIndicator === 'percent') {
+  //       values = [100, 70, 40, 0];
+  //     }
+  //     else if (prevValues) {
+  //       values = prevValues
+  //     }
+  //     let level = this.drillDownLevel ? this.drillDownLevel : this.hierarchyLevel
+  //     var idProp;
+  //     var nameProp;
+  //     switch (Number(level)) {
+  //       case 0:
+  //         nameProp = 'state_name'
+  //         idProp = 'state_id'
+  //         break;
+  //       case 1:
+  //         nameProp = 'district_name'
+  //         idProp = 'district_id'
+  //         break;
+  //       case 2:
+  //         nameProp = 'block_name'
+  //         idProp = 'block_id'
+  //         break;
+  //       case 3:
+  //         nameProp = 'cluster_name'
+  //         idProp = 'cluster_id'
+  //         break;
+  //     }
+  //     mapData.data.forEach((data: any) => {
+  //       let re = new RegExp("_id$");
+  //       // let filterIds = {};
+  //       var id;
+
+
+  //       // Object.keys(data).forEach((prop: any) => {
+  //       //   // if(re.test(prop)){
+  //       //   //   idProp = prop;
+  //       //   //   return false;
+  //       //   // }
+  //       //   // return true;
+  //       //   // if (prop.match(re)) {
+  //       //   //   id = data[prop.match(re)?.input]
+  //       //   // filterIds = {
+  //       //   //   ...filterIds,
+  //       //   //   [prop.match(re).input]: data[prop.match(re)?.input]
+  //       //   // }
+  //       //   // }
+  //       //   id = data[idProp]
+  //       //   console.log(data[nameProp])
+  //       // })
+  // 	let fillColor
+  // 	if(String(data.program_status).toLowerCase() === "yes. implemented in only online mode"){
+  //         fillColor = "#29c0c2"
+  // 	} else if(String(data.program_status).toLowerCase() === "yes. implemented in only face-to-face mode"){
+  // 		fillColor = "#705000"
+  // 	} else if(String(data.program_status).toLowerCase() === "no. not applicable"){
+  // 		fillColor = "#fff400"
+  // 	} else{
+  //         fillColor = this.getZoneColor(reportTypeIndicator, data.indicator, values,data)
+  // 	}
+  //       let markerIcon = L.circleMarker([data.Latitude, data.Longitude], {
+  //         id: data[idProp],
+  //         name: data[nameProp],
+  //         hierarchyLevel: data.hierarchyLevel,
+  //         color: "gray",
+  //         // fillColor: this.getZoneColor(reportTypeIndicator, data.indicator >= 1 ? (max - min ? (data.indicator - min) / (max - min) * 100 : data.indicator) : -1),
+  //         fillColor: fillColor,
+  //         fillOpacity: 1,
+  //         strokeWeight: 0.01,
+  //         weight: 1
+  //       }).addTo(this.map);
+
+  //       markerIcon._path.id = StateCodes[Number(data.state_code)];
+
+  //       markerIcon.setRadius(5);
+
+  //       const popup = R.responsivePopup({
+  //         hasTip: false,
+  //         autoPan: true,
+  //         offset: [15, 20],
+  //       }).setContent(
+  //         data.tooltip
+  //       );
+
+  //       markerIcon.on("mouseover", (e: any) => {
+  //         e.target.openPopup();
+  //       });
+
+  //       markerIcon.on("mouseout", (e: any) => {
+  //         e.target.closePopup();
+  //       });
+
+  //       markerIcon.on("click", async (e: any) => {
+  //         // if (Number(lev) == 1) {
+  //         //   let stateGeoJSON = await this._mapService.getStateGeoJSON();
+
+  //         //   this.districtGeoJSON = stateGeoJSON.features.find(feature => {
+  //         //     return feature.properties['ID_2'] == e.target.options.id;
+  //         //   });
+  //         //   this.applyDrillDown({ id: e.target.options.id, hierarchyLevel: this.rbacDetails.role + 1, name: e.target.options.name })
+  //         // }
+  //         console.log(mapData?.options?.drillDownConfig?.allowedLevels.includes(level))
+  //         if (level < 4 && mapData?.options?.drillDownConfig?.enableDrillDown && mapData?.options?.drillDownConfig?.allowedLevels.includes(level)) {
+  //           console.log(mapData?.options?.drillDownConfig?.enableDrillDown)
+  //           this.applyDrillDown({ name: e.target.options.name, id: e.target.options.id, hierarchyLevel: this.drillDownLevel ? this.drillDownLevel + 1 : this.rbacDetails.role + 1 })
+  //         }
+  //       })
+
+  //       markerIcon.addTo(this.map).bindPopup(popup, { closeButton: false });
+
+  //       this.markers.addLayer(markerIcon);
+  //     });
+
+  //     this.map.addLayer(this.markers);
+  //     if (!prevValues) {
+  //       if (this.config === 'VSK' || level > 0) {
+  //         if(level === 1) {
+  //           this.fitToStateBorder();
+  //         }
+  //         else {
+  //           this.fitToMarkers()
+  //         }
+
+  //       }
+  //       else if (this.config === 'NVSK' && level === 0) {
+  //         this.fitBoundsToCountryBorder();
+  //       }
+  //       this.createLegend(reportTypeIndicator, this.mapData, values);
+  //     }
+  //     else if (prevValues && mapData?.data?.length === 0) {
+  //       const NotificationControl = L.Control.extend({
+  //         onAdd: function (map) {
+  //           const container = L.DomUtil.create('div', 'leaflet-notification');
+  //           container.innerHTML = 'No Data for selected legends !';
+  //           return container;
+  //         },
+
+  //         onRemove: function (map) {
+  //         }
+  //       });
+  //       const notificationControl = new NotificationControl({ position: 'topright' });
+  //       notificationControl.addTo(this.map);
+  //       setTimeout(() => {
+  //         notificationControl.remove()
+  //       }, 2000);
+  //     }
+  //   }
+  // }
+
+  //new changes create lenged 
   createLegend(reportTypeIndicator: string, mapData: any, values: any): void {
     let mapOptions = mapData.options;
     let legend = L.control({ position: 'topright' });
@@ -1002,228 +1062,154 @@ export class LeafletMapComponent implements OnInit, AfterViewInit, OnChanges {
     this.legend?.remove();
     this.legend = legend;
   }
-*/
 
-createLegend(reportTypeIndicator: string, mapData: any, values: any): void {
-  let mapOptions = mapData.options;
-  let legend = L.control({ position: 'topright' });
-  let ref = this;
-  let labels: any[] = [];
-  let program ;
-  legend.onAdd = function (map: any) {
-    let div = L.DomUtil.create('div', 'info legend text-center');
-    let clickable = false;
-    if (mapOptions.legend && mapOptions.legend.title) {
-      labels.push(`<strong>${mapOptions.selectedMetric ? mapOptions.legend.title + mapOptions.selectedMetric : mapOptions.legend.title}:</strong>`)
-    }
-    if (reportTypeIndicator === 'boolean') {
+//   //Uncomment for circle on map
+// createLegend(reportTypeIndicator: string, mapData: any, values: any): void {
+//   let mapOptions = mapData.options;
+//   let legend = L.control({ position: 'topright' });
+//   let ref = this;
+//   let labels: any[] = [];
+//   let program ;
+//   legend.onAdd = function (map: any) {
+//     let div = L.DomUtil.create('div', 'info legend text-center');
+//     let clickable = false;
+//     if (mapOptions.legend && mapOptions.legend.title) {
+//       labels.push(`<strong>${mapOptions.selectedMetric ? mapOptions.legend.title + mapOptions.selectedMetric : mapOptions.legend.title}:</strong>`)
+//     }
+//     if (reportTypeIndicator === 'boolean') {
 
-      // console.log('mapData.data[0].program', mapData.data[0].program_name)
-      // console.log('mapOptions.legend.title', mapOptions.legend)
-      // if (mapOptions.legend && mapOptions.legend.title && mapOptions.legend.title == 'Implemented Nishtha'){
-      //   if(mapData.data[0].program == 'NISHTHA Elementary'){
-      //     values = ["Implemented in only online mode","Implemented in only face-to-face mode","Implemented in both face-to-face and online modes","Not implemented"];
-      //   }else if(mapData.data[0].program == 'NISHTHA Secondary' || mapData.data[0].program == 'NISHTHA FLN'){
-      //     values = ["Implemented in only online mode","Implemented in only face-to-face mode","Not implemented"];
-      //   }else if(mapData.data[0].program == 'NISHTHA ECCE'){
-      //     values = ["Implemented in only online mode","Not implemented"];
-      //   }else{}
-      // }
-      if (mapData.data[0].program_name == 'NISHTHA Elementary (Online)') {
-        mapData.data[0].program_name = 'NISHTHA Elementary';
-        values = ["Implemented in only online mode", "Implemented in only face-to-face mode", "Implemented in both face-to-face and online modes", "Not implemented", "Not applicable"];
-      } else if (mapData.data[0].program_name == 'NISHTHA Secondary' || mapData.data[0].program_name == 'NISHTHA FLN') {
-        values = ["Implemented in only online mode", "Implemented in only face-to-face mode", "Not implemented"];
-      } else if (mapData.data[0].program_name == 'NISHTHA ECCE') {
-        values = ["Implemented in only online mode", "Not implemented"];
-      }
-      else {
-        values = ["Yes", "No"];
-      }
-      for (let i = 0; i < values.length; i++) {
-        // labels.push(`<i class="fa fa-square" style="color:${ref.getLayerColor(values[i])}"></i> ${values[i]}`);
-        labels.push(`<button class="legend-range" style="background-color: ${ref.getZoneColor(reportTypeIndicator, values[i], values ,mapData.data[0])}; color: ${invert(ref.getZoneColor(reportTypeIndicator, values[i], values), true)}">
-        <div class="button-content">
-       <span class="value">${values[i]}</span>
-      </div>
-   </button>`);
-      }
-    }
-    else if (values.length <= 1 && reportTypeIndicator !== 'boolean') {
-      if(String(mapData.data[0].category_name)!== undefined && String(mapData.data[0].category_name)!== null && String(mapData.data[0].category_name).includes("microimprovement")){
-        program = "microimprovement";       
-     }
-      // labels.push(`<i class="fa fa-square" style="color:${ref.getLayerColor(values[0] ? values[0] : -1, true)}"></i> ${formatNumberForReport(values[0])}`);
-      labels.push(`<button class="legend-range" style="background-color: ${ref.getLayerColor(values[0], true, values,program)}; color: ${invert(ref.getLayerColor(values[0], true, values,program), true)}">
-        <div class="button-content">
-        <span class="value">${values[0] ? values[0] : 0}${reportTypeIndicator === 'percent' ? '%' : ''}</span>
-        </div>
-        </button><br>`)
-    }
-    else {
-      if(String(mapData.data[0].category_name)!== undefined && String(mapData.data[0].category_name)!== null && String(mapData.data[0].category_name).includes("microimprovement")){
-        program = "microimprovement";       
-     }
-      ref.legendForm = {
-        range1: true,
-        range2: true,
-        range3: true
-      };
-      values = values && values.length > 0 && reportTypeIndicator !== 'percent' ? values : [100, 70, 40, 0];
-      // div.innerHTML = labels[0] + '</br>';
-      div.innerHTML = labels[0];
+//       // console.log('mapData.data[0].program', mapData.data[0].program_name)
+//       // console.log('mapOptions.legend.title', mapOptions.legend)
+//       // if (mapOptions.legend && mapOptions.legend.title && mapOptions.legend.title == 'Implemented Nishtha'){
+//       //   if(mapData.data[0].program == 'NISHTHA Elementary'){
+//       //     values = ["Implemented in only online mode","Implemented in only face-to-face mode","Implemented in both face-to-face and online modes","Not implemented"];
+//       //   }else if(mapData.data[0].program == 'NISHTHA Secondary' || mapData.data[0].program == 'NISHTHA FLN'){
+//       //     values = ["Implemented in only online mode","Implemented in only face-to-face mode","Not implemented"];
+//       //   }else if(mapData.data[0].program == 'NISHTHA ECCE'){
+//       //     values = ["Implemented in only online mode","Not implemented"];
+//       //   }else{}
+//       // }
+//       if (mapData.data[0].program_name == 'NISHTHA Elementary (Online)') {
+//         mapData.data[0].program_name = 'NISHTHA Elementary';
+//         values = ["Implemented in only online mode", "Implemented in only face-to-face mode", "Implemented in both face-to-face and online modes", "Not implemented", "Not applicable"];
+//       } else if (mapData.data[0].program_name == 'NISHTHA Secondary' || mapData.data[0].program_name == 'NISHTHA FLN') {
+//         values = ["Implemented in only online mode", "Implemented in only face-to-face mode", "Not implemented"];
+//       } else if (mapData.data[0].program_name == 'NISHTHA ECCE') {
+//         values = ["Implemented in only online mode", "Not implemented"];
+//       }
+//       else {
+//         values = ["Yes", "No"];
+//       }
+//       for (let i = 0; i < values.length; i++) {
+//         // labels.push(`<i class="fa fa-square" style="color:${ref.getLayerColor(values[i])}"></i> ${values[i]}`);
+//         labels.push(`<button class="legend-range" style="background-color: ${ref.getZoneColor(reportTypeIndicator, values[i], values ,mapData.data[0])}; color: ${invert(ref.getZoneColor(reportTypeIndicator, values[i], values), true)}">
+//         <div class="button-content">
+//        <span class="value">${values[i]}</span>
+//       </div>
+//    </button>`);
+//       }
+//     }
+//     else if (values.length <= 1 && reportTypeIndicator !== 'boolean') {
+//       if(String(mapData.data[0].category_name)!== undefined && String(mapData.data[0].category_name)!== null && String(mapData.data[0].category_name).includes("microimprovement")){
+//         program = "microimprovement";       
+//      }
+//       // labels.push(`<i class="fa fa-square" style="color:${ref.getLayerColor(values[0] ? values[0] : -1, true)}"></i> ${formatNumberForReport(values[0])}`);
+//       labels.push(`<button class="legend-range" style="background-color: ${ref.getLayerColor(values[0], true, values,program)}; color: ${invert(ref.getLayerColor(values[0], true, values,program), true)}">
+//         <div class="button-content">
+//         <span class="value">${values[0] ? values[0] : 0}${reportTypeIndicator === 'percent' ? '%' : ''}</span>
+//         </div>
+//         </button><br>`)
+//     }
+//     else {
+//       if(String(mapData.data[0].category_name)!== undefined && String(mapData.data[0].category_name)!== null && String(mapData.data[0].category_name).includes("microimprovement")){
+//         program = "microimprovement";       
+//      }
+//       ref.legendForm = {
+//         range1: true,
+//         range2: true,
+//         range3: true
+//       };
+//       values = values && values.length > 0 && reportTypeIndicator !== 'percent' ? values : [100, 70, 40, 0];
+//       // div.innerHTML = labels[0] + '</br>';
+//       div.innerHTML = labels[0];
 
-      // Create the reset button element
-      const resetButton = L.DomUtil.create('button', 'legend-range-reset pull-right');
-      resetButton.innerHTML = '<i class="fa fa-refresh"></i>';
-      L.DomEvent.addListener(resetButton, 'click', () => {
-        ref.resetRange();
-      });
-      div.insertBefore(resetButton, div.previousSibling);
+//       // Create the reset button element
+//       const resetButton = L.DomUtil.create('button', 'legend-range-reset pull-right');
+//       resetButton.innerHTML = '<i class="fa fa-refresh"></i>';
+//       L.DomEvent.addListener(resetButton, 'click', () => {
+//         ref.resetRange();
+//       });
+//       div.insertBefore(resetButton, div.previousSibling);
 
-      // for (let i = 0; i < values.length - 1; i++) {
-      //   let span = L.DomUtil.create('span', 'clickable-range');
-      //   span.innerHTML = `<button class="legend-range" style="background-color: ${ref.getLayerColor(values[i], true, values)}; color: ${invert(ref.getLayerColor(values[i], true, values), true)}"><div class="button-content"><input type="checkbox" id="checkbox-${i + 1}" class="legend-checkbox" checked />${values[i + 1]} &dash; ${values[i] ? values[i] : 0}${reportTypeIndicator === 'percent' ? '%' : ''}</div></button><br>`;
-      //   L.DomEvent.addListener(span, 'click', () => {
-      //     // ref.applyRange(Number(values[i] ? values[i] : 0), Number(values[i + 1]), Number(values[values.length - 1]), ref.getLayerColor(values[i], true, values));
-      //     ref.applyRange(i + 1, Number(values[values.length - 1]), ref.getLayerColor(values[i], true, values), Number(values[i] ? values[i] : 0), Number(values[i + 1]))
-      //   });
-      //   div.appendChild(span);
-      //   clickable = true;
-      // }
+//       // for (let i = 0; i < values.length - 1; i++) {
+//       //   let span = L.DomUtil.create('span', 'clickable-range');
+//       //   span.innerHTML = `<button class="legend-range" style="background-color: ${ref.getLayerColor(values[i], true, values)}; color: ${invert(ref.getLayerColor(values[i], true, values), true)}"><div class="button-content"><input type="checkbox" id="checkbox-${i + 1}" class="legend-checkbox" checked />${values[i + 1]} &dash; ${values[i] ? values[i] : 0}${reportTypeIndicator === 'percent' ? '%' : ''}</div></button><br>`;
+//       //   L.DomEvent.addListener(span, 'click', () => {
+//       //     // ref.applyRange(Number(values[i] ? values[i] : 0), Number(values[i + 1]), Number(values[values.length - 1]), ref.getLayerColor(values[i], true, values));
+//       //     ref.applyRange(i + 1, Number(values[values.length - 1]), ref.getLayerColor(values[i], true, values), Number(values[i] ? values[i] : 0), Number(values[i + 1]))
+//       //   });
+//       //   div.appendChild(span);
+//       //   clickable = true;
+//       // }
 
-      for (let i = 0; i < values.length - 1; i++) {
-        let span = L.DomUtil.create('span', 'clickable-range');
-        const lowerValue = values[i + 1];
-        const upperValue = values[i] ? values[i] : 0;
-        const formattedLowerValue = formatNumberForReport(lowerValue);
-        const formattedUpperValue = formatNumberForReport(upperValue);
-        span.innerHTML = `
-          <button class="legend-range" style="background-color: ${ref.getLayerColor(values[i], true, values,program)}; color: ${invert(ref.getLayerColor(values[i], true, values,program), true)}">
-               <div class="button-content">
-              <input type="checkbox" id="checkbox-${i + 1}" class="legend-checkbox" checked />
-              <span class="value">${formattedLowerValue} &ndash; ${formattedUpperValue}${reportTypeIndicator === 'percent' ? '%' : ''}</span>
-             </div>
-          </button><br>`;
+//       for (let i = 0; i < values.length - 1; i++) {
+//         let span = L.DomUtil.create('span', 'clickable-range');
+//         const lowerValue = values[i + 1];
+//         const upperValue = values[i] ? values[i] : 0;
+//         const formattedLowerValue = formatNumberForReport(lowerValue);
+//         const formattedUpperValue = formatNumberForReport(upperValue);
+//         span.innerHTML = `
+//           <button class="legend-range" style="background-color: ${ref.getLayerColor(values[i], true, values,program)}; color: ${invert(ref.getLayerColor(values[i], true, values,program), true)}">
+//                <div class="button-content">
+//               <input type="checkbox" id="checkbox-${i + 1}" class="legend-checkbox" checked />
+//               <span class="value">${formattedLowerValue} &ndash; ${formattedUpperValue}${reportTypeIndicator === 'percent' ? '%' : ''}</span>
+//              </div>
+//           </button><br>`;
 
-        L.DomEvent.addListener(span, 'click', () => {
-          ref.applyRange(i + 1, Number(values[values.length - 1]), ref.getLayerColor(values[i], true, values), values)
-        });
-        div.appendChild(span);
-        clickable = true;
-      }
-    }
-    if (!clickable) {
-      div.innerHTML = labels.join('<br>');
-    }
-    return div;
-  };
-  legend.addTo(this.map);
-  this.legend?.remove();
-  this.legend = legend;
-}
-  // getZoneColor(reportTypeIndicator: string, value: string | number, values?: number[]) {
-  //   if (reportTypeIndicator === 'boolean') {
-  //     if (String(value).toLowerCase() == "yes") {
-  //       return "#0932b7";
-  //     } else if (String(value).toLowerCase() == "implemented in only online mode") {
-  //       return "#29c0c2";
-  //     } else if (String(value).toLowerCase() == "implemented in only face-to-face mode") {
-  //       return "#705000";
-  //     } else if (String(value).toLowerCase() == "implemented in both face-to-face and online modes") {
-  //       return "#007000";
-  //     } else if (String(value).toLowerCase() == "not implemented") {
-  //       return "#D2222D";
-  //     } else if (String(value).toLowerCase() == "not applicable") {
-  //       return "#fff400";
-  //     } else {
-  //       return "#D2222D";
-  //     }
-  //   }
-  //   else if (values && values.length === 1) {
-  //     return "#007000"
-  //   }
-  //   else {
-  //     let colors = ["#007000", "#FFBF00", "#D2222D"];
-  //     let color = "#fff";
-  //     value = Number(value);
-  //     for (let i = 0; i < values.length - 1; i++) {
-  //       if (value <= values[i] && value >= values[i + 1]) {
-  //         color = colors[i];
-  //       }
-  //     }
+//         L.DomEvent.addListener(span, 'click', () => {
+//           ref.applyRange(i + 1, Number(values[values.length - 1]), ref.getLayerColor(values[i], true, values), values)
+//         });
+//         div.appendChild(span);
+//         clickable = true;
+//       }
+//     }
+//     if (!clickable) {
+//       div.innerHTML = labels.join('<br>');
+//     }
+//     return div;
+//   };
+//   legend.addTo(this.map);
+//   this.legend?.remove();
+//   this.legend = legend;
+// }
 
-  //     return color;
-  //   }
-  // }
+  
 
-  // change color of blue
-
-  /* new get zonecolor 
-  getZoneColor(reportTypeIndicator: string, value: string | number, values?: number[]) {
-    if (reportTypeIndicator === 'boolean') {
-      if (String(value).toLowerCase() == "yes") {
-        return "#0000FF"; // Blue
-      } else if (String(value).toLowerCase() == "implemented in only online mode") {
-        return "#00BFFF"; // Deep Sky Blue
-      } else if (String(value).toLowerCase() == "implemented in only face-to-face mode") {
-        return "#1E90FF"; // Dodger Blue
-      } else if (String(value).toLowerCase() == "implemented in both face-to-face and online modes") {
-        return "#4169E1"; // Royal Blue
-      } else if (String(value).toLowerCase() == "not implemented") {
-        return "#00008B"; // Dark Blue
-      } else if (String(value).toLowerCase() == "not applicable") {
-        return "#87CEFA"; // Light Sky Blue
-      } else {
-        return "#00008B"; // Dark Blue
-      }
-    }
-    else if (values && values.length === 1) {
-      return "#4169E1"; // Royal Blue
-    }
-    else {
-      let colors = ["#4169E1", "#1E90FF", "#0000FF"]; // Shades of Blue
-      let color = "#fff";
-      value = Number(value);
-      for (let i = 0; i < values.length - 1; i++) {
-        if (value <= values[i] && value >= values[i + 1]) {
-          color = colors[i];
-        }
-      }
-
-      return color;
-    }
-  }
-*/
-
-getZoneColor(reportTypeIndicator: string, value: string | number, values?: number[] ,data ?: any) {
-    if (reportTypeIndicator === 'boolean') {
+ 
+ // new get zonecolor 
+ getZoneColor(reportTypeIndicator: string, value: string | number, values?: number[]) {
+  if (reportTypeIndicator === 'boolean') {
     if (String(value).toLowerCase() == "yes") {
-      return "#007000";
+      return "#1D4586"; // Blue
     } else if (String(value).toLowerCase() == "implemented in only online mode") {
-      return "#29c0c2";
+      return "#1D4586"; // Deep Sky Blue
     } else if (String(value).toLowerCase() == "implemented in only face-to-face mode") {
-      return "#705000";
+      return "#6D9FEB"; // Dodger Blue
     } else if (String(value).toLowerCase() == "implemented in both face-to-face and online modes") {
-      return "#007000";
+      return "#1156CC"; // Royal Blue
     } else if (String(value).toLowerCase() == "not implemented") {
-      return "#D2222D";
+      return "#C9DAF7"; // Dark Blue
     } else if (String(value).toLowerCase() == "not applicable") {
-      return "#fff400";
+      return "#EBF0F9"; // Light Sky Blue
     } else {
-      return "#D2222D";
+      return "#C9DAF7"; // Dark Blue
     }
   }
   else if (values && values.length === 1) {
-    return "#007000"
+    return "#1156CC"; // Royal Blue
   }
   else {
-    let colors;
-    if(String(data.category_name)!== undefined && String(data.category_name)!== null && String(data.category_name).includes("microimprovement")){
-     colors = ["#007000", "#4CBB17", "#0BDA51"];
-    }else{
-     colors = ["#007000", "#FFBF00", "#D2222D"];
-    }
+    let colors = ["#1D4586", "#1156CC", "#6D9FEB"];
     let color = "#fff";
     value = Number(value);
     for (let i = 0; i < values.length - 1; i++) {
@@ -1235,6 +1221,47 @@ getZoneColor(reportTypeIndicator: string, value: string | number, values?: numbe
     return color;
   }
 }
+
+// //Uncomment for circle on map
+// getZoneColor(reportTypeIndicator: string, value: string | number, values?: number[] ,data ?: any) {
+//     if (reportTypeIndicator === 'boolean') {
+//     if (String(value).toLowerCase() == "yes") {
+//       return "#007000";
+//     } else if (String(value).toLowerCase() == "implemented in only online mode") {
+//       return "#29c0c2";
+//     } else if (String(value).toLowerCase() == "implemented in only face-to-face mode") {
+//       return "#705000";
+//     } else if (String(value).toLowerCase() == "implemented in both face-to-face and online modes") {
+//       return "#007000";
+//     } else if (String(value).toLowerCase() == "not implemented") {
+//       return "#D2222D";
+//     } else if (String(value).toLowerCase() == "not applicable") {
+//       return "#fff400";
+//     } else {
+//       return "#D2222D";
+//     }
+//   }
+//   else if (values && values.length === 1) {
+//     return "#007000"
+//   }
+//   else {
+//     let colors;
+//     if(String(data.category_name)!== undefined && String(data.category_name)!== null && String(data.category_name).includes("microimprovement")){
+//      colors = ["#007000", "#4CBB17", "#0BDA51"];
+//     }else{
+//      colors = ["#007000", "#FFBF00", "#D2222D"];
+//     }
+//     let color = "#fff";
+//     value = Number(value);
+//     for (let i = 0; i < values.length - 1; i++) {
+//       if (value <= values[i] && value >= values[i + 1]) {
+//         color = colors[i];
+//       }
+//     }
+
+//     return color;
+//   }
+// }
   resetRange() {
     // this.applyCountryBorder(this.mapData)
     this.createMarkers(this.mapData)

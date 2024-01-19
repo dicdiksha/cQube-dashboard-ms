@@ -202,15 +202,18 @@ export const config = {
                             type: "percentage",
                             values: [
                                 {
-                                    color: "#007000",
+                                    //color: "#007000",
+                                    color: "#1D4586",
                                     breakPoint: 70
                                 },
                                 {
-                                    color: "#FFBF00",
+                                    //color: "#FFBF00",
+                                    color: "#1156CC",
                                     breakPoint: 40
                                 },
                                 {
-                                    color: "#D2222D",
+                                    //color: "#D2222D",
+                                    color: "#6D9FEB",
                                     breakPoint: 0
                                 }
                             ]
@@ -293,15 +296,18 @@ export const config = {
                             type: "percentage",
                             values: [
                                 {
-                                    color: "#007000",
+                                    //color: "#007000",
+                                    color: "#1D4586",
                                     breakPoint: 70
                                 },
                                 {
-                                    color: "#FFBF00",
+                                    //color: "#FFBF00",
+                                    color: "#1156CC",
                                     breakPoint: 40
                                 },
                                 {
-                                    color: "#D2222D",
+                                    //color: "#D2222D",
+                                    color: "#6D9FEB",
                                     breakPoint: 0
                                 }
                             ]
@@ -324,6 +330,7 @@ export const config = {
                     "barChart": "select s.state_name, round(cast(avg(t.sum) as numeric),2) as content_coverage from datasets.diksha_content_coverage_on_qr_state as t join dimensions.state as s on t.state_id = s.state_id group by t.state_id, s.state_name order by s.state_name"
                 },
                 "level": "State"
+                
             }
         }],
         "options": {
@@ -357,9 +364,10 @@ export const config = {
             "hierarchyLevel": "0",
             "actions": {
                 "queries": {
-                    "map": "select latitude, longitude, s.state_name, round(cast(avg(t.sum) as numeric),2) as content_coverage from datasets.diksha_content_coverage_on_qr_state as t join dimensions.state as s on t.state_id = s.state_id group by t.state_id, s.state_name, latitude, longitude order by s.state_name"
+                    "map": "select latitude, longitude, s.state_name,t.state_id, round(cast(avg(t.sum) as numeric),2) as content_coverage from datasets.diksha_content_coverage_on_qr_state as t join dimensions.state as s on t.state_id = s.state_id group by t.state_id, s.state_name, latitude, longitude order by s.state_name"
                 },
-                "level": "State",
+                "level": "state",
+                "nextLevel": "district"
             }
         }],
         "options": {
@@ -479,7 +487,7 @@ export const config = {
                 "hierarchyLevel": "0",
                 "actions": {
                     "queries": {
-                        "map": "select latitude, longitude, t2.state_name, round(cast(sum(t1.sum) as numeric),2) as users from datasets.diksha_learning_session_on_potential_user_state as t1 join dimensions.state as t2 on t1.state_id = t2.state_id group by t1.state_id, t2.state_name, latitude, longitude"
+                        "map": "select latitude, longitude, t2.state_name, t1.state_id,round(cast(sum(t1.sum) as numeric),2) as users from datasets.diksha_learning_session_on_potential_user_state as t1 join dimensions.state as t2 on t1.state_id = t2.state_id group by t1.state_id, t2.state_name, latitude, longitude"
                     },
                     "level": "State",
                 }
