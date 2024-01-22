@@ -412,7 +412,7 @@ export const config = {
                 "actions": {
                     "queries": {
                        // "barChart": "select d.district_name, d.district_name as level, sum(ntae.sum) as achieved_certifications from datasets.nishtha_achievedcertification_district0programnishtha as ntae JOIN dimensions.district as d ON d.district_id = ntae.district_id group by d.district_name ORDER BY d.district_name;",
-                       "stackedBarChart": "select t1.program_name, round(cast(t1.sum / sum(t3.sum) * 100 as numeric), 2) as total_certifications_achieved_per, t1.sum as total_achieved , round(cast(t3.sum / sum(t2.sum) * 100 as numeric), 2) as total_participants_per, t3.sum as total_participants , sum(t2.sum) as total_certification from datasets.nishtha_total_certifications_achieved_programnishtha as t1 join datasets.nishtha_total_certification_programnishtha as t2 on t1.program_name = t2.program_name join datasets.nishtha_total_participants_programnishtha t3 on t2.program_name = t3.program_name group by t1.program_name, t1.sum,t3.sum",
+                       "stackedBarChart": "select ntae.program_name, case when ntae.sum > nttcs.sum then 100 when ntae.sum = 0 and nttcs.sum = 0 then 0 else round(cast(ntae.sum / nttcs.sum * 100 as numeric), 2) end as achieved_certificates_per, (100 - case when ntae.sum > nttcs.sum then 100 when ntae.sum = 0 and nttcs.sum = 0 then 0 else round(cast(ntae.sum / nttcs.sum * 100 as numeric), 2) end ) as incomplete_certificates_per, ntae.sum as actual_certificates, nttcs.sum as expected_certificates from datasets.nishtha_achievedcertification_chydbgqxd0rtzw5hz3zt  as ntae join datasets.nishtha_total_participants_programnishtha  as nttcs on ntae.program_name = nttcs.program_name group by ntae.program_name, ntae.sum,nttcs.sum",
                      },
                     "level": "district"
                 }
@@ -433,18 +433,16 @@ export const config = {
                     "metrics": [
                         {
                             "label": "Percentage of Certifications Achieved",
-                            "value": "total_certifications_achieved_per",
+                            "value": "achieved_certificates_per",
                             "tooltipLabel":"Target Achieved",
-                            "tooltipValue":"total_achieved"
-                           
                         },
                         {
-                            "label": "Percentage of Total Certifications",
-                            "value": "total_participants_per",
-                            "tooltipLabel":"Total Participants",
-                            "tooltipValue": "total_participants",
-                            "tooltipLabel1":"Total Certification",
-                            "tooltipValue1":"total_certification"
+                            "label": "Percentage of Certifications Remaining to be Achieved",
+                            "value": "incomplete_certificates_per",
+                            "tooltipLabel":"Actual Certification",
+                            "tooltipValue": "actual_certificates",
+                            "tooltipLabel1":"Total Expected Certification",
+                            "tooltipValue1":"expected_certificates"
                         }
                     ]
                 }
