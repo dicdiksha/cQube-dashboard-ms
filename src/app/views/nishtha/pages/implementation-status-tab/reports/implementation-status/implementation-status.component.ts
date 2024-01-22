@@ -8,6 +8,7 @@ import { config } from 'src/app/views/nishtha/config/nishtha_config';
 import { ImplementationStatusTabComponent } from '../../implementation-status-tab.component';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { environment } from 'src/environments/environment';
+import { ViewChild } from '@angular/core';
 
 @Component({
   selector: 'app-implementation-status',
@@ -31,6 +32,7 @@ export class ImplementationStatusComponent implements OnInit {
   filterIndex: any;
   rbacDetails: any;
   NVSK = true;
+  @ViewChild('implementationStatus') implementationStatus: ImplementationStatusComponent;
 
   @Output() exportReportData = new EventEmitter<any>();
 
@@ -106,7 +108,7 @@ export class ImplementationStatusComponent implements OnInit {
         this.spinner.hide();
         if (this.reportData?.data?.length > 0) {
           let reportsData = { reportData: this.reportData.data, reportType: 'table', reportName: this.title }
-          // this.exportReportData.emit(reportsData)
+          this.exportReportData.emit(reportsData);
           this.csv.csvDownload(reportsData);
         }
       } else if (query && key === 'map') {
@@ -135,4 +137,15 @@ export class ImplementationStatusComponent implements OnInit {
       }
     })
   }
+
+  checkReport(key: string, reportType: string, alterReportType?: string): Boolean {
+    let reportConfig = config;
+    let flag = false;
+    reportConfig[key]?.filters?.forEach((filter: any) => {
+        if (Number(filter.hierarchyLevel) === Number(this.rbacDetails?.role) && (Object.keys(filter?.actions?.queries).includes(reportType) || Object.keys(filter?.actions?.queries).includes(alterReportType))) {
+            flag = true
+        }
+    })
+    return flag
+}
 }

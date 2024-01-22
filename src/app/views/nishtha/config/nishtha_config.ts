@@ -18,14 +18,14 @@ export const config = {
             "tableAlias": "t1",
             "query": "select program_name from dimensions.programnishtha order by program_name"
         },
-        {
-            "label": "Implementation Status",
-            "name": "Program",
-            "labelProp": "program_name",
-            "valueProp": "program_name",
-            "id": "metric",
-            "query": "select program_name from dimensions.programnishtha order by program_name"
-        },
+        // {
+        //     "label": "Implementation Status",
+        //     "name": "Program",
+        //     "labelProp": "program_name",
+        //     "valueProp": "program_name",
+        //     "id": "metric",
+        //     "query": "select program_name from dimensions.programnishtha order by program_name"
+        // },
         {
             "label": "Courses and Medium Status",
             "name": "Program",
@@ -36,6 +36,15 @@ export const config = {
             "query": "select program_name from dimensions.programnishtha order by program_name"
         },
         // {
+        //     "label": "% against Potential Base",
+        //     "name": "Program",
+        //     "labelProp": "program_name",
+        //     "valueProp": "program_name",
+        //     "id": "program_name",
+        //     "tableAlias": "ntae",
+        //     "query": "select program_name from dimensions.programnishtha order by program_name"
+        // },
+        // {
         //     "label": "District Wise Performance",
         //     "name": "Metric",
         //     "labelProp": "category_name",
@@ -43,14 +52,14 @@ export const config = {
         //     "id": "metric",
         //     "query": "select category_name from dimensions.categorypgi"
         // },
-        {
-            "label": "Medium of instruction",
-            "name": "Program",
-            "labelProp": "program_name",
-            "valueProp": "program_name",
-            "id": "program_name",
-            "query": "select program_name from dimensions.programnishtha order by program_name"
-        },
+        // {
+        //     "label": "Medium of instruction",
+        //     "name": "Program",
+        //     "labelProp": "program_name",
+        //     "valueProp": "program_name",
+        //     "id": "program_name",
+        //     "query": "select program_name from dimensions.programnishtha order by program_name"
+        // },
     ],
     implementation_status: {
         "label": "Implementation Status",
@@ -71,8 +80,14 @@ export const config = {
                 "hierarchyLevel": "1",
                 "actions": {
                     "queries": {
-                        // "table": "select  program_name , case when sum > 0 then 'YES' else 'NO' end as status from datasets.nishtha_started_programnishtha group by program_name,status order by program_name",
-                        "map": "select d.latitude, d.longitude, t.district_id, t.district_id as level, t.program_name, district_name ,t.status from dimensions.district as d join (select district_id, program_name, case when sum > 0 then 'YES' else 'NO' end as status from datasets.nishtha_programstarted_district0programnishtha) as t on  d.district_id = t.district_id order by d.district_name asc"
+                        "table": `select  CASE WHEN p.program_name LIKE 'NISHTHA_Elementary%' THEN 'NISHTHA Elementary'
+                        ELSE p.program_name END AS program_name, 
+                        case when p.sum > 0 then 'YES' else 'NO' end as status,
+                        pstatus.program_status as program_status
+                        from datasets.nishtha_started_programnishtha p join datasets.nishtha_programstarted_dwl6ewangb0rgg8igage pstatus
+                        on p.program_name = pstatus.program_name
+                        group by p.program_name, status, program_status order by p.program_name`,
+                        //"map": "select d.latitude, d.longitude, t.district_id, t.district_id as level, t.program_name, district_name ,t.status from dimensions.district as d join (select district_id, program_name, case when sum > 0 then 'YES' else 'NO' end as status from datasets.nishtha_programstarted_district0programnishtha) as t on  d.district_id = t.district_id order by d.district_name asc"
                     },
                     "level": "district",
                     "nextLevel": "block"
@@ -105,6 +120,11 @@ export const config = {
                                 }
                             ]
                         }
+                    },
+                    {
+                        name: "Implementation Mode",
+                        property: "program_status",
+                        class: "text-center"
                     }
                 ],
             },
@@ -112,32 +132,32 @@ export const config = {
                 "fileName": "Implementation Status",
                 "excludeColumns": ['indicator', 'tooltip', 'Latitude', 'Longitude', 'status']
             },
-            "map": {
-                "metricLabelProp": "program_name",
-                "metricValueProp": "status",
-                "groupByColumn": "level",
-                "metricFilterNeeded": true,
-                "legend": {
-                    "title": "Implemented Nishtha"
-                },
-                "tooltipMetrics": [
-                    {
-                        "valuePrefix": "State/ UT Name: ",
-                        "value": "state_name",
-                        "valueSuffix": "\n"
-                    },
-                    {
-                        "valuePrefix": "District Name: ",
-                        "value": "district_name",
-                        "valueSuffix": "\n"
-                    },
-                    {
-                        "valuePrefix": "",
-                        "value": "program_name",
-                        "valueSuffix": "\n"
-                    }
-                ]
-            }
+            // "map": {
+            //     "metricLabelProp": "program_name",
+            //     "metricValueProp": "status",
+            //     "groupByColumn": "level",
+            //     "metricFilterNeeded": true,
+            //     "legend": {
+            //         "title": "Implemented Nishtha"
+            //     },
+            //     "tooltipMetrics": [
+            //         {
+            //             "valuePrefix": "State/ UT Name: ",
+            //             "value": "state_name",
+            //             "valueSuffix": "\n"
+            //         },
+            //         {
+            //             "valuePrefix": "District Name: ",
+            //             "value": "district_name",
+            //             "valueSuffix": "\n"
+            //         },
+            //         {
+            //             "valuePrefix": "",
+            //             "value": "program_name",
+            //             "valueSuffix": "\n"
+            //         }
+            //     ]
+            // }
         }
     },
     course_and_medium_status: {
@@ -211,7 +231,7 @@ export const config = {
                 "hierarchyLevel": "1",
                 "actions": {
                     "queries": {
-                        "table": "SELECT d.district_name, SUM(count) as no_of_languages, string_agg(language, ',' order by language) as list_of_languages FROM datasets.nishtha_totalmedium_district0programnishtha0languagenishtha as ntm JOIN dimensions.district as d ON d.district_id = ntm.district_id GROUP BY ntm.district_id, d.district_name ORDER BY d.district_name"
+                        "table": "SELECT program_name, SUM(count) as no_of_languages, string_agg(language, ',' order by language) as list_of_languages FROM datasets.nishtha_totalmedium_dqamdiwbdiicaxv9f2xl as ntm GROUP BY ntm.program_name ORDER BY ntm.program_name"
                     },
                     "level": "district"
                 }
@@ -221,13 +241,8 @@ export const config = {
             "table": {
                 "columns": [
                     {
-                        name: "Name of State/ UT/ Autonomous Organisation",
-                        property: "state_name",
-                        class: "text-center"
-                    },
-                    {
-                        name: "District Name",
-                        property: "district_name",
+                        name: "Program name",
+                        property: "program_name",
                         class: "text-center"
                     },
                     {
@@ -604,7 +619,11 @@ export const config = {
                 "hierarchyLevel": "0",
                 "actions": {
                     "queries": {
-                        "bigNumber1": "select count(program_id) as programs from dimensions.programnishtha",
+                        "bigNumber1": `SELECT count(program_name) as programs FROM( SELECT DISTINCT CASE
+                            WHEN program_name LIKE 'NISHTHA_Elementary%' THEN 'NISHTHA Elementary'
+                            ELSE program_name
+                            END AS program_name
+                            FROM dimensions.programnishtha) as programnishtha;`,
                         "bigNumber2": "select sum(sum) as beneficiaries from datasets.nishtha_total_participants_programnishtha"
                     },
                     "level": "state"
@@ -615,7 +634,11 @@ export const config = {
                 "hierarchyLevel": "1",
                 "actions": {
                     "queries": {
-                        "bigNumber1": "select count(program_id) as programs from dimensions.programnishtha",
+                        "bigNumber1": `SELECT count(program_name) as programs FROM( SELECT DISTINCT CASE
+                            WHEN program_name LIKE 'NISHTHA_Elementary%' THEN 'NISHTHA Elementary'
+                            ELSE program_name
+                            END AS program_name
+                            FROM dimensions.programnishtha) as programnishtha;`,
                         "bigNumber2": "select sum(sum) as beneficiaries from datasets.nishtha_total_participants_programnishtha"
                     },
                     "level": "state"
@@ -624,7 +647,7 @@ export const config = {
         ],
         "options": {
             "bigNumber": {
-                "title": ['No. of Programs', 'No. of benefeciaries'],
+                "title": ['No. of Programs', 'No. of beneficiaries'],
                 "valueSuffix": ['', ''],
                 "property": ['programs', 'beneficiaries']
             }

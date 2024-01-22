@@ -30,6 +30,8 @@
                 <app-medium-of-instruction-tab
                     *ngIf="selectedTabLabel === 'Medium of instruction'"></app-medium-of-instruction-tab>
             </mat-tab>
+        </ng-container>
+        <ng-container *ngIf="NVSK">
             <mat-tab label='Course Wise Status' *ngIf="tabs.includes('Course Wise Status')">
                 <app-course-wise-status-tab *ngIf="selectedTabLabel === 'Course Wise Status'"></app-course-wise-status-tab>
             </mat-tab>

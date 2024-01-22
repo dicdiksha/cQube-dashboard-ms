@@ -1,13 +1,13 @@
 <div class="grid grid-cols-12" *ngIf="reportData?.data?.length > 0">
-    <div class="xs:col-span-full">
-        <ng-container >
-            <p class="text-center font-medium py-2 filename" >{{title}}</p><br>
-            <app-leaflet-map [mapData]="reportData"></app-leaflet-map>
-        </ng-container>
-        <!-- <ng-container *ngIf="!NVSK">
+    <ng-container *ngIf="NVSK">
+        <p class="text-center font-medium py-2 filename" >{{title}}</p><br>
+        <app-leaflet-map [mapData]="reportData"></app-leaflet-map>
+    </ng-container>
+    <ng-container *ngIf="!NVSK">
+        <div class="xs:col-span-full">
             <app-material-heat-chart-table [tableData]="reportData" [title]="title"></app-material-heat-chart-table>
-        </ng-container>         -->
-    </div>
+        </div>
+    </ng-container>        
 </div>
 <div class="noData" *ngIf="reportData?.data?.length <= 0">
     No Data Found
