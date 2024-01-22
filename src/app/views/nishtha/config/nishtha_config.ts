@@ -35,15 +35,6 @@ export const config = {
             "tableAlias": "ntc",
             "query": "select program_name from dimensions.programnishtha order by program_name"
         },
-        {
-            "label": "% against Potential Base",
-            "name": "Program",
-            "labelProp": "program_name",
-            "valueProp": "program_name",
-            "id": "program_name",
-            "tableAlias": "ntae",
-            "query": "select program_name from dimensions.programnishtha order by program_name"
-        },
         // {
         //     "label": "District Wise Performance",
         //     "name": "Metric",
@@ -410,7 +401,7 @@ export const config = {
                 "hierarchyLevel": "0",
                 "actions": {
                     "queries": {
-                        "barChart": "select s.state_name, s.state_name as level, sum(ntae.sum) as achieved_certifications from datasets.nishtha_achievedcertification_chydbgqxd0rtzw5hz3zt as ntae JOIN dimensions.state as s ON s.state_id = ntae.state_id group by s.state_name ORDER BY s.state_name;",
+                        "stackedBarChart": "select s.state_name, s.state_name as level, sum(ntae.sum) as achieved_certifications from datasets.nishtha_achievedcertification_chydbgqxd0rtzw5hz3zt as ntae JOIN dimensions.state as s ON s.state_id = ntae.state_id group by s.state_name ORDER BY s.state_name;",
                     },
                     "level": "district"
                 }
@@ -420,34 +411,48 @@ export const config = {
                 "hierarchyLevel": "1",
                 "actions": {
                     "queries": {
-                        "barChart": "select d.district_name, d.district_name as level, sum(ntae.sum) as achieved_certifications from datasets.nishtha_achievedcertification_district0programnishtha as ntae JOIN dimensions.district as d ON d.district_id = ntae.district_id group by d.district_name ORDER BY d.district_name;",
-                    },
+                       // "barChart": "select d.district_name, d.district_name as level, sum(ntae.sum) as achieved_certifications from datasets.nishtha_achievedcertification_district0programnishtha as ntae JOIN dimensions.district as d ON d.district_id = ntae.district_id group by d.district_name ORDER BY d.district_name;",
+                       "stackedBarChart": "select t1.program_name, round(cast(t1.sum / sum(t3.sum) * 100 as numeric), 2) as total_certifications_achieved_per, t1.sum as total_achieved , round(cast(t3.sum / sum(t2.sum) * 100 as numeric), 2) as total_participants_per, t3.sum as total_participants , sum(t2.sum) as total_certification from datasets.nishtha_total_certifications_achieved_programnishtha as t1 join datasets.nishtha_total_certification_programnishtha as t2 on t1.program_name = t2.program_name join datasets.nishtha_total_participants_programnishtha t3 on t2.program_name = t3.program_name group by t1.program_name, t1.sum,t3.sum",
+                     },
                     "level": "district"
                 }
             },
         ],
         "options": {
-            "barChart": {
+            "stackedBarChart": {
                 "isMultibar": true,
+                "valueSuffix": "%",
                 "type": "horizontal",
                 "yAxis": {
-                    "title": ['States', 'Districts']
+                    "title": " Programs",
+                    "label": "program_name",
+                    "value": "program_name",
                 },
                 "xAxis": {
                     "title": "Achieved Certifications",
-                    "label": "level",
-                    "value": "level",
                     "metrics": [
                         {
-                            "label": "Achieved Certifications",
-                            "value": "achieved_certifications"
+                            "label": "Percentage of Certifications Achieved",
+                            "value": "total_certifications_achieved_per",
+                            "tooltipLabel":"Target Achieved",
+                            "tooltipValue":"total_achieved"
+                           
                         },
-                        
+                        {
+                            "label": "Percentage of Total Certifications",
+                            "value": "total_participants_per",
+                            "tooltipLabel":"Total Participants",
+                            "tooltipValue": "total_participants",
+                            "tooltipLabel1":"Total Certification",
+                            "tooltipValue1":"total_certification"
+                        }
                     ]
                 }
-            },
+            }
         }
     },
+        
+   
     course_wise_status: {
         "label": "Course Wise Status",
         "defaultLevel": "state",
