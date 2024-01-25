@@ -4,6 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { CommonService } from 'src/app/core/services/common/common.service';
 import { RbacService } from 'src/app/core/services/rbac-service.service';
 import { config } from './config/nas_config';
+import { environment } from 'src/environments/environment';
 
 @Component({
     selector: 'app-nas',
@@ -18,7 +19,7 @@ export class NasComponent implements OnInit {
     tabs: any = [];
     programName: any = 'nas';
     bigNumberMetrics: any = [];
-    
+    NVSK: boolean = true;
 constructor(private route: ActivatedRoute, private _rbacService: RbacService, private _commonService: CommonService) { 
     this.route.queryParams.subscribe((param: any) => {
         this.tabIndex = param.tab ? Number(param.tab) : 0;
@@ -38,6 +39,11 @@ constructor(private route: ActivatedRoute, private _rbacService: RbacService, pr
         return true
         })
     })
+
+    if(environment.config === 'VSK') {
+        this.NVSK = false;
+    }
+
     }
 
     ngOnInit(): void {

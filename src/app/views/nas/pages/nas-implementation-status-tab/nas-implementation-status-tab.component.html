@@ -6,14 +6,6 @@
         </div>
     </div>
     <div class="reports-row" >
-        <div class="row-wrapper grid grid-cols-5 gap-4" *ngIf="NVSK">
-            <div class="col-span-2 xmd:col-span-1  bignumber-container" id="bignumber1"
-                *ngFor="let bigNumberData of getMetricsArray(); let index = index">
-                <div *ngIf="checkReport('nas_metrics', 'bigNumber'+(index+1))">
-                    <app-big-number [bigNumberReportData]="bigNumberData"></app-big-number>
-                </div>
-            </div>
-        </div>
         <div class="row-wrapper grid grid-cols-1 gap-4">
             <div class="col-span-2 xmd:col-span-1 div-shadow" *ngIf="checkReport('nas_implementation_status', 'map')" id="map">
                 <app-nas-implementation-status #nasimplementationstatus

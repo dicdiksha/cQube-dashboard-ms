@@ -9,6 +9,20 @@
     </div>
 </div>
 
+<div class="col-span-full tab-wrapper" *ngIf="NVSK">
+    <div *ngIf="checkReport('pgi_metrics', 'bigNumber1')" id="bignumber1">
+        <app-pgi-bignumber-metrics (exportReportData)="importBigNumberMetrics($event)"></app-pgi-bignumber-metrics>
+    </div>
+    <div class="row-wrapper grid grid-cols-5 gap-4">
+        <div class="col-span-2 xmd:col-span-1  bignumber-container" id="bignumber1"
+            *ngFor="let bigNumberData of bigNumberMetrics; let index = index">
+            <div *ngIf="checkReport('pgi_metrics', 'bigNumber'+(index+1))">
+                <app-big-number [bigNumberReportData]="bigNumberData"></app-big-number>
+            </div>
+        </div>
+    </div>
+</div>
+
 <div class="custom-tab-group-wrapper">
     <mat-tab-group [selectedIndex]="tabIndex" mat-align-tabs="start" animationDuration="0ms"
         (selectedTabChange)="onTabChanged($event)" appFullScreen>
