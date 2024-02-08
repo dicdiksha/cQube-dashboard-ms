@@ -13,9 +13,9 @@
 // }
 ::ng-deep {
     .leaflet-popup {
-        // word-break: break-all;
         word-wrap: break-word;
-    }
+        pointer-events: none !important;
+      }
 
     .leaflet-notification {
         background-color: white;

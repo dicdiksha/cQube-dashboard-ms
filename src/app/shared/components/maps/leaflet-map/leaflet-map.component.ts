@@ -647,10 +647,15 @@ async createMarkers(mapData: any, prevValues?: any): Promise<void> {
         onEachFeature: (feature, layer) => {
           layer.on({
             mouseover: (e) => {
-              e.target.openPopup();
+              var popup = e.target.getPopup();
+               popup.setLatLng(e.latlng).openOn(this.map);
             },
             mouseout: (e) => {
               e.target.closePopup();
+            },
+            mousemove: (e) => {
+              var popup = e.target.getPopup();
+               popup.setLatLng(e.latlng).openOn(this.map);
             },
             click: async (e) => {
               if (level < 4 && mapData?.options?.drillDownConfig?.enableDrillDown && mapData?.options?.drillDownConfig?.allowedLevels.includes(level)) {
