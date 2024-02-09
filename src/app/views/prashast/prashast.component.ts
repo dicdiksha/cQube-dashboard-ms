@@ -32,7 +32,6 @@ export class PrashastComponent implements OnInit {
 
 
   checkReport(key: string, reportType: string): Boolean {
-    debugger
       let reportConfig = config;
       let flag = false;
       reportConfig[key]?.filters?.forEach((filter: any) => {
@@ -44,14 +43,12 @@ export class PrashastComponent implements OnInit {
     }
 
   importBigNumberMetrics(bigNumberMetric: any) {
-    debugger
       this.bigNumberMetrics[bigNumberMetric.ind] = bigNumberMetric.data
   }
 
   getMetricsArray() {
     return this.bigNumberMetrics.filter((data) => {
-      debugger
-      return data.averagePercentage !== null || data.averagePercentage !== undefined
+     return data.averagePercentage !== null || data.averagePercentage !== undefined
     }) 
   }
 }
