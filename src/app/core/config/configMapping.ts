@@ -16,6 +16,7 @@ import{config as microImprovement} from '../../views/micro-improvements/config/m
 import {config as nipunBharatConfig } from '../../views/nipun-bharat/config/nipun_bharat_config';
 import {config as pmShriConfig } from '../../views/pm-shri/config/pm_shri_config';
 import{config as prashastConfig} from '../../views/prashast/config/prashast_config';
+import { config as udiseApexConfig } from '../../views/udise-apex/config/udise_apex_config'
 export const configFiles = {
   studentAttendance: studentAttendaceConfig,
   reviewMeetings: reviewMeetingsConfig,
@@ -34,7 +35,8 @@ export const configFiles = {
   microImprovement:microImprovement,
   nipunBharat:nipunBharatConfig,
   pmShri: pmShriConfig,
-  prashast:prashastConfig
+  prashast:prashastConfig,
+  udiseApex:udiseApexConfig
 };
 
 export const programFolderNames = {
@@ -53,7 +55,8 @@ export const programFolderNames = {
   microImprovement:'microImprovement',
   pmShri: 'pm_shri',
   nipunBharat: 'nipun-bharat',
-  prashast: 'prashast'
+  prashast: 'prashast',
+  udiseApex: 'udise-apex',
 }
 
 export const stateProgramsFolderNames = {
@@ -72,5 +75,6 @@ export const stateProgramsFolderNames = {
   microImprovement:'',
   pmShri: '',
   nipunBharat: '',
-  prashast: ''
+  prashast: '',
+  udiseApex: ''
 }

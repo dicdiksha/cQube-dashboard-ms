@@ -188,6 +188,14 @@ routes = [
             (module) => module.PrashastModule
           ),
         // canLoad: [AuthGuard]
+      },
+      {
+        path: 'udiseApex',
+        loadChildren: () =>
+          import('./views/udise-apex/udise-apex.module').then(
+            (module) => module.UdiseApexModule
+          ),
+        // canLoad: [AuthGuard]
       }
     ],
   },
