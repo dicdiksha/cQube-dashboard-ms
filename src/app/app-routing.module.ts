@@ -196,6 +196,22 @@ routes = [
             (module) => module.UdiseApexModule
           ),
         // canLoad: [AuthGuard]
+      },
+      {
+        path: 'nasApex',
+        loadChildren: () =>
+          import('./views/nas-apex/nas-apex.module').then(
+            (module) => module.NasApexModule
+          ),
+        // canLoad: [AuthGuard]
+      },
+      {
+        path: 'pgiApex',
+        loadChildren: () =>
+          import('./views/pgi-apex/pgi-apex.module').then(
+            (module) => module.PgiApexModule
+          ),
+        // canLoad: [AuthGuard]
       }
     ],
   },
