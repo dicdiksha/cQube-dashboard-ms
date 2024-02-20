@@ -6,7 +6,7 @@ export const config = {
             "labelProp": "category_name",
             "valueProp": "category_name",
             "id": "metric",
-            "query": "select category_name from dimensions.categorypgi"
+            "query": "select category_name from dimensions.categorypgi order by category_name"
         },
         {
             "label": "District Wise Performance",
@@ -22,7 +22,7 @@ export const config = {
             "labelProp": "category_name",
             "valueProp": "category_name",
             "id": "metric",
-            "query": "select category_name from dimensions.categorypgi"
+            "query": "select category_name from dimensions.performancecategorypgi order by category_name"
         },
     ],
     implementation_status:{
@@ -198,7 +198,7 @@ export const config = {
                 "actions": {
                     "queries":
                     {
-                        "map": "SELECT s.latitude, s.longitude, s.state_name, s.state_id, s.state_id as level, c.category_name, sum(c.sum) as performance FROM dimensions.state s JOIN datasets.pgi_category_state0categorypgi c ON s.state_id = c.state_id GROUP BY s.state_id,s.state_name, c.category_name, s.latitude, s.longitude  order by c.category_name"
+                        "map": "SELECT s.latitude, s.longitude, s.state_name, s.state_id, s.state_id as level, c.category_name, c.sum as performance FROM dimensions.state s JOIN datasets.pgi_performancecategory_bawdjqgfbh5eynxje3iw c ON s.state_id = c.state_id GROUP BY s.state_id,s.state_name, c.category_name, s.latitude, s.longitude,c.sum  order by c.category_name"
                     },
                     "level": "state",
                     "nextLevel": "district"
