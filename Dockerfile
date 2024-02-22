@@ -1,8 +1,7 @@
 FROM node:14.21.2 as build
 WORKDIR /app
-COPY package.json .
+COPY package.json package-lock.json* ./
 RUN npm install --legacy-peer-deps
-COPY package-lock.json .
 COPY . .
 RUN npm run build --prod
 
