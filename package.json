@@ -52,7 +52,7 @@
     "leaflet": "^1.6.0",
     "leaflet-responsive-popup": "^1.0.0",
     "lodash": "^4.17.21",
-    "ng-apexcharts": "^1.7.1",
+    "ng-apexcharts": "1.7.1",
     "ng-circle-progress": "^1.6.0",
     "ngx-bootstrap": "^9.0.0",
     "ngx-daterangepicker-material": "^6.0.4",
