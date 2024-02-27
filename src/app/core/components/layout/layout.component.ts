@@ -105,7 +105,7 @@ export class LayoutComponent implements OnInit {
       console.log("cvbn:", { menuResult })
       menuResult?.data?.forEach((dasboardMenu: IDashboardMenu | any) => {
 
-        if (hierarchyLevels[dasboardMenu.programID]?.includes(String(rbacRole))) {
+        // if (hierarchyLevels[dasboardMenu.programID]?.includes(String(rbacRole))) {
 
           let menuToDisplay: IMenuItem | any = {};
           menuToDisplay.label = dasboardMenu.programName;
@@ -114,7 +114,7 @@ export class LayoutComponent implements OnInit {
           menuToDisplay.isSelected = false;
 
           this.menu?.push(menuToDisplay);
-        }
+       // }
 
       });
 

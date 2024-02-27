@@ -58,7 +58,7 @@ export const ChartJSConfig = {
     },
     colors: [
         "#6C63F0",
-        "#ED589D",
+        "#808080",
         "#2171b5",
         "#ddd"
     ]

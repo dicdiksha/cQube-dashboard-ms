@@ -51,7 +51,7 @@ export class ReportDrilldownService {
 
       let { timeSeriesQueries, queries, levels, label, defaultLevel, filters, options } = reportConfig;
       let onLoadQuery;
-      if (rbacDetails?.role) {
+      if (rbacDetails?.role !== null && rbacDetails.role !== undefined) {
         filters.every((filter: any) => {
           if (Number(hierarchyLevel) === Number(filter.hierarchyLevel)) {
             queries = { ...filter?.actions?.queries }
