@@ -70,7 +70,7 @@ export class DashboardComponent implements OnInit {
       let rbacDetails;
       let menuData = menuResult?.data
       for (let i = 0; i < menuData?.length; i++) {
-        if (hierarchyLevels[menuData[i].programID]?.includes(String(this.rbacDetails?.role))) {
+        //if (hierarchyLevels[menuData[i].programID]?.includes(String(this.rbacDetails?.role))) {
 
           let menuToDisplay: IMenuItem | any = {};
           menuToDisplay.title = menuData[i].programName;
@@ -84,7 +84,7 @@ export class DashboardComponent implements OnInit {
           this.dashboardMenu.push(menuToDisplay);
 
         }
-      }
+     // }
     })
 
   }
