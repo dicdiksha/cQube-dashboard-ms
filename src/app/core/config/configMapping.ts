@@ -13,6 +13,7 @@ import { config as studentAssessments } from '../../../app/views/student-assessm
 import {config as ncf } from '../../views/ncf/config/ncf_config';
 import {config as quiz} from '../../views/ncert-quiz/config/quiz_config';
 import{config as microImprovement} from '../../views/micro-improvements/config/microimprovements_config';
+import{config as schoolManagement} from '../../views/school-management/config/school_management_config';
 
 
 
@@ -32,6 +33,7 @@ export const configFiles = {
   ncf:ncf,
   quiz:quiz,
   microImprovement:microImprovement,
+  schoolManagement:schoolManagement,
 };
 
 export const programFolderNames = {
@@ -48,6 +50,7 @@ export const programFolderNames = {
   ncf:'ncf',
   quiz:'quiz',
   microImprovement:'microImprovement',
+  schoolManagement:'school-management',
 }
 
 export const stateProgramsFolderNames = {
@@ -64,4 +67,5 @@ export const stateProgramsFolderNames = {
   ncf:'',
   quiz:'',
   microImprovement:'',
+  schoolManagement:''
 }

@@ -165,6 +165,14 @@ routes = [
           ),
         // canLoad: [AuthGuard]
       },
+      {
+        path: 'school-management',
+        loadChildren: () =>
+          import('./views/school-management/school-management.module').then(
+            (module) => module.SchoolManagementModule
+          ),
+        // canLoad: [AuthGuard]
+      },
     ],
   },
 ];

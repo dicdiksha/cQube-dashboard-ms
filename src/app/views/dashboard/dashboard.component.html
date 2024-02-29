@@ -2,9 +2,22 @@
 <div class="grid gap-4 sm:grid-cols-2 md:grid-cols-3 xs:gap-y-6 md:gap-y-16 dashboard 4k:grid-cols-4 4k:gap-8"
      *ngIf="dashboardMenu">
     <ng-container *ngFor="let menuInfo of dashboardMenu; let i = index">
+          <!-- <div *ngIf="menuInfo.title === 'School Management'" >
+           <div class="sb-cQ-card sb-cQ-card_2">
+                <div class="brand">
+                <div  class="title">{{menuInfo.title}}</div>
+                 <div class="logo"><img alt="icon here" class="mg-0" src="/assets/images/{{menuInfo.icon}}"></div>
+                </div>
+                 <button type="button"><a href="https://edomsmizoram.in/" target="_blank" >Access dashboard<i _ngcontent-fkf-c67="">→</i></a></button>
+           </div>
+        </div> -->
+
         <div id="dashboard-item-{{i}}">
-            <sb-cqube-program-card [cardInfo]="menuInfo" id="dashboard-item-{{i}}"
+            <sb-cqube-program-card [cardInfo]="menuInfo" id="dashboard-item-{{i}}" 
                                    (onProgramClick)="onClickOfDashboardItem($event)"></sb-cqube-program-card>
         </div>
     </ng-container>
+
+    
+
 </div>
