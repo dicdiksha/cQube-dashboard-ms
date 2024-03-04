@@ -145,7 +145,7 @@ export const config = {
         ],
         "options": {
             "bigNumber": {
-                "title": ['Total PM SHRI schools', 'Total districts', 'No. of primary schools', 'No. of upper primary schools', 'No. of secondary schools', 'No. of higher secondary schools', 'KVS', 'NVS'],
+                "title": ['Total PM SHRI Schools', 'Total Districts', 'No. of primary schools', 'No. of upper primary schools', 'No. of secondary schools', 'No. of higher secondary schools', 'KVS', 'NVS'],
                 "formatter": { locale: 'en-IN', format: "short" }
             }
         }
