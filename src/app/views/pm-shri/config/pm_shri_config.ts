@@ -130,8 +130,8 @@ export const config = {
                 "hierarchyLevel": "0",
                 "actions": {
                     "queries": {
-                        "bigNumber1": "6448",
-                        "bigNumber2": "763",
+                        "bigNumber1": "6204",
+                        "bigNumber2": "701",
                         "bigNumber3": "863",
                         "bigNumber4": "1533",
                         "bigNumber5": "1384",
