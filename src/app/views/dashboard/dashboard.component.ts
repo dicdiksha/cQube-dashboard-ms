@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { reject } from 'lodash';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { rbacConfig } from 'src/app/shared/components/rbac-dialog/rbacConfig';
 import { configFiles } from 'src/app/core/config/configMapping';
 
 import { IDashboardMenu } from 'src/app/core/models/IDashboardCard';
@@ -21,10 +22,30 @@ import { environment } from 'src/environments/environment';
 })
 export class DashboardComponent implements OnInit {
   dashboardMenu: IDashboardMenu[] | any;
-  // isNvsk = environment.config.toLocaleLowerCase() === 'nvsk';
   isNvsk = false;
+  roles: any;
   rbacDetails: any;
-  constructor(private spinner: NgxSpinnerService,private readonly _commonService: CommonService, private readonly _router: Router, private readonly rbac: RbacService, private _wrapperService: WrapperService) {
+  constructor(private spinner: NgxSpinnerService,
+	private readonly _commonService: CommonService, 
+	private readonly _router: Router, 
+	private readonly rbac: RbacService, 
+	public router: Router,
+	private _wrapperService: WrapperService) {
+	this.roles = rbacConfig.roles.filter((role: any, index: any) => {
+		return rbacConfig.roles[index - 1]?.['skipNext'] !== true
+	  })
+	  if(environment.config === 'VSK') {
+		this.roles = this.roles.filter((role: any, index: any) => {
+		  return role.value !== 0
+		})
+	  }
+	  else {
+		this.roles = this.roles.filter((role: any, index: any) => {
+		  return role.value === 0
+		})
+
+	  }
+	  //console.log('roles', this.roles)
     this.rbac.getRbacDetails().subscribe((rbacDetails: any) => {
       this.rbacDetails = rbacDetails
     })
@@ -32,6 +53,12 @@ export class DashboardComponent implements OnInit {
 
   ngOnInit(): void {
     this.checkRbacLevel();
+	this.onRoleSelect(this.roles[0]);
+  }
+
+  onRoleSelect(role: any) {
+    this.rbac.setRbacDetails({ role: role.value, roleDetail: role })
+    // this.router.navigate(['/rbac'])
   }
 
   onClickOfDashboardItem(cardInfo: IDashboardMenu | undefined): void {
