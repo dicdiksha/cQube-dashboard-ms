@@ -63,9 +63,15 @@ export class DashboardComponent implements OnInit {
     // this.router.navigate(['/rbac'])
   }
 
-  onClickOfDashboardItem(cardInfo: IDashboardMenu | undefined): void {
+  /* onClickOfDashboardItem(cardInfo: IDashboardMenu | undefined): void {
     if (cardInfo) {
       this._router.navigate([cardInfo.navigationURL.trim()]);
+    }
+  } */
+
+  onClickOfDashboardItem(cardInfo:any): void {
+    if (cardInfo) {
+      this._router.navigate([cardInfo.trim()]);
     }
   }
 

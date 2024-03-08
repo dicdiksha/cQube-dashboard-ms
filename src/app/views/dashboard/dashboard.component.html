@@ -1,10 +1,43 @@
-<p class="h3 font-weight-bold mb-0">Summary Statistics</p>
-<div class="grid gap-4 sm:grid-cols-2 md:grid-cols-3 xs:gap-y-6 md:gap-y-16 dashboard 4k:grid-cols-4 4k:gap-8"
+<div class="sp-dashboard-wrapper">
+<div class="banner-wrapper">
+	<img src="assets/images/36.png" alt="Banner">
+</div>
+<div class="container">
+	<div class="top-section">
+		<h2 class="page-title">
+			About NVSK
+		</h2>
+		<p class="page-dec">Vidya Samiksha Kendra (VSKs) is a data repository which will have data from all schemes run by the Ministry of Education (MoE). It is an institutional setup that is part of the National Digital Education Architecture (NDEAR). The Ministry of Education is pushing states to open VSKs under the NDEAR. VSKs are data repositories that store and analyze data from various sources. They help the Ministry of Education (MoE) monitor the progress and impact of its policies and programs. VSKs can help identify weak spots in learning outcomes, assessment, or teachers. VSKs are designed to improve learning outcomes by Amplifying data-based decision making, Enabling actioning by key stakeholders, Providing actionable insights from aggregated data. VSKs can also amplify the existing capabilities of people or systems and enable transformative impact towards outcomes. </p>
+	</div>
+	<div class="main-content">
+		<h2 class="page-title ">Programs</h2>
+		<div class="grid gap-4 sm:grid-cols-2 md:grid-cols-3 xs:gap-y-6 dashboard 4k:grid-cols-4 4k:gap-8"
      *ngIf="dashboardMenu">
     <ng-container *ngFor="let menuInfo of dashboardMenu; let i = index">
         <div id="dashboard-item-{{i}}">
-            <sb-cqube-program-card [cardInfo]="menuInfo" id="dashboard-item-{{i}}"
-                                   (onProgramClick)="onClickOfDashboardItem($event)"></sb-cqube-program-card>
+					<div class="sb-cQ-card sb-cQ-card_2 custom-card">
+					<div  class="brand">
+						<div class="logo">
+							<img alt="icon here" class="mg-0" src="assets/images/{{menuInfo?.icon}}">
+						</div>
+						<div class="title">{{menuInfo?.title}}</div>
+					</div>
+					<P class="card-dec">{{menuInfo?.tooltip}}</P>
+					<div class="dataContainer">
+						<div class="sb-cQ-card__data ng-star-inserted">
+							<span class="Value">{{menuInfo?.metrics[0].value}}</span>
+							<span class="Title">{{menuInfo?.metrics[0].name}}</span>
+						</div>
+						<div class="sb-cQ-card__data ng-star-inserted">
+							<span class="Value">{{menuInfo?.metrics[1].value}}</span>
+							<span class="Title">{{menuInfo?.metrics[1].name}}</span>
+						</div>
+					</div>
+						<a class="card-btn" (click)="onClickOfDashboardItem(menuInfo?.navigationURL)">Explore</a>
+					</div>
         </div>
     </ng-container>
+		</div>
+	</div>
+</div>
 </div>

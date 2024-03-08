@@ -1,16 +1,16 @@
 @import './../../../../assets/styles/variables';
-.app-footer-bar{
-    background-color:rgba(19,36,93,255);
-    min-height: 7rem;
-    // min-height: 100%;
-}
+// .app-footer-bar{
+//     // background-color:rgba(19,36,93,255);
+//     // min-height: 7rem;
+//     // min-height: 100%;
+// }
 
-img {
-    align-self: center;
-    padding-top: 12px;
-    height: 43px;
-    width: 192px;
-}
+// img {
+//     align-self: center;
+//     padding-top: 12px;
+//     height: 43px;
+//     width: 192px;
+// }
 .footer{
     align-items: stretch;
     display: flex;
@@ -33,4 +33,31 @@ img {
     .footer{
         width: 100vw !important;
     }
+}
+.top-section {
+  background-color: #fff;
+  padding: 60px 0px 20px;
+}
+.logo-wrappe{
+	padding: 0 15px;
+}
+.black-bg {
+  margin-top: 0px;
+  background-color: #20242A;
+  color: #FFFFFF;
+  line-height: 1.5;
+  font-size: 14px;
+  font-weight: 500;
+  text-align: center;
+}
+.info-section {
+   padding:15px;
+}
+.info-p {
+   text-align: left;
+}
+
+.copyright-section {
+	padding: 10px;
+	border-top: 1px solid #FFFFFF;
 }

@@ -10,6 +10,7 @@ import { HeaderComponent } from './components/header/header.component';
 import { SideNavComponent } from './components/side-nav/side-nav.component';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { FooterComponent } from './components/footer/footer.component';
+import { HeaderV2Component } from './components/header-v2/header-v2.component';
 
 export const OtherOptions: MatTooltipDefaultOptions = {
   showDelay: 0,
@@ -33,7 +34,8 @@ const DECLARATIONS = [
 @NgModule({
   declarations: [
     DECLARATIONS,
-    FooterComponent
+    FooterComponent,
+    HeaderV2Component
   ],
   imports: [
     CommonModule,

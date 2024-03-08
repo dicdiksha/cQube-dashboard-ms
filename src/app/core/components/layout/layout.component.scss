@@ -1,6 +1,6 @@
 .fontBar {
     min-height: 3rem;
-   background: var(--cQ-primary);
+   background: #20242A;
    z-index: 999;
    display: flex;
    align-items: center;
@@ -13,17 +13,25 @@
    width: 100%;
    .flagArea {
     display: flex;
-    align-items: center;
-    justify-content: center;
+    align-items: flex-start;
+	width: 50%;
+	padding-top: 5px;
+    justify-content: start;
     img {
         margin-right: 0.5rem;
     }
+	
+   }
+
+   .container {
+	display: flex;
    }
 
    .btnGroup {
     display: flex;
-    align-items: center;
-    justify-content: center; 
+	width: 50%;
+    align-items: flex-end;
+    justify-content: end; 
     gap:0.5rem;
    
     button, .fa-sign-out, .fa-home, .fa-key{

@@ -1,11 +1,12 @@
+<ng-container *ngIf="isDashboard">
 <div>
     <div class="fontBar">
+			<div class="container">
         <div class="flagArea"><img title=""
                 src="assets/images/{{title?.dashboard_header1_image}}" width="32"
                 [alt]="title?.dashboard_header1_title">
             <span data-translate="govofIndia">{{ title?.dashboard_header1_title }}</span>
         </div>
-
         <div class="btnGroup">
             <i *ngIf="showBackBtn" class="fa fa-home" aria-hidden="true" routerLink="/home" id="homeButton"></i>
             <button type="button" [attr.aria-pressed]="false" tabindex="0" attr.aria-label="A-"
@@ -20,8 +21,8 @@
             <i *ngIf="role==='report_viewer'" class="fa fa-key" aria-hidden="true"
                 [routerLink]="['change-password']" matTooltip="Change Password"></i>
             
-            <i *ngIf="!NVSK" class="fa fa-sign-out" aria-hidden="true" matTooltip="Logout" (click)="signOut()" id="signOut"
-                name="signOut"></i>
+					<!-- <i *ngIf="!NVSK" class="fa fa-sign-out" aria-hidden="true" matTooltip="Logout" (click)="signOut()" id="signOut"
+						name="signOut"></i> -->
             <!-- <button id="dark-mode-toggle" class="dark-mode-toggle" tabindex="0"
              title="{{resourceService?.frmelmnts?.lbl?.accessibilitytheme}}" (click)="changeTheme()"
              (keydown.enter)="changeTheme();" #darkModeToggle>
@@ -33,12 +34,123 @@
            </button> -->
         </div>
     </div>
+		</div>
+		<div class="bg-white">
     <app-header></app-header>
-    <app-side-nav [isHome]="isHome" [menu]="menu" [isSummary]="isSummary"></app-side-nav>
+		</div>
+		<div >
+			<div  #contentElement>
+				<router-outlet (activate)="activate($event)"></router-outlet>
+			</div>
+			<app-footer></app-footer>
+		</div>
+	</div>
+</ng-container>
+
+<ng-container *ngIf="!isDashboard">
+	<div>
+		<div class="fontBar">
+		  <div class="flagArea">
+			<img
+			  title=""
+			  src="assets/images/{{ title?.dashboard_header1_image }}"
+			  width="32"
+			  [alt]="title?.dashboard_header1_title"
+			/>
+			<span data-translate="govofIndia">{{
+			  title?.dashboard_header1_title
+			}}</span>
+		  </div>
+	   
+		  <div class="btnGroup">
+			<i
+			  *ngIf="showBackBtn"
+			  class="fa fa-home"
+			  aria-hidden="true"
+			  routerLink="/home"
+			  id="homeButton"
+			></i>
+			<button
+			  type="button"
+			  [attr.aria-pressed]="false"
+			  tabindex="0"
+			  attr.aria-label="A-"
+			  class="fontResizeBtn fontResizeBtn_A-"
+			  title="Decrease font size"
+			  (click)="changeFontSize('decrease')"
+			  id="font-size-decrease"
+			  name="font-size-decrease"
+			  #decreaseFontSize
+			>
+			  A-
+			</button>
+			<button
+			  [attr.aria-pressed]="false"
+			  type="button"
+			  tabindex="0"
+			  attr.aria-label="A"
+			  class="fontResizeBtn fontResizeBtn_A"
+			  title="Default Font size"
+			  (click)="changeFontSize('reset')"
+			  id="font-size-reset"
+			  name="font-size-reset"
+			  #resetFontSize
+			>
+			  A
+			</button>
+			<button
+			  [attr.aria-pressed]="false"
+			  type="button"
+			  tabindex="0"
+			  attr.aria-label="A+"
+			  class="fontResizeBtn fontResizeBtn_A+"
+			  title="Increase font size"
+			  (click)="changeFontSize('increase')"
+			  id="font-size-increase"
+			  name="font-size-increase"
+			  #increaseFontSize
+			>
+			  A+
+			</button>
+			<i
+			  *ngIf="role === 'report_viewer'"
+			  class="fa fa-key"
+			  aria-hidden="true"
+			  [routerLink]="['change-password']"
+			  matTooltip="Change Password"
+			></i>
+	   
+			<!-- <i
+			  *ngIf="!NVSK"
+			  class="fa fa-sign-out"
+			  aria-hidden="true"
+			  matTooltip="Logout"
+			  (click)="signOut()"
+			  id="signOut"
+			  name="signOut"
+			></i> -->
+			<!-- <button id="dark-mode-toggle" class="dark-mode-toggle" tabindex="0"
+				   title="{{resourceService?.frmelmnts?.lbl?.accessibilitytheme}}" (click)="changeTheme()"
+				   (keydown.enter)="changeTheme();" #darkModeToggle>
+				   <svg width="20" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 496">
+					 <path fill="var(--white)"
+					   d="M8,256C8,393,119,504,256,504S504,393,504,256,393,8,256,8,8,119,8,256ZM256,440V72a184,184,0,0,1,0,368Z"
+					   transform="translate(-8 -8)" />
+				   </svg>
+				 </button> -->
+		  </div>
+		</div>
+		<app-header-v2></app-header-v2>
+		<app-side-nav
+		  [isHome]="isHome"
+		  [menu]="menu"
+		  [isSummary]="isSummary"
+		></app-side-nav>
     <div class="app-content-wrapper">
         <div class="app-content" #contentElement>
             <router-outlet (activate)="activate($event)"></router-outlet>
         </div>
-        <app-footer></app-footer>
+		  <!-- <app-footer></app-footer> -->
+		</div>
     </div>
-</div>
+</ng-container>

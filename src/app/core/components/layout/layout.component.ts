@@ -1,5 +1,5 @@
 import { Component, OnInit, ElementRef, Renderer2, ViewChild, ChangeDetectorRef } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import * as Title from '../../../../assets/config/ui_config.json'
 import { environment } from 'src/environments/environment';
 import { IDashboardMenu } from '../../models/IDashboardCard';
@@ -34,12 +34,21 @@ export class LayoutComponent implements OnInit {
   environment = environment;
   title: any;
   hierarchyLevel: any;
+  isDashboard: boolean = true;
   // @ViewChild('darkModeToggle') darkModeToggle: ElementRef;
   @ViewChild('contentElement', { static: true }) contentElementRef!: ElementRef;
   // @ViewChild('darkModeToggle') darkModeToggle: ElementRef;
   //tempPrashast: any = { "label": "PRASHAST", "path": "/prashast", "icon": "prashast.png", "isSelected": false }
-  constructor(private readonly _commonService: CommonService, private renderer: Renderer2, private _router: Router, private rbac: RbacService, private _authService: AuthenticationService,
-    private pdfDownloadService: PdfDownloadService, private cdr: ChangeDetectorRef) {
+  constructor(
+	private readonly _commonService: CommonService, 
+	private renderer: Renderer2, 
+	private _router: Router, 
+	private rbac: RbacService, 
+	private _authService: AuthenticationService,
+    private pdfDownloadService: PdfDownloadService, 
+	private cdr: ChangeDetectorRef,
+	private route: ActivatedRoute
+	) {
 
     if (this._router.url === '/home' || this._router.url === '/rbac') {
       this.isHome = true;
@@ -103,7 +112,12 @@ export class LayoutComponent implements OnInit {
       menuToDisplay.icon = 'dashboard.png';
       menuToDisplay.isSelected = true;
       this.menu?.push(menuToDisplay);
-      console.log("cvbn:", { menuResult })
+
+	  if(this._router.url === "/summary-statistics"){
+		this.isDashboard = true;
+	  }else{
+		this.isDashboard = false;
+	  }
       menuResult?.data?.forEach((dasboardMenu: IDashboardMenu | any) => {
           let menuToDisplay: IMenuItem | any = {};
           menuToDisplay.label = dasboardMenu.programName;
