@@ -47,7 +47,7 @@
 	</div>
 </ng-container>
 
-<ng-container *ngIf="!isDashboard">
+<ng-container *ngIf="!isDashboard && !isLandingPages">
 	<div>
 		<div class="fontBar">
 		  <div class="flagArea">
@@ -153,4 +153,27 @@
 		  <!-- <app-footer></app-footer> -->
 		</div>
     </div>
+</ng-container>
+
+<ng-container *ngIf="isLandingPages">
+	<div>
+		<div class="fontBar">
+			<div class="container">
+				<div class="flagArea landing-pages"><img title=""
+						src="assets/images/{{title?.dashboard_header1_image}}" width="32"
+						[alt]="title?.dashboard_header1_title">
+					<span data-translate="govofIndia">{{ title?.dashboard_header1_title }}</span>
+				</div>
+			</div>
+		</div>
+		<div class="bg-white">
+			<app-header-v3></app-header-v3>
+		</div>
+		<div >
+			<div  #contentElement>
+				<router-outlet (activate)="activate($event)"></router-outlet>
+			</div>
+			<app-footer></app-footer>
+		</div>
+	</div>
 </ng-container>

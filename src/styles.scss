@@ -25,9 +25,11 @@ body {
 // }
 html body {
     background: url('assets/images/background.png') !important;
+	background: none !important;
     background-position: center !important;
     background-repeat: no-repeat !important;
     background-size: cover !important;
+	background-color: #FFFFFF !important;
 }
 
 .button-grp,
@@ -422,13 +424,15 @@ html body {
 }
 @media(max-width: 768px) {
     .container {
-		max-width: 576px;
+		max-width: 100% !important;
 		margin: 0 auto;
+		padding: 0 15px !important;
 	}
 }
 @media(max-width: 576px) {
     .container {
-		max-width: 100%;
+		max-width: 100% !important;
 		margin: 0 auto;
+		padding: 0 15px !important;
 	}
 }

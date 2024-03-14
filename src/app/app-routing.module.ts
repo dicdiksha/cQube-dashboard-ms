@@ -4,13 +4,15 @@ import { LayoutComponent } from './core/components/layout/layout.component';
 import { RbacDialogComponent } from './shared/components/rbac-dialog/rbac-dialog.component';
 import { HomePageComponent } from './views/home-page/home-page.component';
 import { AuthGuard } from './core/guards/auth.guard';
+import { AboutPageComponent } from './views/about-page/about-page.component';
+import { ContactPageComponent } from './views/contact-page/contact-page.component';
 
 var routes: Routes = [];
 
 
 routes = [
   {
-    path: '', redirectTo: `summary-statistics`, pathMatch: 'full'
+    path: '', redirectTo: `home`, pathMatch: 'full'
   },
 //   {
 //     path: '',
@@ -29,6 +31,13 @@ routes = [
         path: 'home', component: HomePageComponent,
         // canActivate: [AuthGuard]
       },
+      {
+        path: 'about-us', component: AboutPageComponent,
+      },
+      {
+        path: 'contact-us', component: ContactPageComponent,
+      },
+      
       {
         path: 'summary-statistics',
         loadChildren: () =>

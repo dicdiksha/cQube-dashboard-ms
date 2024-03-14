@@ -34,7 +34,8 @@ export class LayoutComponent implements OnInit {
   environment = environment;
   title: any;
   hierarchyLevel: any;
-  isDashboard: boolean = true;
+  isDashboard: boolean = false;
+  isLandingPages: boolean = false;
   // @ViewChild('darkModeToggle') darkModeToggle: ElementRef;
   @ViewChild('contentElement', { static: true }) contentElementRef!: ElementRef;
   // @ViewChild('darkModeToggle') darkModeToggle: ElementRef;
@@ -56,7 +57,6 @@ export class LayoutComponent implements OnInit {
     else {
       this.isHome = false;
     }
-
     if (this._router.url !== '/home') {
       this.showBackBtn = true
     }
@@ -72,6 +72,11 @@ export class LayoutComponent implements OnInit {
       this.NVSK = false;
     }
     this.role = localStorage.getItem('role');
+	if(this._router.url === "/home"){
+		this.isLandingPages = true;
+	  }else{
+		this.isLandingPages = false;
+	  }
   }
 
 
@@ -237,11 +242,14 @@ export class LayoutComponent implements OnInit {
   activate(componentRef: any) {
     const copyOfContentElementRef = (this.contentElementRef);
     this.pdfDownloadService.contentElementRef = copyOfContentElementRef;
-    if (this._router.url === '/home' || this._router.url === '/rbac') {
+    if (this._router.url === '/home' || this._router.url === '/rbac'|| this._router.url === '/about-us' || this._router.url === '/contact-us') {
       this.isHome = true;
+		this.isLandingPages = true;
+		this.isDashboard = false;
     }
     else {
       this.isHome = false;
+	  this.isLandingPages = false;
       this.checkRbacLevel();
     }
     if (this._router.url !== '/home') {

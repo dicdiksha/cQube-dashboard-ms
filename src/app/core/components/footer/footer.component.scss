@@ -69,3 +69,12 @@
 	padding: 10px;
 	border-top: 1px solid #FFFFFF;
 }
+
+@media (max-width: 768px) {
+	.top-section {
+		padding: 20px 0px 20px;
+	}
+	.info-p {
+		text-align: center;
+	}
+}

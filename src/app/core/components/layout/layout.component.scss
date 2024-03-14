@@ -59,6 +59,11 @@
 
 }
 
+.flagArea.landing-pages{
+	width: 95% !important;
+	margin: 0 auto;
+}
+
 ::ng-deep{
     .mat-tab-nav-bar, .mat-tab-header{
         border-bottom: none !important;
@@ -107,13 +112,7 @@
         z-index: 100;
     }
 }
-@media(min-width: 916px) and (max-width:1380px){
-    ::ng-deep{
-        .legend{
-            //margin-right: 100px !important;
-        }
-    }
-}
+
 
 @media(min-width: 436px) and  (max-width:915px){
     ::ng-deep{
@@ -149,4 +148,35 @@
             font-size: 25px;
         }
     }
+}
+
+@media (max-width: 768px){
+	
+	.fontBar {
+		position: static;
+
+		.container {
+			display: block;
+		}
+
+	 .flagArea{
+		align-items: center;
+		width: 100%;
+		justify-content: center;
+		span{
+			font-size: 14px;
+		}
+	}
+	.btnGroup {
+		align-items: center;
+		width: 100%;
+		justify-content: center;
+		padding: 5px 0;
+	}
+  }
+  .flagArea.landing-pages{
+	width: 100% !important;
+	margin: 0 auto;
+  }
+
 }

@@ -1,0 +1,33 @@
+<div class="container-fluid" style=" height: 100%;">
+    <div class="justify-center">
+        <div class="row ">
+            <div class="col-2"></div>
+            <div class="col-2">
+                <div class="pull-right">
+                    <img src="../../../assets/images/left-lines.png" alt="" srcset="">
+                </div>
+            </div>
+            <div class="col-4 text-center">
+                <span class="welcometxt">Welcome</span><br>
+                <span class="tostyle">to</span>
+            </div>
+            <div class="col-2">
+                <img src="../../../assets/images/right-lines.png" alt="" srcset="">
+            </div>
+            <div class="col-2"></div>
+        </div>
+    </div>
+    <div class="flex justify-center mb-2">
+        <div class="text-center">
+            <span class="samikshadiv">NDEAR</span><br>
+            <span class="samikshadiv">VIDYA SAMIKSHA KENDRA</span><br>
+            <span class="selectRole">Please select your role</span>
+        </div>
+    </div>
+    <div class="flex flex-wrap justify-center">
+        <div class="" *ngFor="let role of roles">
+            <img id="cQb_dhsbrd" class="btn " class="officers" (click)="onRoleSelect(role)"
+                src="../../../assets//images/{{role.imageUrl}}" alt="" srcset="" id="{{role.id}}">
+        </div>
+    </div>
+</div>

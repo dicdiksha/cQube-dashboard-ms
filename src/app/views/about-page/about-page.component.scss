@@ -1,0 +1,51 @@
+.about-sec{
+	background-color: #FFFFFF !important;
+}
+.section-padding {
+    padding: 40px 0;
+}
+.about-sec .container{
+  max-width: 90%;
+}
+.head-title {
+    margin-bottom: 1.5rem;
+}
+.head-title h1 {
+    font-size: 3.45rem;
+    color: #434141;
+    line-height: 80px;
+    font-family: 'Outfit';
+}
+.about-sec p {
+    line-height: 26px;
+    text-align: justify;
+	margin-bottom: 1rem;
+}
+
+@media (min-width:992px) {
+	.about-sec .container{
+		max-width: 90%;
+	  }
+}
+
+@media (max-width:991px) {
+	.misstion-visstion img {
+		display: block;
+		margin: 10px auto;
+	}
+}
+
+@media (max-width:768px) {
+	  .section-padding {
+		padding: 20px 0;
+	 }
+	 .head-title {
+		margin-bottom: 1rem;
+	}
+	 .head-title h1 {
+		font-size: 40px;
+		line-height: 1.25;
+	}
+}
+
+

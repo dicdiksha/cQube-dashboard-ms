@@ -108,3 +108,23 @@
     justify-content: center;
     margin-right: 10px;
 }
+
+@media (max-width: 768px){
+	.banner-wrapper{
+		margin-bottom: 15px;
+	}
+	.page-title {
+		font-size: 40px;
+	 }
+	 .main-content .dashboard {
+		margin-top: 20px;
+	}
+	.sb-cQ-card_2.custom-card .brand .title {
+		font-size: 18px;
+	}
+	.card-btn {
+		margin-bottom: 10px;
+        margin-top: 5px;
+	}
+	
+}

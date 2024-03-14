@@ -1,33 +1,125 @@
-<div class="container-fluid" style=" height: 100%;">
-    <div class="justify-center">
-        <div class="row ">
-            <div class="col-2"></div>
-            <div class="col-2">
-                <div class="pull-right">
-                    <img src="../../../assets/images/left-lines.png" alt="" srcset="">
-                </div>
-            </div>
-            <div class="col-4 text-center">
-                <span class="welcometxt">Welcome</span><br>
-                <span class="tostyle">to</span>
-            </div>
-            <div class="col-2">
-                <img src="../../../assets/images/right-lines.png" alt="" srcset="">
-            </div>
-            <div class="col-2"></div>
-        </div>
-    </div>
-    <div class="flex justify-center mb-2">
-        <div class="text-center">
-            <span class="samikshadiv">NDEAR</span><br>
-            <span class="samikshadiv">VIDYA SAMIKSHA KENDRA</span><br>
-            <span class="selectRole">Please select your role</span>
-        </div>
-    </div>
-    <div class="flex flex-wrap justify-center">
-        <div class="" *ngFor="let role of roles">
-            <img id="cQb_dhsbrd" class="btn " class="officers" (click)="onRoleSelect(role)"
-                src="../../../assets//images/{{role.imageUrl}}" alt="" srcset="" id="{{role.id}}">
-        </div>
-    </div>
+<div class="home-wrapper">
+	<!-- Banner section starts -->
+	<div class="banner-sec">
+		 <img src="assets/images/banner-1.png" alt="banner" class="img-fluid">
+	</div>
+	<!-- Banner section ends -->
+	<section class="emp-sec section-padding">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-12">
+					<!-- <div class="sub-heading-gradient">
+						<h2>Empowering Education Initiatives: Addressing the Imperatives</h2>
+					</div> -->
+					<img src="assets/images/head1.png" alt="heading" class="img-fluid">
+					<div class="emp-desc">
+						<p>Addressing the Imperatives of Education Initiatives The National Education Policy (NEP) 2020, alongside numerous schemes and programs administered by the Ministry of Education, encompasses diverse requirements aimed at benefiting various aspects of education and stakeholders. However, these initiatives encounter challenges in their implementation due to the absence of:
+						</p>
+						<ul class="blue-dot-list">
+							<li><span class="blue-text"> Real-time Visibility and Relevant Metrics: </span>The ability for stakeholders to gain timely insight into the progress of initiatives and access relevant metrics, enabling them to comprehend the ongoing developments effectively.</li>
+							<li><span class="blue-text">Insights into Effectiveness: </span>The capability to discern what aspects are functioning efficiently and what areas require improvement, facilitating informed decision-making and course corrections.</li>
+							<li><span class="blue-text">Coordination for Improvement: </span>The capacity to synchronise efforts across stakeholders for driving enhancements based on data-driven insights, fostering cohesive and timely actions.</li>
+						</ul>
+						<div class="text-center mb-4">
+							<img src="assets/images/emp.png" class="img-fluid" alt="empower">
+						</div>
+						<p>To address these challenges, there arises a pressing need for a comprehensive system that empowers stakeholders to monitor the progress of various education initiatives. Data emerges as the pivotal asset in the successful execution of these schemes at scale. <span class="blue-text">Efficient data collection, monitoring, correlation, and analysis are paramount,</span> as they enable prompt actions for the implementation of initiatives.</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<!-- Solution section -->
+	<section class="emp-sec">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-12">
+					<img src="assets/images/head2-new.png" alt="heading" class="img-fluid">
+					<!-- <div class="sub-heading-gradient">
+						<h2>NDEAR-Compliant VSK</h2>
+					</div> -->
+					<!-- <div class="emp-desc">
+						<div>
+							<img src="assets/img/image-key.png" class="img-fluid" alt="key">
+						</div>
+					</div> -->
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-12 col-lg-6 col-height-flex">
+					<img src="assets/images/key-xl-img.png" class="img-fluid key-img" alt="key">
+					<!-- <img src="assets/img/key-lg-image.png" class="img-fluid key-lg-img" alt="key"> -->
+					<img src="assets/images/key-mob-3.png" class="img-fluid key-tab-img" alt="key">
+					<img src="assets/images/key-mob.png" class="img-fluid key-mob-img" alt="key">
+				</div>   
+				<div class="col-md-12 col-lg-6 col-cust-height">
+					<div class="key-ben-box peach cust-lh">
+						<h3>Actionable Insights</h3>
+						<ul>
+							<li>Harnessing aggregated data from diverse schemes/programs under Samagra Siksha to visualize actionable insights.</li>
+							<li>Empowering administrators and teachers with data-driven decision-making capabilities at central and state levels.</li>
+						</ul>
+					</div>
+					<div class="key-ben-box yellow cust-lh">
+						<h3>Comprehensive Student Registry</h3>
+						<ul>
+							<li>Maintaining a student registry to track enrolled students, monitor learning at home, address dropouts, mainstream, and manage out-of-school children.
+							</li>
+							<li>Ensuring efficient delivery of textbooks and uniforms, managing scholarships and allowances, conducting school-based assessments, 
+								and providing necessary support to teachers and schools. </li>
+						</ul>
+					</div>
+					<div class="key-ben-box orange">
+						<h3>Enhanced Academic Performance</h3>
+						<ul>
+							<li>Improving academic performance by empowering teachers and schools through effective resource utilization. </li>
+							<li>Identifying and analyzing areas for improvement, addressing program gaps promptly.
+							</li>
+						</ul>
+					</div>
+					<div class="key-ben-box purple">
+						<h3>Centralized and Localized Dashboards</h3>
+						<ul>
+							<li>	Developing centralized and localized dashboards to provide continuous, updated insights into school performance indicators.</li>
+						</ul>
+					</div>
+					<div class="key-ben-box pink">
+						<h3>Empowering Field-Level Staff</h3>
+						<ul>
+							<li>Empowering field-level staff with insights relevant to their programs/schemes, guiding them to take actions that positively impact educational outcomes.</li>
+						</ul>
+					</div>
+					<div class="key-ben-box lpurple">
+						<h3>Efficient Data Capture</h3>
+						<ul>
+							<li>Implementing data phygitisation for efficient data capture, digitizing information from physical documents like attendance registers and mark sheets. This significantly reduces the time from data collection to entry, streamlining the process.</li>
+						</ul>
+					</div>
+				</div>    
+			</div>
+		</div>
+	</section>
+	<!-- Adoption section -->
+	<section class="adopt-sec section-padding">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-12">
+					<img src="assets/images/head3.png" alt="heading" class="img-fluid">
+					<!-- <div class="sub-heading-gradient">
+						<h2>Adoption Across States</h2>
+					</div> -->
+					<div class="emp-desc">
+						<ul class="blue-dot-list">
+							<li>In collaboration with DIC, CIET-NCERT is spearheading the establishment of a dedicated team and a standardized package to facilitate the seamless adoption of NDEAR VSK across states and Union Territories (UTs). </li>
+							<li>This comprehensive package focuses on addressing the software aspect of VSK, offering versions equipped with standardized data integration and visualization features for key programs such as DIKSHA, UDISE, NAS, PM Poshan, and PGI. </li>
+							<li>This widespread adoption across diverse regions underscores the commitment to leveraging  VSK as a transformative tool for advancing education and improving learning outcomes on a national scale.</li>
+						</ul>
+						<div class="text-center map-img my-4">
+							<img src="assets/images/india-map3.png" class="img-fluid" alt="Map">
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
 </div>

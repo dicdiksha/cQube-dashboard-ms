@@ -1,0 +1,138 @@
+.menu-header {
+	padding-top: 45px;
+	position: relative;
+	box-shadow: 0px 4px 16px 0px rgba(0, 0, 0, 0.1);
+}
+
+.nat-text-tab {
+    display: none;
+}
+
+.nat-text {
+    font-size: 24px;
+    font-weight: 500;
+    color: #434141;
+    font-family: 'Outfit';
+}
+.menu-header .navbar-nav {
+    justify-content: center;
+    width: 100%;
+}
+
+.dropdown:hover > .dropdown-menu {
+    display: block;
+    margin-top: 0.125em;
+    margin-left: 0.125em;
+    top: 34px;
+}
+.dashboard-dropdown .dropdown-item:hover {
+    background-color: #4C30F5;
+    color: #fff !important;
+}
+.container-fluid {
+     overflow-y: visible !important; 
+}
+
+@media (min-width: 992px){
+	.navbar-expand-lg .navbar-toggler {
+		display: none;
+	}
+	.navbar-expand-lg .navbar-collapse {
+		display: flex !important;
+		flex-basis: auto;
+	}
+	.collapse {
+		visibility: visible;
+	}
+	.dropdown {
+		bottom: 0;
+	}
+	.menu-header .navbar-nav {
+		justify-content: center;
+		width: 100%;
+	}
+	.menu-header .navbar-nav li a.active, .menu-header .navbar-nav .show>.nav-link {
+		color: #4C30F5;
+	}
+	.menu-header .navbar-nav li a {
+		font-size: 15px;
+		color: #434141;
+		padding-right: 20px !important;
+		padding-left: 20px !important;
+	}
+	.dashboard-dropdown .dropdown-toggle::after {
+		height: 100%;
+		border: 0;
+		background: url(../../../../assets/images/dropdown-arrow1.svg) no-repeat;
+		width: 20%;
+		position: absolute;
+	}
+	
+}
+
+@media (max-width: 991px){
+	.nat-text-tab {
+		display: block;
+	}
+	.nat-text-lg {
+		display: none;
+	}
+	.nat-text {
+		font-size: 16px;
+	}
+	.collapse {
+		visibility: visible;
+	}
+	.menu-header .navbar-nav li a.active, .menu-header .navbar-nav .show>.nav-link {
+		color: #4C30F5;
+	}
+	.menu-header .navbar-nav li a {
+		font-size: 15px;
+		color: #434141;
+		padding-right: 20px !important;
+		padding-left: 20px !important;
+	}
+	.dashboard-dropdown .dropdown-toggle::after {
+		height: 100%;
+		border: 0;
+		background: url(../../../../assets/images/dropdown-arrow1.svg) no-repeat;
+		width: 20%;
+		position: absolute;
+	}
+	.dropdown {
+		bottom:0;
+	}
+}
+
+
+@media (max-width:768px) {
+	.navbar{
+		padding: 0.5rem 0rem;
+	}
+	.container.mob-container {
+		padding: 0;
+	}
+	.menu-header {
+		padding-top: 0px;
+	}
+	
+}
+
+@media (max-width: 576px){
+	.nat-text {
+		font-size: 11px;
+	}
+	a.navbar-brand{
+		margin-right: 0rem;
+	}
+	a.navbar-brand img {
+		max-width: 70%;
+	}
+}
+
+@media (max-width: 420px){
+	.nat-text-tab {
+		display: none;
+	}
+}
+

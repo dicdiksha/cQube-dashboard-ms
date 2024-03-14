@@ -180,3 +180,12 @@ p {
 //         display: none;
 //     }
 // }
+
+@media (max-width: 768px){
+	.rightContent h1 {
+		font-size: 16px;
+	}
+	.container {
+		padding-top: 0px;
+	}
+}
