@@ -365,7 +365,7 @@ export const config = {
                     {
                         "queries":
                         {
-                            "map":"select latitude, longitude, t.state_id, state_name,lo_name, round(cast(avg(t.sum) as numeric ),2) as performance from datasets.nas_performance_state0lonas0subject0grade as t join dimensions.state as s on t.state_id = s.state_id join dimensions.lonas as lo on t.lo_code = lo.lo_code group by t.state_id, state_name, lo_name, latitude, longitude"
+                            "map":"select latitude, longitude, t.state_id, state_name,lo_name, round(cast(avg(t.avg) as numeric ),2) as performance from datasets.nas_performance_state0lonas0subject0grade as t join dimensions.state as s on t.state_id = s.state_id join dimensions.lonas as lo on t.lo_code = lo.lo_code group by t.state_id, state_name, lo_name, latitude, longitude"
                         },
                         "level": "state",
                         "nextLevel": "district"
