@@ -158,11 +158,15 @@ export class LeafletMapComponent implements OnInit, AfterViewInit, OnChanges {
     //   }else{
     //    colors = ["#007000", "#FFBF00", "#D2222D"];
     //  }
-     let colors = ["#1D4586", "#1156CC", "#6D9FEB"];
+     //let colors = ["#1D4586", "#1156CC", "#6D9FEB"];
+    // let colors = ["#7E4EB0", "#586FC1", "#7CA3F4", "#82D4CA", "#3F9F67"]
+     let colors = ["#3F9F67", "#82D4CA", "#7CA3F4", "#586FC1", "#7E4EB0"];
       let color = "#fff";
       value = Number(value);
       for (let i = 0; i < values.length - 1; i++) {
-        if (value <= values[i] && value >= values[i + 1]) {
+        if(value == 0){
+          color = colors[values.length - 1];
+        }else if (value <= values[i] && value > values[i + 1]) {
           color = colors[i];
         }
       }
@@ -198,7 +202,7 @@ export class LeafletMapComponent implements OnInit, AfterViewInit, OnChanges {
             max = max >= data.indicator ? max : data.indicator;
           });
 
-          let parts = 3;
+          let parts = 4;
           max = max > 0 ? max : parts;
           let range = max - min;
 
@@ -213,8 +217,9 @@ export class LeafletMapComponent implements OnInit, AfterViewInit, OnChanges {
           }
 
           values.push(0);
+          console.log("values:", values);
         } else if (reportTypeIndicator === 'percent') {
-          values = [100, 70, 40, 0];
+          values = [100, 75, 50, 25, 0];
         }
 
         function styleStates(feature: any) {
@@ -384,7 +389,7 @@ export class LeafletMapComponent implements OnInit, AfterViewInit, OnChanges {
           //   fillOpacity: 1
           // },
           data: data,
-          color: "black",
+          color: "#ffffff",
           weight: 2,
           fillOpacity: 0,
           fontWeight: "bold"
@@ -412,7 +417,7 @@ export class LeafletMapComponent implements OnInit, AfterViewInit, OnChanges {
           //   dashArray: '0',
           //   fillOpacity: 1
           // },
-          color: "#6e6d6d",
+          color: "#ffffff",
           weight: 2,
           fillOpacity: 0,
           fontWeight: "bold"
@@ -439,7 +444,7 @@ export class LeafletMapComponent implements OnInit, AfterViewInit, OnChanges {
           //   dashArray: '0',
           //   fillOpacity: 1
           // },
-          color: "#6e6d6d",
+          color: "#ffffff",
           weight: 2,
           fillOpacity: 0,
           fontWeight: "bold"
@@ -462,7 +467,7 @@ export class LeafletMapComponent implements OnInit, AfterViewInit, OnChanges {
       //   dashArray: '0',
       //   fillOpacity: 1
       // },
-      color: "#6e6d6d",
+      color: "#ffffff",
       weight: 2,
       fillOpacity: 0,
       fontWeight: "bold"
@@ -551,8 +556,9 @@ async createMarkers(mapData: any, prevValues?: any): Promise<void> {
         min = min <= data.indicator ? min : data.indicator;
         max = max >= data.indicator ? max : data.indicator;
       });
-
-      let parts = 3;
+      console.log("min:" + min);
+      console.log("max:" + max);
+      let parts = 4;
       max = max > 0 ? max : parts;
       let range = max - min;
 
@@ -561,20 +567,22 @@ async createMarkers(mapData: any, prevValues?: any): Promise<void> {
       }
       else {
         let partSize = (range / parts % 1 === 0) ? range / parts : Number((range / parts).toFixed(0));
+        //let partSize = (range / parts % 1 === 0) ? range / parts : Math.floor(range / parts);
         for (let i = 0; i < parts; i++) {
           if (i === 0) {
             values.push(max);
-          }
-          else {
+          }/*else if(i=== (parts-1)){
+            values.push(min);
+          }*/else {
             let value = Number((max - partSize * i).toFixed(0));
             values.push(value);
           }
         }
-
         values.push(0);
+        console.log("values1111:", values);
       }
     } else if (reportTypeIndicator === 'percent') {
-      values = [100, 70, 40, 0];
+      values = [100, 75, 50, 25, 0];
     }
     else if (prevValues) {
       values = prevValues
@@ -619,27 +627,35 @@ async createMarkers(mapData: any, prevValues?: any): Promise<void> {
       
       // Determine the color of the state.
       let fillColor;
-      if (String(data.program_status).toLowerCase() === "yes. implemented in only online mode") {
+      if (String(data.program_status).toLowerCase() === "yes. implemented in online mode") {
         // fillColor = "#29c0c2";
-        fillColor='#1D4586'
-      } else if (String(data.program_status).toLowerCase() === "yes. implemented in only face-to-face mode") {
+        fillColor='#3F9F67'
+      } else if (String(data.program_status).toLowerCase() === "yes. implemented in only online mode") {
+        // fillColor = "#29c0c2";
+        fillColor='#3F9F67'
+      }      else if (String(data.program_status).toLowerCase() === "yes. implemented in only face-to-face mode") {
         // fillColor = "#705000";
-        fillColor='#6D9FEB'
+        fillColor='#82D4CA'
       } else if (String(data.program_status).toLowerCase() === "no. not applicable") {
         // fillColor = "#fff400";
-        fillColor='#EBF0F9'
+        fillColor='#7E4EB0'
+      } else if (String(data.program_status).toLowerCase() === "no. not implemented") {
+        // fillColor = "#fff400";
+        fillColor='#586FC1'
       } 
       else if (String(data.program_status).toLowerCase() === "yes. implemented in both face-to-face and online modes") {
         // fillColor = "#705000";
-        fillColor='#1156CC'
+        fillColor='#7CA3F4'
       }
       else {
         fillColor = this.getZoneColor(reportTypeIndicator, data.indicator, values);
       }
+      console.log(data.program_status);
+      console.log("Fillcolor:" + data.state_name + "::" + fillColor);
       // Create a GeoJSON layer for the state and add it to the map.
       L.geoJSON(stateGeoJSON, {
         style: {
-          color: "black",
+          color: "white",
           fillColor: fillColor,
           fillOpacity: 1,
           weight: 1
@@ -682,12 +698,13 @@ async createMarkers(mapData: any, prevValues?: any): Promise<void> {
       let re = new RegExp("_id$");
       var id;
       let fillColor = this.getZoneColor(reportTypeIndicator, data.indicator, values)
+      console.log("District fillColor:" + data.district_name + "::" + fillColor);
       
       let markerIcon = L.circleMarker([data.Latitude, data.Longitude], {
         id: data[idProp],
         name: data[nameProp],
         hierarchyLevel: data.hierarchyLevel,
-        color: "black",
+        color: "white",
         fillColor: fillColor,
         fillOpacity: 1,
         strokeWeight: 0.01,
@@ -855,7 +872,7 @@ async createMarkers(mapData: any, prevValues?: any): Promise<void> {
   //       //   console.log(data[nameProp])
   //       // })
   // 	let fillColor
-  // 	if(String(data.program_status).toLowerCase() === "yes. implemented in only online mode"){
+  // 	if(String(data.program_status).toLowerCase() === "yes. implemented in online mode"){
   //         fillColor = "#29c0c2"
   // 	} else if(String(data.program_status).toLowerCase() === "yes. implemented in only face-to-face mode"){
   // 		fillColor = "#705000"
@@ -973,28 +990,29 @@ async createMarkers(mapData: any, prevValues?: any): Promise<void> {
         // console.log('mapOptions.legend.title', mapOptions.legend)
         // if (mapOptions.legend && mapOptions.legend.title && mapOptions.legend.title == 'Implemented Nishtha'){
         //   if(mapData.data[0].program == 'NISHTHA Elementary'){
-        //     values = ["Implemented in only online mode","Implemented in only face-to-face mode","Implemented in both face-to-face and online modes","Not implemented"];
+        //     values = ["Implemented in online mode","Implemented in only face-to-face mode","Implemented in both face-to-face and online modes","Not implemented"];
         //   }else if(mapData.data[0].program == 'NISHTHA Secondary' || mapData.data[0].program == 'NISHTHA FLN'){
-        //     values = ["Implemented in only online mode","Implemented in only face-to-face mode","Not implemented"];
+        //     values = ["Implemented in online mode","Implemented in only face-to-face mode","Not implemented"];
         //   }else if(mapData.data[0].program == 'NISHTHA ECCE'){
-        //     values = ["Implemented in only online mode","Not implemented"];
+        //     values = ["Implemented in online mode","Not implemented"];
         //   }else{}
         // }
         if (mapData.data[0].program_name == 'NISHTHA Elementary (Online)') {
           mapData.data[0].program_name = 'NISHTHA Elementary';
-          values = ["Implemented in only online mode", "Implemented in only face-to-face mode", "Implemented in both face-to-face and online modes", "Not implemented", "Not applicable"];
+          values = ["Implemented in online mode", "Implemented in only face-to-face mode", "Implemented in both face-to-face and online modes", "Not implemented", "Not applicable"];
         } else if (mapData.data[0].program_name == 'NISHTHA Secondary' || mapData.data[0].program_name == 'NISHTHA FLN') {
-          values = ["Implemented in only online mode", "Implemented in only face-to-face mode", "Not implemented"];
+          values = ["Implemented in online mode", "Implemented in only face-to-face mode", "Not implemented"];
         } else if (mapData.data[0].program_name == 'NISHTHA ECCE') {
-          values = ["Implemented in only online mode", "Not implemented"];
+          values = ["Implemented in online mode", "Not implemented"];
         }
         else {
           values = ["Yes", "No"];
         }
         for (let i = 0; i < values.length; i++) {
           // labels.push(`<i class="fa fa-square" style="color:${ref.getLayerColor(values[i])}"></i> ${values[i]}`);
-          labels.push(`<button class="legend-range" style="background-color: ${ref.getZoneColor(reportTypeIndicator, values[i], values)}; color: ${invert(ref.getZoneColor(reportTypeIndicator, values[i], values), true)}">
+          labels.push(`<button class="legend-range">
           <div class="button-content">
+		     <span class="marker" style="background-color: ${ref.getZoneColor(reportTypeIndicator, values[i], values)};"></span>
          <span class="value">${values[i]}</span>
         </div>
      </button>`);
@@ -1002,19 +1020,22 @@ async createMarkers(mapData: any, prevValues?: any): Promise<void> {
       }
       else if (values.length <= 1 && reportTypeIndicator !== 'boolean') {
         // labels.push(`<i class="fa fa-square" style="color:${ref.getLayerColor(values[0] ? values[0] : -1, true)}"></i> ${formatNumberForReport(values[0])}`);
-        labels.push(`<button class="legend-range" style="background-color: ${ref.getLayerColor(values[0], true, values)}; color: ${invert(ref.getLayerColor(values[0], true, values), true)}">
+        labels.push(`<button class="legend-range">
           <div class="button-content">
+		  <span class="marker" style="background-color: ${ref.getLayerColor(values[0], true, values)};"></span>
           <span class="value">${values[0] ? values[0] : 0}${reportTypeIndicator === 'percent' ? '%' : ''}</span>
           </div>
-          </button><br>`)
+          </button>`)
       }
       else {
         ref.legendForm = {
           range1: true,
           range2: true,
-          range3: true
+          range3: true,
+          range4: true,
+          range5: true
         };
-        values = values && values.length > 0 && reportTypeIndicator !== 'percent' ? values : [100, 70, 40, 0];
+        values = values && values.length > 0 && reportTypeIndicator !== 'percent' ? values : [100, 75, 50, 25, 0];
         // div.innerHTML = labels[0] + '</br>';
         div.innerHTML = labels[0];
 
@@ -1037,20 +1058,53 @@ async createMarkers(mapData: any, prevValues?: any): Promise<void> {
         //   clickable = true;
         // }
 
-        for (let i = 0; i < values.length - 1; i++) {
+        for (let i = 0; i <=values.length - 1; i++) {
           let span = L.DomUtil.create('span', 'clickable-range');
-          const lowerValue = values[i + 1];
+          const lowerValue = values[i + 1]?values[i + 1] : 0;
           const upperValue = values[i] ? values[i] : 0;
-          const formattedLowerValue = formatNumberForReport(lowerValue);
-          const formattedUpperValue = formatNumberForReport(upperValue);
-          span.innerHTML = `
-            <button class="legend-range" style="background-color: ${ref.getLayerColor(values[i], true, values)}; color: ${invert(ref.getLayerColor(values[i], true, values), true)}">
-                 <div class="button-content">
-                <input type="checkbox" id="checkbox-${i + 1}" class="legend-checkbox" checked />
-                <span class="value">${formattedLowerValue} &ndash; ${formattedUpperValue}${reportTypeIndicator === 'percent' ? '%' : ''}</span>
-               </div>
-            </button><br>`;
+          let formattedLowerValue = formatNumberForReport(lowerValue);
+          let formattedUpperValue = formatNumberForReport(upperValue);
 
+          if(i==0){
+            span.innerHTML = `
+              <button class="legend-range">
+                  <div class="button-content">
+				  <span class="marker" style="background-color: ${ref.getLayerColor(values[i], true, values)};"></span>
+                  <input type="checkbox" id="checkbox-${i + 1}" class="legend-checkbox" checked />
+                  <span class="value">${formattedLowerValue} &ndash; ${formattedUpperValue}${reportTypeIndicator === 'percent' ? '%' : ''}</span>
+                </div>
+              </button>`;
+          }else if(i==values.length - 1){
+            span.innerHTML = `
+              <button class="legend-range">
+                  <div class="button-content">
+				  <span class="marker" style="background-color: ${ref.getLayerColor(values[i], true, values)};"></span>
+                  <input type="checkbox" id="checkbox-${i + 1}" class="legend-checkbox" checked />
+                  <span class="value">${formattedUpperValue}${reportTypeIndicator === 'percent' ? '%' : ''}</span>
+                </div>
+              </button>`;
+          }else if(i==values.length - 2){
+            formattedUpperValue = formatNumberForReport(upperValue-1);
+            formattedLowerValue = formatNumberForReport(lowerValue+1);
+            span.innerHTML = `
+              <button class="legend-range">
+                  <div class="button-content">
+				  <span class="marker" style="background-color: ${ref.getLayerColor(values[i], true, values)};"></span>
+                  <input type="checkbox" id="checkbox-${i + 1}" class="legend-checkbox" checked />
+                  <span class="value">${formattedLowerValue} &ndash; ${formattedUpperValue}${reportTypeIndicator === 'percent' ? '%' : ''}</span>
+                </div>
+              </button>`;
+          }else{
+            formattedUpperValue = formatNumberForReport(upperValue-1);
+            span.innerHTML = `
+              <button class="legend-range" >
+                  <div class="button-content">
+				  <span class="marker" style="background-color: ${ref.getLayerColor(values[i], true, values)};"></span>
+                  <input type="checkbox" id="checkbox-${i + 1}" class="legend-checkbox" checked />
+                  <span class="value">${formattedLowerValue} &ndash; ${formattedUpperValue}${reportTypeIndicator === 'percent' ? '%' : ''}</span>
+                </div>
+              </button>`;
+          }
           L.DomEvent.addListener(span, 'click', () => {
             ref.applyRange(i + 1, Number(values[values.length - 1]), ref.getLayerColor(values[i], true, values), values)
           });
@@ -1059,7 +1113,7 @@ async createMarkers(mapData: any, prevValues?: any): Promise<void> {
         }
       }
       if (!clickable) {
-        div.innerHTML = labels.join('<br>');
+        div.innerHTML = labels.join('');
       }
       return div;
     };
@@ -1087,20 +1141,20 @@ async createMarkers(mapData: any, prevValues?: any): Promise<void> {
 //       // console.log('mapOptions.legend.title', mapOptions.legend)
 //       // if (mapOptions.legend && mapOptions.legend.title && mapOptions.legend.title == 'Implemented Nishtha'){
 //       //   if(mapData.data[0].program == 'NISHTHA Elementary'){
-//       //     values = ["Implemented in only online mode","Implemented in only face-to-face mode","Implemented in both face-to-face and online modes","Not implemented"];
+//       //     values = ["Implemented in online mode","Implemented in only face-to-face mode","Implemented in both face-to-face and online modes","Not implemented"];
 //       //   }else if(mapData.data[0].program == 'NISHTHA Secondary' || mapData.data[0].program == 'NISHTHA FLN'){
-//       //     values = ["Implemented in only online mode","Implemented in only face-to-face mode","Not implemented"];
+//       //     values = ["Implemented in online mode","Implemented in only face-to-face mode","Not implemented"];
 //       //   }else if(mapData.data[0].program == 'NISHTHA ECCE'){
-//       //     values = ["Implemented in only online mode","Not implemented"];
+//       //     values = ["Implemented in online mode","Not implemented"];
 //       //   }else{}
 //       // }
 //       if (mapData.data[0].program_name == 'NISHTHA Elementary (Online)') {
 //         mapData.data[0].program_name = 'NISHTHA Elementary';
-//         values = ["Implemented in only online mode", "Implemented in only face-to-face mode", "Implemented in both face-to-face and online modes", "Not implemented", "Not applicable"];
+//         values = ["Implemented in online mode", "Implemented in only face-to-face mode", "Implemented in both face-to-face and online modes", "Not implemented", "Not applicable"];
 //       } else if (mapData.data[0].program_name == 'NISHTHA Secondary' || mapData.data[0].program_name == 'NISHTHA FLN') {
-//         values = ["Implemented in only online mode", "Implemented in only face-to-face mode", "Not implemented"];
+//         values = ["Implemented in online mode", "Implemented in only face-to-face mode", "Not implemented"];
 //       } else if (mapData.data[0].program_name == 'NISHTHA ECCE') {
-//         values = ["Implemented in only online mode", "Not implemented"];
+//         values = ["Implemented in online mode", "Not implemented"];
 //       }
 //       else {
 //         values = ["Yes", "No"];
@@ -1195,30 +1249,37 @@ async createMarkers(mapData: any, prevValues?: any): Promise<void> {
  getZoneColor(reportTypeIndicator: string, value: string | number, values?: number[]) {
   if (reportTypeIndicator === 'boolean') {
     if (String(value).toLowerCase() == "yes") {
-      return "#1D4586"; // Blue
+      return "#7CA3F4"; // Blue
+    } else if (String(value).toLowerCase() == "implemented in online mode") {
+      return "#3F9F67"; // Deep Sky Blue
     } else if (String(value).toLowerCase() == "implemented in only online mode") {
-      return "#1D4586"; // Deep Sky Blue
-    } else if (String(value).toLowerCase() == "implemented in only face-to-face mode") {
-      return "#6D9FEB"; // Dodger Blue
+      return "#3F9F67"; // Deep Sky Blue
+    }else if (String(value).toLowerCase() == "implemented in only face-to-face mode") {
+      return "#82D4CA"; // Dodger Blue
     } else if (String(value).toLowerCase() == "implemented in both face-to-face and online modes") {
-      return "#1156CC"; // Royal Blue
+      return "#7CA3F4"; // Royal Blue
     } else if (String(value).toLowerCase() == "not implemented") {
-      return "#C9DAF7"; // Dark Blue
+      return "#586FC1"; // Dark Blue
     } else if (String(value).toLowerCase() == "not applicable") {
-      return "#EBF0F9"; // Light Sky Blue
+      return "#7E4EB0"; // Light Sky Blue
     } else {
-      return "#C9DAF7"; // Dark Blue
+      return "#586FC1"; // Dark Blue
     }
   }
   else if (values && values.length === 1) {
-    return "#1156CC"; // Royal Blue
+    return "#7CA3F4"; // Royal Blue
   }
   else {
-    let colors = ["#1D4586", "#1156CC", "#6D9FEB"];
+    //let colors = ["#1D4586", "#1156CC", "#6D9FEB"];
+    let colors = ["#3F9F67", "#82D4CA", "#7CA3F4", "#586FC1", "#7E4EB0"];
     let color = "#fff";
     value = Number(value);
     for (let i = 0; i < values.length - 1; i++) {
-      if (value <= values[i] && value >= values[i + 1]) {
+      if(value == 0){
+        color = colors[values.length - 1];
+      }else if (i==0 && value <= values[i] && value >= values[i + 1]) {
+        color = colors[i];
+      }else if(value < values[i] && value >= values[i + 1]) {
         color = colors[i];
       }
     }
@@ -1232,7 +1293,7 @@ async createMarkers(mapData: any, prevValues?: any): Promise<void> {
 //     if (reportTypeIndicator === 'boolean') {
 //     if (String(value).toLowerCase() == "yes") {
 //       return "#007000";
-//     } else if (String(value).toLowerCase() == "implemented in only online mode") {
+//     } else if (String(value).toLowerCase() == "implemented in online mode") {
 //       return "#29c0c2";
 //     } else if (String(value).toLowerCase() == "implemented in only face-to-face mode") {
 //       return "#705000";
@@ -1273,7 +1334,7 @@ async createMarkers(mapData: any, prevValues?: any): Promise<void> {
   }
 
   applyRange(index: any, baseValue: any, rangeColour: any, values: any) {
-    let range1Data = [], range2Data = [], range3Data = []
+    let range1Data = [], range2Data = [], range3Data = [], range4Data = [], range5Data = []
     switch (index) {
       case 1:
         let checkbox1 = <HTMLInputElement>document.getElementById('checkbox-1');
@@ -1290,6 +1351,16 @@ async createMarkers(mapData: any, prevValues?: any): Promise<void> {
         checkbox3.checked = !this.legendForm.range3
         this.legendForm.range3 = !this.legendForm.range3
         break;
+      case 4:
+          let checkbox4 = <HTMLInputElement>document.getElementById('checkbox-4');
+          checkbox4.checked = !this.legendForm.range4
+          this.legendForm.range4 = !this.legendForm.range4
+          break;
+      case 5:
+            let checkbox5 = <HTMLInputElement>document.getElementById('checkbox-5');
+            checkbox5.checked = !this.legendForm.range5
+            this.legendForm.range5 = !this.legendForm.range5
+            break;
     }
     if (this.legendForm.range1) {
       range1Data = this.mapData.data.filter((obj: any) => {
@@ -1306,10 +1377,19 @@ async createMarkers(mapData: any, prevValues?: any): Promise<void> {
         return obj.indicator <= values[2] && (values[3] === baseValue ? obj.indicator >= values[3] : obj.indicator > values[3])
       });
     }
-
+    if (this.legendForm.range4) {
+      range4Data = this.mapData.data.filter((obj: any) => {
+        return obj.indicator <= values[3] && (values[4] === baseValue ? obj.indicator >= values[4] : obj.indicator > values[4])
+      });
+    }
+    if (this.legendForm.range5) {
+      range5Data = this.mapData.data.filter((obj: any) => {
+        return obj.indicator <= values[4] && (values[5] === baseValue ? obj.indicator >= values[5] : obj.indicator > values[5])
+      });
+    }
     let filteredData = {
       ...this.mapData,
-      data: [range1Data, range2Data, range3Data].flat()
+      data: [range1Data, range2Data, range3Data, range4Data, range5Data].flat()
     };
 
     this.markers.clearLayers();

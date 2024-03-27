@@ -35,14 +35,25 @@
     }
 
     .legend-range {
-        margin-top: 10px;
         padding: 5px;
-        height: 4.5vh;
-        font-size: 0.75rem;
-        text-align: center;
-        border-radius: 10px;
-        font-weight: bold;
+        font-size: 12px;
+        font-weight: 500;
         width: 100%;
+		line-height:2;
+		letter-spacing: 0.1px;
+		font-family: "Lato", sans-serif;
+		text-align: left;
+		.button-content {
+			display: flex;
+			align-items: center;
+			span.marker {
+				width: 16px;
+				height: 16px;
+				border-radius: 50%;
+				display: inline-flex;
+				margin: 0 10px;
+			}
+		}
     }
 
     .leaflet-interactive:focus,

@@ -50,6 +50,7 @@
 <ng-container *ngIf="!isDashboard && !isLandingPages">
 	<div>
 		<div class="fontBar">
+			<div class="custom-container">
 		  <div class="flagArea">
 			<img
 			  title=""
@@ -61,7 +62,6 @@
 			  title?.dashboard_header1_title
 			}}</span>
 		  </div>
-	   
 		  <div class="btnGroup">
 			<i
 			  *ngIf="showBackBtn"
@@ -139,6 +139,7 @@
 				   </svg>
 				 </button> -->
 		  </div>
+			</div>  
 		</div>
 		<app-header-v2></app-header-v2>
 		<app-side-nav

@@ -7,6 +7,14 @@
     z-index: 2;
 }
 
+.program-banner-wrapper{
+	margin-bottom: 25px;
+	img{
+		width: 100%;
+		border-radius: 5px;
+	}
+}
+
 @media(max-width: 400px) {
     .app-nav-bar{
         
@@ -64,32 +72,25 @@
     max-height: 90%;
 }
 
-// .row-wrapper {
-//     flex-grow: 1;
-//     min-height: 45rem;
-//     // max-height: 50%;
-// }
 
 .bignumber-container {
-    box-shadow: 0px 7.16865px 19.7138px rgba(0, 0, 0, 0.16);
     border-radius: 10px;
     margin: 10px;
-    
     display: flex;
     // justify-content: center;
     flex-direction: column;
-    background: #fff;
+    background: #FCFBFF;
+	border: 1px solid #4C30F5;
 }
 
 .div-shadow{
-    box-shadow: 0px 7.16865px 19.7138px rgba(0, 0, 0, 0.16);
     border-radius: 10px;
     margin: 10px;
     min-height: 23rem;
     display: flex;
     justify-content: center;
     flex-direction: column;
-    background: #fff;
+    background: #FCFBFF;
 }
 
 .dropdown {

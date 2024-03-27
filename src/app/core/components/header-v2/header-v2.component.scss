@@ -20,17 +20,19 @@
     }
  
     .left-logo{
-        height: 70px;
+        height: auto;
         width: auto;
     }
 }
  
 .header-wrapper{
     align-items: center;
+	width: 100%;
+    padding: 10px 0;
 }
  
 .left-logo {
-    height: 70px;
+    height: auto;
     width: auto;
 }
  
@@ -82,7 +84,7 @@
 }
  
 .headerSideWidth {
-    max-width: 5rem;
+	width: 50%;
 }
  
 .mainHeaderContent {
@@ -148,12 +150,41 @@ p {
     font-size: 12.4133px;
     line-height: 19px
 }
-// @media(max-width: 674px) {
-//     .left-logo{
-//         height: 30px;
-//         width: 112rem;
-//     }
-//     .white-box{
-//         display: none;
-//     }
-// }
+.custom-container {
+    width: calc(100% - 14rem);
+    margin: 0 auto;
+    display: flex;
+	padding: 0 8px;
+}
+.rightContent {
+    display: flex;
+    width: 50%;
+    align-items: flex-end;
+    justify-content: end;
+    gap: 0.5rem;
+
+	h1{
+		font-family: "Outfit", sans-serif;
+		font-size: 24px;
+		line-height: 30px;
+		font-weight: 500;
+
+	}
+}
+
+@media (max-width:992px) {
+	.custom-container{
+		width: 100%;
+		padding: 0 1rem;
+	}
+	.rightContent h1{
+		font-size: 20px;
+	}
+}
+@media (max-width:768px) {
+	.rightContent h1 {
+		font-size: 13px;
+		line-height: 15px;
+	}
+}
+

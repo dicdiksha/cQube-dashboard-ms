@@ -1,4 +1,41 @@
-<div class="bg-white border-gray-200 py-1 dark:bg-gray-800  app-nav-bar">
+<div class="bg-white app-nav-bar">
+	<div class="custom-container">
+    <div class="flex header-wrapper">
+        <div class="headerSideWidth">
+            <div class="flex items-center bg-white justify-between">
+					<img src="assets/images/Ministry_of_Education_India.png" class="h-8 sm:h-11 left-logo"
+                    alt="MOI Logo" />
+                <img src="assets/images/{{title.dashboard_header2_image2}}" class="h-full logo" alt="NCERT Logo"
+                    *ngIf="title.dashboard_header2_image2 && title.dashboard_header2_image2 !== ''">
+ 
+                        <a href="https://www.education.gov.in/en" class="hidden" target="_blank">
+                            <img src="assets/images/moi_logo.png" class="mr-3 h-6 sm:h-9" alt="MOI Logo" />
+                        </a>
+ 
+            </div>
+        </div>
+			<div class="rightContent">
+				<div class="" *ngIf="NVSK">
+					<h1 class="">NDEAR VIDYA SAMIKSHA KENDRA</h1>
+            </div>
+            <div class="justify-left items-center md:flex" *ngIf="!NVSK">
+                <h1 class="font-medium leading-tight lg:text-4xl md:text-2xl xs:text-sm sm:text-1xl mt-0">
+                    {{title.dashboard_header2_title ? title.dashboard_header2_title : stateName + ' - VIDYA SAMIKSHA KENDRA (VSK)'}}</h1>
+            </div>
+            <div class="">
+ 
+                        <div *ngIf="!NVSK">
+                            <!-- <img src="../../../../assets/images/user.png" class="user-icon ml-5" (mouseover)="onMouseOver()"
+                        (mouseout)="onMouseOut()"> -->
+                            <!-- <div *ngIf="dropdown" class="dropdown" (mouseover)="withinTime = true;" [@fadeInOut] (mouseout)="onMouseOut()">
+                        <a href="#" (click)="logout()" id="logout" name="logout"> logout</a>
+                    </div> -->
+                        </div>
+ 
+                    </div>
+                </div>
+            </div>
+        </div>
     <!--<div class="flex justify-between items-center xs:px-2 md:container md:mx-auto h-full">
         <div class="flex items-center">
  
@@ -28,44 +65,8 @@
         </div>
  
     </div>-->
-    <div class="flex header-wrapper">
-        <div class="headerSideWidth">
-            <div class="flex items-center bg-white justify-between">
-                <img src="assets/images/{{title.dashboard_header2_image1}}" class="h-8 sm:h-11 left-logo"
-                    alt="MOI Logo" />
-                <img src="assets/images/{{title.dashboard_header2_image2}}" class="h-full logo" alt="NCERT Logo"
-                    *ngIf="title.dashboard_header2_image2 && title.dashboard_header2_image2 !== ''">
- 
- 
-                        <a href="https://www.education.gov.in/en" class="hidden" target="_blank">
-                            <img src="assets/images/moi_logo.png" class="mr-3 h-6 sm:h-9" alt="MOI Logo" />
-                        </a>
- 
-            </div>
-        </div>
-        <div class="mainHeaderContent d-flex justify-between items-center h-full px-2">
-            <div class="justify-left items-center md:flex" *ngIf="NVSK">
-                <h1 class="font-medium leading-tight lg:text-4xl md:text-2xl xs:text-sm sm:text-1xl mt-0">NDEAR VIDYA
-                    SAMIKSHA KENDRA</h1>
-            </div>
-            <div class="justify-left items-center md:flex" *ngIf="!NVSK">
-                <h1 class="font-medium leading-tight lg:text-4xl md:text-2xl xs:text-sm sm:text-1xl mt-0">
-                    {{title.dashboard_header2_title ? title.dashboard_header2_title : stateName + ' - VIDYA SAMIKSHA KENDRA (VSK)'}}</h1>
-            </div>
-            <div class="">
- 
-                        <div *ngIf="!NVSK">
-                            <!-- <img src="../../../../assets/images/user.png" class="user-icon ml-5" (mouseover)="onMouseOver()"
-                        (mouseout)="onMouseOut()"> -->
-                            <!-- <div *ngIf="dropdown" class="dropdown" (mouseover)="withinTime = true;" [@fadeInOut] (mouseout)="onMouseOut()">
-                        <a href="#" (click)="logout()" id="logout" name="logout"> logout</a>
-                    </div> -->
-                        </div>
- 
-                    </div>
-                </div>
-            </div>
-        </div>
+    
+</div>
  
 <!--<div class="rbac-detail-box" *ngIf="!hideDiv">
     <img *ngIf="rbacDetails && rbacDetails.roleDetail" id="cQb_dhsbrd" class="btn" src="assets/images/{{rbacDetails.roleDetail.imageUrl}}">

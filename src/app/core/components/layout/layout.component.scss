@@ -104,15 +104,36 @@
 }
 ::ng-deep{
     .legend{
-        background-color: rgb(238, 235, 235);
-        border: solid 1px black;
-        padding: 10px;
+        background-color: #FCFBFF;
+        border: solid 1px #C9C0FF;
+        border-radius: 4px;
+		max-width: 340px;
+		padding-bottom: 8px;
+		strong{
+			width: 100%;
+			background-color: #4C30F5;
+			color: #FFFFFF;
+			font-weight: 500;
+			font-size: 16px;
+			line-height: 1.5;
+			letter-spacing: 0.1px;
+			font-family: "Lato", sans-serif;
+			padding: 7px 15px;
+            border-radius: 4px 4px 0 0;
+			display: block;
+			margin-bottom: 8px 
+		}
     }
     .sb-cQ-card{
         z-index: 100;
     }
 }
 
+.custom-container {
+    width: calc(100% - 14rem);
+    margin: 0 auto;
+    display: flex;
+}
 
 @media(min-width: 436px) and  (max-width:915px){
     ::ng-deep{
@@ -150,11 +171,41 @@
     }
 }
 
-@media (max-width: 768px){
-	
+@media (max-width: 992px){
+	.custom-container {
+		width: 100%;
+		margin: 0 auto;
+		display: flex;
+		padding: 0 1rem;
+	}
 	.fontBar {
 		position: static;
+		padding: 0;
+	}
+	.custom-container{
+		display: block;
+		.flagArea{
+			align-items: center;
+			width: 100%;
+			justify-content: center;
+			span{
+				font-size: 14px;
+			}
+		}
+		.btnGroup {
+			align-items: center;
+			width: 100%;
+			justify-content: center;
+			padding: 5px 0;
+		}
+     }
 
+}
+
+@media (max-width: 768px){
+	.fontBar {
+		position: static;
+        .custom-container,
 		.container {
 			display: block;
 		}
@@ -179,4 +230,26 @@
 	margin: 0 auto;
   }
 
+}
+.program-banner-wrapper{
+	margin-bottom: 25px;
+	img{
+	  width: 100%;
+	  border-radius: 5px;
+	}
+}
+
+@media (max-width: 479px){
+	
+.fontBar {
+	.custom-container {
+		width: calc(100% - 4rem);
+	}
+
+    .flagArea{
+		span{
+			font-size: 8px;
+		}
+	}
+}
 }
