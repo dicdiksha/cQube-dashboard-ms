@@ -503,7 +503,7 @@ export const config = {
                 "metricFilterNeeded": false,
                 "indicator": "users",
                 "legend": {
-                    "title": "Learning Sessions on Potential Users"
+                    "title": "Learning Sessions per Capita"
                 },
                 "tooltipMetrics": [
                     {
@@ -512,7 +512,7 @@ export const config = {
                         "valueSuffix": "\n"
                     },
                     {
-                        "valuePrefix": "Learning Sessions on Potential Users: ",
+                        "valuePrefix": "Learning Sessions per Capita: ",
                         "value": "users",
                         "valueSuffix": "\n"
                     }

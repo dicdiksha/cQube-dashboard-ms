@@ -48,10 +48,10 @@
             <app-learning-sessions-tab *ngIf="selectedTabLabel === 'Learning Sessions'"></app-learning-sessions-tab>
         </mat-tab>
 
-        <mat-tab label='Learning Sessions on Potential Users'
-            *ngIf="tabs.includes('Learning Sessions on Potential Users')">
+        <mat-tab label='Learning Sessions per Capita'
+            *ngIf="tabs.includes('Learning Sessions per Capita')">
             <app-learning-sessions-on-potential-users-tab
-                *ngIf="selectedTabLabel === 'Learning Sessions on Potential Users'"></app-learning-sessions-on-potential-users-tab>
+                *ngIf="selectedTabLabel === 'Learning Sessions per Capita'"></app-learning-sessions-on-potential-users-tab>
         </mat-tab>
 
     </mat-tab-group>

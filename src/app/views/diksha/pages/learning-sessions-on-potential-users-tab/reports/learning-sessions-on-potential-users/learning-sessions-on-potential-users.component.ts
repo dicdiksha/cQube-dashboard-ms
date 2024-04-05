@@ -19,7 +19,7 @@ export class LearningSessionsOnPotentialUsersComponent implements OnInit {
   reportData: any = {
     reportName: "learning_sessions_on_potential_users"
   };
-  title: string = 'Learning Sessions on Potential Users'
+  title: string = 'Learning Sessions per Capita'
   selectedYear: any;
   selectedMonth: any;
   startDate: any;
