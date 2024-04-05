@@ -470,7 +470,7 @@ export const config = {
     // },
 
     learning_sessions_on_potential_users: {
-        "label": "Learning Sessions on Potential Users",
+        "label": "Learning Sessions per Capita",
         "filters": [
             {
                 "name": "State",
@@ -495,7 +495,7 @@ export const config = {
         ],
         "options": {
             "bigNumber": {
-                "title": "Learning Sessions On Potential Users",
+                "title": "Learning Sessions per Capita",
                 "valueSuffix": '',
                 "property": 'users'
             },
@@ -503,7 +503,7 @@ export const config = {
                 "metricFilterNeeded": false,
                 "indicator": "users",
                 "legend": {
-                    "title": "Learning Sessions on Potential Users"
+                    "title": "Learning Sessions per Capita"
                 },
                 "tooltipMetrics": [
                     {
@@ -512,7 +512,7 @@ export const config = {
                         "valueSuffix": "\n"
                     },
                     {
-                        "valuePrefix": "Learning Sessions on Potential Users: ",
+                        "valuePrefix": "Learning Sessions per Capita: ",
                         "value": "users",
                         "valueSuffix": "\n"
                     }

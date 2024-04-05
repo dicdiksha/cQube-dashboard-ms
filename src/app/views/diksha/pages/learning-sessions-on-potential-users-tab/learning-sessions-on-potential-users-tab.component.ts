@@ -29,7 +29,7 @@ export class LearningSessionsOnPotentialUsersTabComponent implements OnInit, Aft
     hasTimeSeriesFilters: boolean = false;
     hasCommonFilters: boolean = true;
     NVSK:boolean = true;
-    matLabel:any ="Learning Sessions on Potential Users"
+    matLabel:any ="Learning Sessions per Capita"
     @ViewChild('learningSessionsOnPotentialUsers') learningSessionsOnPotentialUsers: LearningSessionsOnPotentialUsersComponent;
 
     constructor(private _wrapperService: WrapperService, private _rbacService: RbacService) {
