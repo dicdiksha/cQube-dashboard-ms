@@ -151,7 +151,7 @@ export const config = {
         ],
         "options": {
             "bigNumber": {
-                "title": ['Total Micro Improvements Ongoing', 'Total Micro Improvements Started', 'Total Micro Improvements In Progress', 'Total Micro Improvements Submitted', 'Total Micro Improvements Submitted with Evidence'],
+                "title": ['Total MicroImprovements Projects', 'Total MicroImprovements Started', 'Total MicroImprovements InProgress', 'Total MicroImprovements Submitted', 'Total MicroImprovements Submitted With Evidence'],
                 "valueSuffix": ['','','','',''],
                 "property": ['total_mi_ongoing', 'total_mi_started', 'total_mi_inprogress', 'total_mi_submitted', 'total_mi_submitted_with_evidence']
             }
