@@ -1,6 +1,6 @@
-<div class="program-banner-wrapper">
+<!-- <div class="program-banner-wrapper">
 	<img src="assets/images/nishtha_spotlight 1.png" alt="Banner Images">
-</div>
+</div> -->
 <div class="metric-card-wrapper">
     <div class="grid gap-4 grid-cols-6 xmd:grid-cols-12">
         <div class="col-span-12">
@@ -15,7 +15,7 @@
         </div>
     </div>
 </div>
-<div class="row-wrapper grid grid-cols-5 gap-4" *ngIf="NVSK">
+<!-- <div class="row-wrapper grid grid-cols-5 gap-4" *ngIf="NVSK">
     <div class="col-span-2 xmd:col-span-1  bignumber-container" id="bignumber1"
         *ngFor="let bigNumberData of getMetricsArray(); let index = index">
         <div *ngIf="checkReport('pmposhan_metrics', 'bigNumber'+(index+1))">
@@ -44,4 +44,11 @@
         </mat-tab>
 
     </mat-tab-group>
+</div> -->
+
+<div class="custom-tab-group-wrapper" style="height: 1000px; max-height: 2200px; min-height: 300px;">
+	<iframe width="100%" height="100%" frameBorder="0" [src]="urlSafe"
+	target="_parent" loading="lazy"
+	>
+    </iframe>
 </div>

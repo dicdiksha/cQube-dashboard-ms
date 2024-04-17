@@ -3,6 +3,7 @@ import { RbacService } from 'src/app/core/services/rbac-service.service';
 import { config } from 'src/app/views/prashast/config/prashast_config';
 import { CommonService } from 'src/app/core/services/common/common.service';
 import { ActivatedRoute } from '@angular/router';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 @Component({
   selector: 'app-prashast',
   templateUrl: './prashast.component.html',
@@ -13,8 +14,10 @@ export class PrashastComponent implements OnInit {
   rbacDetails: any;
   bigNumberMetrics: any = [];
   programName: any = 'prashast';
+  url:string = 'https://vskdev-apex.diksha.gov.in/ords/r/vskdev/prashast';
+  urlSafe: SafeResourceUrl;
 
-  constructor(private route: ActivatedRoute, private _rbacService: RbacService, private _commonService: CommonService) { 
+  constructor(private route: ActivatedRoute, private sanitizer: DomSanitizer, private _rbacService: RbacService, private _commonService: CommonService) { 
     
     this._rbacService.getRbacDetails().subscribe((rbacDetails: any) => {
         this.rbacDetails = rbacDetails;
@@ -23,6 +26,7 @@ export class PrashastComponent implements OnInit {
     }
 
     ngOnInit(): void {
+      this.urlSafe = this.sanitizer.bypassSecurityTrustResourceUrl(this.url);
         this._commonService.getMetaData(this.programName).subscribe()
     }
 

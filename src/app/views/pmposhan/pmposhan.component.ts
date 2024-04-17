@@ -5,6 +5,7 @@ import { CommonService } from 'src/app/core/services/common/common.service';
 import { RbacService } from 'src/app/core/services/rbac-service.service';
 import { config } from './config/pmposhan_config';
 import { environment } from 'src/environments/environment';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 
 @Component({
     selector: 'app-pmposhan',
@@ -20,7 +21,11 @@ export class PmPoshanComponent implements OnInit {
     programName = 'pmPoshan'
     bigNumberMetrics: any = [];
     NVSK: boolean = true;
-constructor(private route: ActivatedRoute, private _rbacService: RbacService, private _commonService: CommonService) { 
+    url:string = 'https://vskdev-apex.diksha.gov.in/ords/r/vskdev/pmposhan';
+    urlSafe: SafeResourceUrl;
+    
+
+constructor(private route: ActivatedRoute, private sanitizer: DomSanitizer, private _rbacService: RbacService, private _commonService: CommonService) { 
     this.route.queryParams.subscribe((param: any) => {
         this.tabIndex = param.tab ? Number(param.tab) : 0;
     })
@@ -47,6 +52,7 @@ constructor(private route: ActivatedRoute, private _rbacService: RbacService, pr
     }
 
     ngOnInit(): void {
+        this.urlSafe = this.sanitizer.bypassSecurityTrustResourceUrl(this.url);
         this._commonService.getMetaData(this.programName).subscribe()
     }
 
