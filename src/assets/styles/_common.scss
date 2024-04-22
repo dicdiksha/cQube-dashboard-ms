@@ -214,6 +214,13 @@ h2.program-desc{
 	}	
 }
 
+button.legend-range-reset.pull-right {
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    color: #fff;
+}
+
 // theme-overriding 
 html[data-layout="cQubeDkR"] {
 	// overflow-x: hidden;

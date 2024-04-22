@@ -160,7 +160,8 @@ export class LeafletMapComponent implements OnInit, AfterViewInit, OnChanges {
     //  }
      //let colors = ["#1D4586", "#1156CC", "#6D9FEB"];
     // let colors = ["#7E4EB0", "#586FC1", "#7CA3F4", "#82D4CA", "#3F9F67"]
-     let colors = ["#3F9F67", "#82D4CA", "#7CA3F4", "#586FC1", "#7E4EB0"];
+     //let colors = ["#3F9F67", "#82D4CA", "#7CA3F4", "#586FC1", "#7E4EB0"];
+     let colors = ["#5E6EFF", "#8571FB", "#7CA3F4", "#586FC1", "#AFCFFF"];
       let color = "#fff";
       value = Number(value);
       for (let i = 0; i < values.length - 1; i++) {
@@ -629,23 +630,23 @@ async createMarkers(mapData: any, prevValues?: any): Promise<void> {
       let fillColor;
       if (String(data.program_status).toLowerCase() === "yes. implemented in online mode") {
         // fillColor = "#29c0c2";
-        fillColor='#3F9F67'
+        fillColor='#5E6EFF'
       } else if (String(data.program_status).toLowerCase() === "yes. implemented in only online mode") {
         // fillColor = "#29c0c2";
-        fillColor='#3F9F67'
+        fillColor='#5E6EFF'
       }      else if (String(data.program_status).toLowerCase() === "yes. implemented in only face-to-face mode") {
         // fillColor = "#705000";
-        fillColor='#82D4CA'
+        fillColor='#8571FB'
       } else if (String(data.program_status).toLowerCase() === "no. not applicable") {
         // fillColor = "#fff400";
-        fillColor='#7E4EB0'
+        fillColor='#7CA3F4'
       } else if (String(data.program_status).toLowerCase() === "no. not implemented") {
         // fillColor = "#fff400";
         fillColor='#586FC1'
       } 
       else if (String(data.program_status).toLowerCase() === "yes. implemented in both face-to-face and online modes") {
         // fillColor = "#705000";
-        fillColor='#7CA3F4'
+        fillColor='#AFCFFF'
       }
       else {
         fillColor = this.getZoneColor(reportTypeIndicator, data.indicator, values);
@@ -1251,17 +1252,17 @@ async createMarkers(mapData: any, prevValues?: any): Promise<void> {
     if (String(value).toLowerCase() == "yes") {
       return "#7CA3F4"; // Blue
     } else if (String(value).toLowerCase() == "implemented in online mode") {
-      return "#3F9F67"; // Deep Sky Blue
+      return "#5E6EFF"; // Deep Sky Blue
     } else if (String(value).toLowerCase() == "implemented in only online mode") {
-      return "#3F9F67"; // Deep Sky Blue
+      return "#5E6EFF"; // Deep Sky Blue
     }else if (String(value).toLowerCase() == "implemented in only face-to-face mode") {
-      return "#82D4CA"; // Dodger Blue
+      return "#8571FB"; // Dodger Blue
     } else if (String(value).toLowerCase() == "implemented in both face-to-face and online modes") {
       return "#7CA3F4"; // Royal Blue
     } else if (String(value).toLowerCase() == "not implemented") {
       return "#586FC1"; // Dark Blue
     } else if (String(value).toLowerCase() == "not applicable") {
-      return "#7E4EB0"; // Light Sky Blue
+      return "#AFCFFF"; // Light Sky Blue
     } else {
       return "#586FC1"; // Dark Blue
     }
@@ -1271,7 +1272,7 @@ async createMarkers(mapData: any, prevValues?: any): Promise<void> {
   }
   else {
     //let colors = ["#1D4586", "#1156CC", "#6D9FEB"];
-    let colors = ["#3F9F67", "#82D4CA", "#7CA3F4", "#586FC1", "#7E4EB0"];
+    let colors = ["#5E6EFF", "#8571FB", "#7CA3F4", "#586FC1", "#AFCFFF"];
     let color = "#fff";
     value = Number(value);
     for (let i = 0; i < values.length - 1; i++) {
