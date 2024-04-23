@@ -22,6 +22,9 @@ export class SideNavComponent implements OnInit, OnChanges {
    }
 
   ngOnInit(): void {
+    if (!this.isHome && document.body.classList.contains("sidebaractive")){
+      document.body.classList.remove("sidebaractive")
+   }
   }
   ngOnChanges(changes: SimpleChanges): void {
 
@@ -38,7 +41,7 @@ export class SideNavComponent implements OnInit, OnChanges {
       document.body.classList.add("sideBarHeightNone");
     }
     else if (!this.isHome && document.body.classList.contains("sidebaractive")){
-       document.body.classList.remove("sidebaractive")
+      // document.body.classList.remove("sidebaractive")
 
     }
     if (!this.isHome && document.body.classList.contains("sideBarHeightNone")){ 
@@ -56,7 +59,7 @@ export class SideNavComponent implements OnInit, OnChanges {
     });
     menuItemSelected.isSelected = true;
     // document.body.classList.add("sidebaractive");
-    this.toggleSideBar();
+    //this.toggleSideBar();
   }
 
   toggleSideBar(menuIconclicked?: string): void {
