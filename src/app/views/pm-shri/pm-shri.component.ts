@@ -21,9 +21,12 @@ export class PmShriComponent implements OnInit {
   programName: any = 'pm_shri';
   bigNumberMetrics: any = [];
   NVSK: boolean = true;
-  //url:string = 'https://g120d41e0b7eddc-vskdevdb.adb.ap-mumbai-1.oraclecloudapps.com/ords/r/vskdev/udise/home?session=110658119291029';
-  //url:string = 'https://g120d41e0b7eddc-vskdevdb.adb.ap-mumbai-1.oraclecloudapps.com/ords/r/vskdev/pm-shri';
+  
+  //dev url
   url:string = 'https://vskdev-apex.diksha.gov.in/ords/r/vskdev/pm-shri112';
+
+  // prod url
+  //url:string = 'https://nvsk.diksha.gov.in/ords/r/vskdev/pm-shri106';
   urlSafe: SafeResourceUrl;
 
   constructor(private route: ActivatedRoute, private sanitizer: DomSanitizer, private _rbacService: RbacService, private _commonService: CommonService) {
