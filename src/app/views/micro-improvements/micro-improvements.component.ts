@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { CommonService } from 'src/app/core/services/common/common.service';
 import { RbacService } from 'src/app/core/services/rbac-service.service';
@@ -8,7 +8,7 @@ import { config } from './config/microimprovements_config';
   templateUrl: './micro-improvements.component.html',
   styleUrls: ['./micro-improvements.component.scss']
 })
-export class MicroImprovementsComponent implements OnInit {
+export class MicroImprovementsComponent implements OnInit, AfterViewInit {
 
   loadTabs = false;
   rbacDetails: any;
@@ -17,6 +17,7 @@ export class MicroImprovementsComponent implements OnInit {
   tabs: any = [];
   programName: any = 'pgi'
   bigNumberMetrics: any = [];
+  @ViewChild('target') private myTarget:ElementRef;
 
   constructor(private route: ActivatedRoute, private _rbacService: RbacService, private _commonService: CommonService) {
     this.route.queryParams.subscribe((param: any) => {
@@ -44,6 +45,7 @@ export class MicroImprovementsComponent implements OnInit {
   }
 
   ngAfterViewInit(): void {
+	this._commonService.scrollInto(this.myTarget.nativeElement);
     setTimeout(() => {
       this.selectedTabLabel = this.tabs.length > 0 ? this.tabs[0] : undefined
     });

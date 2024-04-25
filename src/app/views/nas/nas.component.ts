@@ -1,5 +1,5 @@
 
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { CommonService } from 'src/app/core/services/common/common.service';
 import { RbacService } from 'src/app/core/services/rbac-service.service';
@@ -11,7 +11,7 @@ import { environment } from 'src/environments/environment';
     templateUrl: './nas.component.html',
     styleUrls: ['./nas.component.scss']
 })
-export class NasComponent implements OnInit {
+export class NasComponent implements OnInit, AfterViewInit {
     loadTabs = false;
     rbacDetails: any;
     tabIndex;
@@ -20,6 +20,8 @@ export class NasComponent implements OnInit {
     programName: any = 'nas';
     bigNumberMetrics: any = [];
     NVSK: boolean = true;
+    @ViewChild('target') private myTarget:ElementRef;
+
 constructor(private route: ActivatedRoute, private _rbacService: RbacService, private _commonService: CommonService) { 
     this.route.queryParams.subscribe((param: any) => {
         this.tabIndex = param.tab ? Number(param.tab) : 0;
@@ -46,11 +48,13 @@ constructor(private route: ActivatedRoute, private _rbacService: RbacService, pr
 
     }
 
+
     ngOnInit(): void {
         this._commonService.getMetaData(this.programName).subscribe()
     }
 
     ngAfterViewInit(): void {
+		this._commonService.scrollInto(this.myTarget.nativeElement);
     setTimeout(() => {
         this.selectedTabLabel = this.tabs.length > 0 ? this.tabs[0] : undefined
     });
@@ -61,7 +65,6 @@ constructor(private route: ActivatedRoute, private _rbacService: RbacService, pr
     this.tabIndex = $event.index;
     setTimeout(() => {
         window.dispatchEvent(new Event('resize'));
-        console.log('resize');
     }, 100);
     }
 
@@ -79,5 +82,4 @@ constructor(private route: ActivatedRoute, private _rbacService: RbacService, pr
     importBigNumberMetrics(bigNumberMetric: any) {
         this.bigNumberMetrics[bigNumberMetric.ind] = bigNumberMetric.data
     }
-
 }

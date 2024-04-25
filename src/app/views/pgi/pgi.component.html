@@ -15,7 +15,7 @@
     </div>
 </div>
 
-<div class="col-span-full tab-wrapper" *ngIf="NVSK">
+<div class="col-span-full tab-wrapper" *ngIf="NVSK" #target>
     <div *ngIf="checkReport('pgi_metrics', 'bigNumber1')" id="bignumber1">
         <app-pgi-bignumber-metrics (exportReportData)="importBigNumberMetrics($event)"></app-pgi-bignumber-metrics>
     </div>

@@ -1,7 +1,7 @@
 <ng-container *ngIf="NVSK">
     <div class="col-span-full">
         <ng-container *ngIf="(reportData?.values && reportData?.values?.length > 0)">
-            <p class="text-center font-medium py-2 filename" >{{title}}</p><br>
+            <!-- <p class="text-center font-medium py-2 filename" >{{title}}</p> -->
             <app-sb-bar-chart type="horizontalBar" [data]="reportData" [config]="config" ></app-sb-bar-chart>
         </ng-container>
         <div class="noData" *ngIf="!(reportData?.values && reportData?.values?.length > 0)">

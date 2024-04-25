@@ -14,7 +14,7 @@
     </div>
 </div><br>
 
-<div class="col-span-full tab-wrapper">
+<div class="col-span-full tab-wrapper" #target>
     <div class="reports-row" >
         <div *ngIf="checkReport('nishtha_metrics', 'bigNumber1')" id="bignumber1">
             <app-nishtha-bignumber-metrics (exportReportData)="importBigNumberMetrics($event)"></app-nishtha-bignumber-metrics>

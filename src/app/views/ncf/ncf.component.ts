@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { CommonService } from 'src/app/core/services/common/common.service';
 import { RbacService } from 'src/app/core/services/rbac-service.service';
@@ -8,7 +8,7 @@ import {config} from '../ncf/config/ncf_config';
   templateUrl: './ncf.component.html',
   styleUrls: ['./ncf.component.scss']
 })
-export class NcfComponent implements OnInit {
+export class NcfComponent implements OnInit, AfterViewInit {
 
   loadTabs = false;
   rbacDetails: any;
@@ -17,6 +17,7 @@ export class NcfComponent implements OnInit {
   tabs: any = [];
   programName: any = 'nas'
   bigNumberMetrics: any = [];
+  @ViewChild('target') private myTarget:ElementRef;
 
   constructor(private route: ActivatedRoute, private _rbacService: RbacService, private _commonService: CommonService) {
     this.route.queryParams.subscribe((param: any) => {
@@ -44,6 +45,7 @@ export class NcfComponent implements OnInit {
   }
 
   ngAfterViewInit(): void {
+	this._commonService.scrollInto(this.myTarget.nativeElement);
     setTimeout(() => {
       this.selectedTabLabel = this.tabs.length > 0 ? this.tabs[0] : undefined
     });

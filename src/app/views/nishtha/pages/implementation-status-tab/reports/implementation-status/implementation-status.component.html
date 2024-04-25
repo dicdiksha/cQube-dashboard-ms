@@ -1,7 +1,7 @@
 <div class="grid grid-cols-12" *ngIf="reportData?.data?.length > 0">
     <div class="xs:col-span-full">
         <ng-container *ngIf="NVSK">
-            <p class="text-center font-medium py-2 filename" >{{title}}</p><br>
+            <!-- <p class="text-center font-medium py-2 filename" >{{title}}</p> -->
             <app-leaflet-map [mapData]="reportData"></app-leaflet-map>
         </ng-container>
         <ng-container *ngIf="!NVSK">

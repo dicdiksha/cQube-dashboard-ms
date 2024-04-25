@@ -1,5 +1,5 @@
 
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { CommonService } from 'src/app/core/services/common/common.service';
 import { RbacService } from 'src/app/core/services/rbac-service.service';
@@ -12,7 +12,7 @@ import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
     templateUrl: './nas-apex.component.html',
     styleUrls: ['./nas-apex.component.scss']
 })
-export class NasComponent implements OnInit {
+export class NasComponent implements OnInit, AfterViewInit {
     loadTabs = false;
     rbacDetails: any;
     tabIndex;
@@ -23,6 +23,7 @@ export class NasComponent implements OnInit {
     NVSK: boolean = true;
     url:string = 'https://vskdev-apex.diksha.gov.in/ords/r/vskdev/nas';
     urlSafe: SafeResourceUrl;
+	@ViewChild('target') private myTarget:ElementRef;
 
     constructor(private route: ActivatedRoute, private sanitizer: DomSanitizer, private _rbacService: RbacService, private _commonService: CommonService) {
         this.route.queryParams.subscribe((param: any) => {
@@ -54,6 +55,7 @@ export class NasComponent implements OnInit {
     }
 
     ngAfterViewInit(): void {
+		this._commonService.scrollInto(this.myTarget.nativeElement);
         setTimeout(() => {
             this.selectedTabLabel = this.tabs.length > 0 ? this.tabs[0] : undefined
         });

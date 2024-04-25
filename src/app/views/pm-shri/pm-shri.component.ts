@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { CommonService } from 'src/app/core/services/common/common.service';
 import { RbacService } from 'src/app/core/services/rbac-service.service';
@@ -11,7 +11,7 @@ import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
   templateUrl: './pm-shri.component.html',
   styleUrls: ['./pm-shri.component.scss']
 })
-export class PmShriComponent implements OnInit {
+export class PmShriComponent implements OnInit, AfterViewInit {
 
   loadTabs = false;
   rbacDetails: any;
@@ -21,13 +21,9 @@ export class PmShriComponent implements OnInit {
   programName: any = 'pm_shri';
   bigNumberMetrics: any = [];
   NVSK: boolean = true;
-  
-  //dev url
   url:string = 'https://vskdev-apex.diksha.gov.in/ords/r/vskdev/pm-shri112';
-
-  // prod url
-  //url:string = 'https://nvsk.diksha.gov.in/ords/r/vskdev/pm-shri106';
   urlSafe: SafeResourceUrl;
+  @ViewChild('target') private myTarget:ElementRef;
 
   constructor(private route: ActivatedRoute, private sanitizer: DomSanitizer, private _rbacService: RbacService, private _commonService: CommonService) {
     this.route.queryParams.subscribe((param: any) => {
@@ -56,9 +52,11 @@ export class PmShriComponent implements OnInit {
   ngOnInit(): void {
 	this.urlSafe = this.sanitizer.bypassSecurityTrustResourceUrl(this.url);
     this._commonService.getMetaData(this.programName).subscribe()
+	console.log('PMSHree URL ', this.urlSafe)
   }
 
   ngAfterViewInit(): void {
+	this._commonService.scrollInto(this.myTarget.nativeElement);
     setTimeout(() => {
         this.selectedTabLabel = this.tabs.length > 0 ? this.tabs[0] : undefined
     });

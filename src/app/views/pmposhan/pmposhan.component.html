@@ -15,7 +15,7 @@
         </div>
     </div>
 </div>
-<div class="row-wrapper grid grid-cols-5 gap-4" *ngIf="NVSK">
+<div class="row-wrapper grid grid-cols-5 gap-4" *ngIf="NVSK"  #target>
     <div class="col-span-2 xmd:col-span-1  bignumber-container" id="bignumber1"
         *ngFor="let bigNumberData of getMetricsArray(); let index = index">
         <div *ngIf="checkReport('pmposhan_metrics', 'bigNumber'+(index+1))">

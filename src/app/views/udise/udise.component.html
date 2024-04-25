@@ -13,7 +13,7 @@
         </div>
     </div>
 </div>
-<div class="col-span-full tab-wrapper" *ngIf="NVSK">
+<div class="col-span-full tab-wrapper" *ngIf="NVSK" #target>
     <div *ngIf="checkReport('udise_metrics', 'bigNumber1')" id="bignumber1">
         <app-udise-bignumber-metrics (exportReportData)="importBigNumberMetrics($event)"></app-udise-bignumber-metrics>
     </div>

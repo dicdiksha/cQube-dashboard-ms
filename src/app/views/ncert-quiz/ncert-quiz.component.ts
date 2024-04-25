@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { CommonService } from 'src/app/core/services/common/common.service';
 import { RbacService } from 'src/app/core/services/rbac-service.service';
@@ -8,7 +8,7 @@ import {config} from './config/quiz_config';
   templateUrl: './ncert-quiz.component.html',
   styleUrls: ['./ncert-quiz.component.scss']
 })
-export class NcertQuizComponent implements OnInit {
+export class NcertQuizComponent implements OnInit, AfterViewInit {
 
   loadTabs = false;
   rbacDetails: any;
@@ -17,6 +17,7 @@ export class NcertQuizComponent implements OnInit {
   tabs: any = [];
   programName: any = 'nas'
   bigNumberMetrics: any = [];
+  @ViewChild('target') private myTarget:ElementRef;
   
 constructor(private route: ActivatedRoute, private _rbacService: RbacService, private _commonService: CommonService) { 
   this.route.queryParams.subscribe((param: any) => {
@@ -44,6 +45,7 @@ constructor(private route: ActivatedRoute, private _rbacService: RbacService, pr
   }
 
   ngAfterViewInit(): void {
+	this._commonService.scrollInto(this.myTarget.nativeElement);
   setTimeout(() => {
       this.selectedTabLabel = this.tabs.length > 0 ? this.tabs[0] : undefined
   });

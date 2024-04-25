@@ -32,9 +32,9 @@ export class SideNavComponent implements OnInit, OnChanges {
       document.body.classList.remove("sidebaractive")
     }
     if (changes?.['isSummary']?.currentValue !== changes?.['isSummary']?.previousValue && !this.isHome && !this.isSummary){
-      let ckbox = document.getElementById('openSidebarMenu') as HTMLInputElement;
-      document.body.classList.add("sidebaractive");
-      ckbox.checked = true;
+    //   let ckbox = document.getElementById('openSidebarMenu') as HTMLInputElement;
+    //   document.body.classList.add("sidebaractive");
+    //   ckbox.checked = true;
     }
     if (this.isHome) {
       document.body.classList.add("sidebaractive");

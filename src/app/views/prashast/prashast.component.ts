@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { RbacService } from 'src/app/core/services/rbac-service.service';
 import { config } from 'src/app/views/prashast/config/prashast_config';
 import { CommonService } from 'src/app/core/services/common/common.service';
@@ -9,10 +9,11 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ['./prashast.component.scss']
   
 })
-export class PrashastComponent implements OnInit {
+export class PrashastComponent implements OnInit, AfterViewInit {
   rbacDetails: any;
   bigNumberMetrics: any = [];
   programName: any = 'prashast';
+  @ViewChild('target') private myTarget:ElementRef;
 
   constructor(private route: ActivatedRoute, private _rbacService: RbacService, private _commonService: CommonService) { 
     
@@ -27,7 +28,7 @@ export class PrashastComponent implements OnInit {
     }
 
     ngAfterViewInit(): void {
-    
+		this._commonService.scrollInto(this.myTarget.nativeElement);
     }
 
 

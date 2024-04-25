@@ -37,5 +37,10 @@ export class CommonService {
     return this._http.get<ResponseType<any>>(`${environment.apiURL}/lastmodified?ProgramName=${ProgramFolderName}`);
   }
   
+  scrollInto(el:any){
+	setTimeout(()=>{
+		el.scrollIntoView({behavior:'smooth', block:'center', inline:'nearest'})
+	},5000)
+  }
 
 }

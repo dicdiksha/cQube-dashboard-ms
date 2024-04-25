@@ -1,5 +1,5 @@
 
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { CommonService } from 'src/app/core/services/common/common.service';
 import { RbacService } from 'src/app/core/services/rbac-service.service';
@@ -10,7 +10,7 @@ import { config } from './config/diksha_config';
     templateUrl: './diksha.component.html',
     styleUrls: ['./diksha.component.scss']
 })
-export class DikshaComponent implements OnInit {
+export class DikshaComponent implements OnInit, AfterViewInit {
     loadTabs = false;
     rbacDetails: any;
     tabIndex;
@@ -18,6 +18,7 @@ export class DikshaComponent implements OnInit {
     tabs: any = [];
     programName: any = 'diksha'
     bigNumberMetrics: any = [];
+	@ViewChild('target') private myTarget:ElementRef;
     
 constructor(private route: ActivatedRoute, private _rbacService: RbacService, private _commonService: CommonService) { 
     this.route.queryParams.subscribe((param: any) => {
@@ -45,6 +46,7 @@ constructor(private route: ActivatedRoute, private _rbacService: RbacService, pr
     }
 
     ngAfterViewInit(): void {
+	this._commonService.scrollInto(this.myTarget.nativeElement);
     setTimeout(() => {
         this.selectedTabLabel = this.tabs.length > 0 ? this.tabs[0] : undefined
     });
