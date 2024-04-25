@@ -1,5 +1,5 @@
 <div class="program-banner-wrapper">
-	<img src="assets/images/nishtha_spotlight 1.png" alt="Banner Images">
+	<img src="assets/images/ncert-quizzes-banner.png" alt="NCERT Quizzes Banner">
 </div>
 <div class="metric-card-wrapper">
     <div class="grid gap-4 grid-cols-6 xmd:grid-cols-12">
@@ -7,14 +7,14 @@
             <p class="program-title ">
 				<img src="assets/images/Quizzes.png" alt="logo"> NCERT Quiz
 			</p>
-            
+            <p>Quizzes on NCERT DIKSHA are the set of questions particularly educative and informative asked to one person or a group of people. Quizzes are generally accompanied with a prize or appreciation for the person who answers maximum number of questions correctly.</p>
         </div>
     </div>
 </div>
-<div *ngIf="checkReport('quiz_metrics', 'bigNumber1')" id="bignumber1">
+<!-- <div *ngIf="checkReport('quiz_metrics', 'bigNumber1')" id="bignumber1">
     <app-quiz-bignumber-metrics (exportReportData)="importBigNumberMetrics($event)"></app-quiz-bignumber-metrics>
 </div>
-<div class="row-wrapper grid grid-cols-5 gap-4">
+<div class="row-wrapper grid grid-cols-5 gap-4" #target>
     <div class="col-span-2 xmd:col-span-1  bignumber-container" id="bignumber2"
         *ngFor="let bigNumberData of bigNumberMetrics; let index = index">
         <div *ngIf="checkReport('quiz_metrics', 'bigNumber'+(index+1))">
@@ -42,4 +42,8 @@
                 *ngIf="selectedTabLabel === 'Quiz wise Status'"></app-quiz-wise-status-tab>
         </mat-tab>
     </mat-tab-group>
+</div> -->
+
+<div class="custom-tab-group-wrapper" style="height: 1600px; max-height: 2200px; min-height: 300px;">
+	<iframe width="100%" height="100%" frameBorder="0" [src]="urlSafe" 	target="_parent" loading="lazy"></iframe>
 </div>

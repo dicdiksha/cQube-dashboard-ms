@@ -1,5 +1,5 @@
 <div class="program-banner-wrapper">
-	<img src="assets/images/nishtha_spotlight 1.png" alt="Banner Images">
+	<img src="assets/images/nishtha-banner.png" alt="Nishtha Banner">
 </div>
 <div class="metric-card-wrapper">
     <div class="grid gap-4 grid-cols-6 xmd:grid-cols-12">
@@ -14,7 +14,7 @@
     </div>
 </div><br>
 
-<div class="col-span-full tab-wrapper">
+<div class="col-span-full tab-wrapper" #target>
     <div class="reports-row" >
         <div *ngIf="checkReport('nishtha_metrics', 'bigNumber1')" id="bignumber1">
             <app-nishtha-bignumber-metrics (exportReportData)="importBigNumberMetrics($event)"></app-nishtha-bignumber-metrics>

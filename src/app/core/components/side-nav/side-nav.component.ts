@@ -22,6 +22,9 @@ export class SideNavComponent implements OnInit, OnChanges {
    }
 
   ngOnInit(): void {
+    if (!this.isHome && document.body.classList.contains("sidebaractive")){
+      document.body.classList.remove("sidebaractive")
+   }
   }
   ngOnChanges(changes: SimpleChanges): void {
 
@@ -29,9 +32,9 @@ export class SideNavComponent implements OnInit, OnChanges {
       document.body.classList.remove("sidebaractive")
     }
     if (changes?.['isSummary']?.currentValue !== changes?.['isSummary']?.previousValue && !this.isHome && !this.isSummary){
-      let ckbox = document.getElementById('openSidebarMenu') as HTMLInputElement;
-      document.body.classList.add("sidebaractive");
-      ckbox.checked = true;
+    //   let ckbox = document.getElementById('openSidebarMenu') as HTMLInputElement;
+    //   document.body.classList.add("sidebaractive");
+    //   ckbox.checked = true;
     }
     if (this.isHome) {
       document.body.classList.add("sidebaractive");
@@ -56,7 +59,7 @@ export class SideNavComponent implements OnInit, OnChanges {
     });
     menuItemSelected.isSelected = true;
     // document.body.classList.add("sidebaractive");
-    this.toggleSideBar();
+    //this.toggleSideBar();
   }
 
   toggleSideBar(menuIconclicked?: string): void {

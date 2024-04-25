@@ -1,5 +1,5 @@
 <div class="program-banner-wrapper">
-	<img src="assets/images/nishtha_spotlight 1.png" alt="Banner Images">
+	<img src="assets/images/udise-banner.png" alt="UDISE Banner">
 </div>
 <div class="metric-card-wrapper">
     <div class="grid gap-4 grid-cols-6 xmd:grid-cols-12">
@@ -13,7 +13,7 @@
         </div>
     </div>
 </div>
-<div class="col-span-full tab-wrapper" *ngIf="NVSK">
+<div class="col-span-full tab-wrapper" *ngIf="NVSK" #target>
     <div *ngIf="checkReport('udise_metrics', 'bigNumber1')" id="bignumber1">
         <app-udise-bignumber-metrics (exportReportData)="importBigNumberMetrics($event)"></app-udise-bignumber-metrics>
     </div>

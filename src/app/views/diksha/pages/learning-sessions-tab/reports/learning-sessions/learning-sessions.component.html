@@ -1,6 +1,6 @@
 <div class="col-span-full">
                 <ng-container *ngIf="(reportData?.values && reportData?.values?.length > 0)">
-                    <p class="text-center font-medium py-2 filename" >{{title}}</p><br>
+                    <!-- <p class="text-center font-medium py-2 filename" >{{title}}</p> -->
                     <sb-dashlet type="horizontalBar" [data]="reportData" [config]="config"></sb-dashlet>
                 </ng-container>
                 <div class="noData" *ngIf="!(reportData?.values && reportData?.values?.length > 0)">

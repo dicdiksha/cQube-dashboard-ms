@@ -1,15 +1,16 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { CommonService } from 'src/app/core/services/common/common.service';
 import { RbacService } from 'src/app/core/services/rbac-service.service';
 import { config } from './config/nipun_bharat_config';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-nipun-bharat',
   templateUrl: './nipun-bharat.component.html',
   styleUrls: ['./nipun-bharat.component.scss']
 })
-export class NipunBharatComponent implements OnInit {
+export class NipunBharatComponent implements OnInit, AfterViewInit {
 
   loadTabs = false;
   rbacDetails: any;
@@ -18,7 +19,11 @@ export class NipunBharatComponent implements OnInit {
   tabs: any = [];
   programName: any = 'nipunBharat'
   bigNumberMetrics: any = [];
-  constructor(private route: ActivatedRoute, private _rbacService: RbacService, private _commonService: CommonService) {
+  @ViewChild('target') private myTarget:ElementRef;
+  url:string = 'https://vskdev-apex.diksha.gov.in/ords/r/vskdev/nipunbharat';
+  urlSafe: SafeResourceUrl;
+
+  constructor(private route: ActivatedRoute, private sanitizer: DomSanitizer, private _rbacService: RbacService, private _commonService: CommonService) {
     this.route.queryParams.subscribe((param: any) => {
       this.tabIndex = param.tab ? Number(param.tab) : 0;
     })
@@ -40,11 +45,12 @@ export class NipunBharatComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.urlSafe = this.sanitizer.bypassSecurityTrustResourceUrl(this.url);
     this._commonService.getMetaData(this.programName).subscribe()
   }
 
   ngAfterViewInit(): void {
-    console.log("this.selectedTabLabel",this.selectedTabLabel)
+	this._commonService.scrollInto(this.myTarget.nativeElement);
     setTimeout(() => {
       // making textbook status tab as default
       //this.selectedTabLabel = this.tabs.length > 0 ? this.tabs[0] : undefined

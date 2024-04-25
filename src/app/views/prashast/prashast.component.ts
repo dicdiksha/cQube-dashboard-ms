@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { RbacService } from 'src/app/core/services/rbac-service.service';
 import { config } from 'src/app/views/prashast/config/prashast_config';
 import { CommonService } from 'src/app/core/services/common/common.service';
@@ -10,10 +10,11 @@ import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
   styleUrls: ['./prashast.component.scss']
   
 })
-export class PrashastComponent implements OnInit {
+export class PrashastComponent implements OnInit, AfterViewInit {
   rbacDetails: any;
   bigNumberMetrics: any = [];
   programName: any = 'prashast';
+  @ViewChild('target') private myTarget:ElementRef;
   url:string = 'https://vskdev-apex.diksha.gov.in/ords/r/vskdev/prashast';
   urlSafe: SafeResourceUrl;
 
@@ -31,7 +32,7 @@ export class PrashastComponent implements OnInit {
     }
 
     ngAfterViewInit(): void {
-    
+		this._commonService.scrollInto(this.myTarget.nativeElement);
     }
 
 

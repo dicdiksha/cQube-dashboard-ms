@@ -1,5 +1,5 @@
 <div class="program-banner-wrapper">
-	<img src="assets/images/nishtha_spotlight 1.png" alt="Banner Images">
+	<img src="assets/images/micro-improvements-banner.png" alt="Micro Improvements Banner">
 </div>
 <div class="metric-card-wrapper">
     <div class="grid gap-4 grid-cols-6 xmd:grid-cols-12">
@@ -10,7 +10,7 @@
         </div>
     </div>
 </div>
-<div class="col-span-full tab-wrapper">
+<div class="col-span-full tab-wrapper" #target>
     <div *ngIf="checkReport('micro_improvements_metrics', 'bigNumber1')" id="bignumber1">
         <app-micro-improvements-metrics (exportReportData)="importBigNumberMetrics($event)"></app-micro-improvements-metrics>
     </div>

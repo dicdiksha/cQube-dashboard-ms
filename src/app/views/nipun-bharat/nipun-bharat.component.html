@@ -1,5 +1,5 @@
 <div class="program-banner-wrapper">
-	<img src="assets/images/nishtha_spotlight 1.png" alt="Banner Images">
+	<img src="assets/images/nipun-bharat-banner.jpg" alt="Nipun Bharat Banner">
 </div>
 <div class="metric-card-wrapper">
     <div class="grid gap-4 grid-cols-6 xmd:grid-cols-12">
@@ -8,11 +8,11 @@
 				<img src="assets/images/NIPUN%20BHARAT.png" alt="logo">
 				NIPUN Bharat
 			</p>
-            
+            <p  #target class="program-desc">As a part of implementation of NEP -2020 Ministry of Education , Govt. of India has launched NIPUN Bharat Mission for FLN. The aim of FLN is to ensure that children learn in a joyful manner through play, stories, rhymes, activities, local art, craft and music and develop strong foundations for lifelong learning.</p> 
     </div>
 </div>
 </div>
-<div class="col-span-full tab-wrapper">
+<!-- <div class="col-span-full tab-wrapper" #target>
     <div class="reports-row" >
     <div *ngIf="checkReport('nipun_bharat_metrics', 'bigNumber1')" id="bignumber1">
         <app-nipun-bharat-metrics (exportReportData)="importBigNumberMetrics($event)"></app-nipun-bharat-metrics>
@@ -26,21 +26,11 @@
         </div>
     </div>
     </div>
-</div>
-<div class="custom-tab-group-wrapper">
+</div> -->
+<!-- <div class="custom-tab-group-wrapper">
     <mat-tab-group [selectedIndex]="tabIndex" mat-align-tabs="start" animationDuration="0ms"
         (selectedTabChange)="onTabChanged($event)" appFullScreen>
           
-        <!-- Removed below two tabs as requested by NCERT on 15-jan-2024 -->
-        <!-- <mat-tab label='Module-wide Status' *ngIf="tabs.includes('Module-wide Status')">
-            <app-module-wide-status-tab
-                *ngIf="selectedTabLabel === 'Module-wide Status'"></app-module-wide-status-tab>
-        </mat-tab>
-
-        <mat-tab label='Detailed Status' *ngIf="tabs.includes('Detailed Status')">
-            <app-detailed-status-tab
-                *ngIf="selectedTabLabel === 'Detailed Status'"></app-detailed-status-tab>
-        </mat-tab> -->
         
         <mat-tab label='Textbook Status' *ngIf="tabs.includes('Textbook Status')">
             <app-textbook-status-tab
@@ -53,5 +43,9 @@
         </mat-tab>
         
 
-    </mat-tab-group>
+    </mat-tab-group> 
+</div> -->
+
+<div class="custom-tab-group-wrapper" style="height: 1600px; max-height: 2200px; min-height: 300px;">
+	<iframe width="100%" height="100%" frameBorder="0" [src]="urlSafe" 	target="_parent" loading="lazy"></iframe>
 </div>

@@ -1,5 +1,5 @@
 
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { CommonService } from 'src/app/core/services/common/common.service';
 import { RbacService } from 'src/app/core/services/rbac-service.service';
@@ -12,7 +12,7 @@ import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
     templateUrl: './pmposhan.component.html',
     styleUrls: ['./pmposhan.component.scss']
 })
-export class PmPoshanComponent implements OnInit {
+export class PmPoshanComponent implements OnInit, AfterViewInit {
     loadTabs = false;
     rbacDetails: any;
     tabIndex;
@@ -21,6 +21,7 @@ export class PmPoshanComponent implements OnInit {
     programName = 'pmPoshan'
     bigNumberMetrics: any = [];
     NVSK: boolean = true;
+	@ViewChild('target') private myTarget:ElementRef;
     url:string = 'https://vskdev-apex.diksha.gov.in/ords/r/vskdev/pmposhan';
     urlSafe: SafeResourceUrl;
     
@@ -57,6 +58,7 @@ constructor(private route: ActivatedRoute, private sanitizer: DomSanitizer, priv
     }
 
     ngAfterViewInit(): void {
+		this._commonService.scrollInto(this.myTarget.nativeElement);
     setTimeout(() => {
         this.selectedTabLabel = this.tabs.length > 0 ? this.tabs[0] : undefined
     });

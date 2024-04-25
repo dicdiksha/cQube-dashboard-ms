@@ -1,5 +1,5 @@
 
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { CommonService } from 'src/app/core/services/common/common.service';
 import { RbacService } from 'src/app/core/services/rbac-service.service';
@@ -12,7 +12,7 @@ import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
     templateUrl: './pgi-apex.component.html',
     styleUrls: ['./pgi-apex.component.scss']
 })
-export class PgiComponent implements OnInit {
+export class PgiComponent implements OnInit, AfterViewInit {
     loadTabs = false;
     rbacDetails: any;
     tabIndex;
@@ -23,6 +23,7 @@ export class PgiComponent implements OnInit {
     NVSK: boolean = true;
     url:string = 'https://vskdev-apex.diksha.gov.in/ords/r/vskdev/pgi';
     urlSafe: SafeResourceUrl;
+	@ViewChild('target') private myTarget:ElementRef;
 
     constructor(private route: ActivatedRoute, private sanitizer: DomSanitizer, private _rbacService: RbacService, private _commonService: CommonService) {
         this.route.queryParams.subscribe((param: any) => {
@@ -54,6 +55,7 @@ export class PgiComponent implements OnInit {
     }
 
     ngAfterViewInit(): void {
+		this._commonService.scrollInto(this.myTarget.nativeElement);
         setTimeout(() => {
             this.selectedTabLabel = this.tabs.length > 0 ? this.tabs[0] : undefined
         });
