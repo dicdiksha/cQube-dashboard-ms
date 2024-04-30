@@ -39,7 +39,7 @@ export class CommonService {
   
   scrollInto(el:any){
 	setTimeout(()=>{
-		el.scrollIntoView({behavior:'smooth', block:'center', inline:'nearest'})
+		el.scrollIntoView({behavior:'smooth', block:'center', inline:'start'})
 	},5000)
   }
 
