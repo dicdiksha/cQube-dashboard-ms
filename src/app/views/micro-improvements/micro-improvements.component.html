@@ -7,10 +7,14 @@
             <p class="program-title">
 				<img src="assets/images/Micro%20Improvement.png" alt="logo">	Micro-Improvements<em></em>
 			</p>
+            <p #target class="program-desc">Micro-improvements cater to the objective of making the improvement process easy, simple, and achievable for every teacher and leader in the education system. The approach uses the ‘learning by doing’ concept.</p>
         </div>
     </div>
 </div>
-<div class="col-span-full tab-wrapper" #target>
+<div class="custom-tab-group-wrapper" style="height: 1200px; max-height: 1500px; min-height: 300px;">
+    <iframe width="100%" height="100%" frameBorder="0" [src]="urlSafe" 	target="_parent" loading="lazy"> </iframe>
+</div>
+<!-- <div class="col-span-full tab-wrapper" #target>
     <div *ngIf="checkReport('micro_improvements_metrics', 'bigNumber1')" id="bignumber1">
         <app-micro-improvements-metrics (exportReportData)="importBigNumberMetrics($event)"></app-micro-improvements-metrics>
     </div>
@@ -35,4 +39,4 @@
                 *ngIf="selectedTabLabel === 'Improvements Status'"></app-improvements-status-tab>
         </mat-tab>
     </mat-tab-group>
-</div>
+</div> -->

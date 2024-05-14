@@ -1,7 +1,7 @@
 <div class="program-banner-wrapper">
 	<img src="assets/images/nas-banner.png" alt="NAS Banner">
 </div>
-<div class="metric-card-wrapper">
+<div #target class="metric-card-wrapper">
     <div class="grid gap-4 grid-cols-6 xmd:grid-cols-12">
         <div class="col-span-12">
             <p class="program-title ">
@@ -12,7 +12,10 @@
     </div>
     </div>
 </div>
-<div class="col-span-full tab-wrapper" *ngIf="NVSK" #target>
+<div class="custom-tab-group-wrapper" style="height: 1200px; max-height: 1500px; min-height: 300px;">
+    <iframe width="100%" height="100%" frameBorder="0" [src]="urlSafe" 	target="_parent" loading="lazy"> </iframe>
+</div>
+<!-- <div class="col-span-full tab-wrapper" *ngIf="NVSK" #target>
     <div *ngIf="checkReport('nas_metrics', 'bigNumber1')" id="bignumber1">
         <app-nas-bignumber-metrics (exportReportData)="importBigNumberMetrics($event)"></app-nas-bignumber-metrics>
     </div>
@@ -45,4 +48,4 @@
                 *ngIf="selectedTabLabel === 'Grade & Subject Performance'"></app-grade-and-subject-performance-tab>
         </mat-tab>       
     </mat-tab-group>
-</div>
+</div> -->

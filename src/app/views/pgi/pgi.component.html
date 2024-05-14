@@ -8,14 +8,16 @@
 				<img src="assets/images/pgi.png" alt="logo">
 				Performance Grading Index <em><small>(PGI)</small></em>
 			</p>
-            <p class="program-desc ">The Performance Grading Index (PGI) is a tool to provide insights on the status of
+            <p  #target class="program-desc ">The Performance Grading Index (PGI) is a tool to provide insights on the status of
                 school education in States and Union territories including key levers that drive their performance and
                 critical areas for improvement.</p>
         </div>
     </div>
 </div>
-
-<div class="col-span-full tab-wrapper" *ngIf="NVSK" #target>
+<div class="custom-tab-group-wrapper" style="height: 1200px; max-height: 1500px; min-height: 300px;">
+    <iframe width="100%" height="100%" frameBorder="0" [src]="urlSafe" 	target="_parent" loading="lazy"> </iframe>
+</div>
+<!-- <div class="col-span-full tab-wrapper" *ngIf="NVSK" #target>
     <div *ngIf="checkReport('pgi_metrics', 'bigNumber1')" id="bignumber1">
         <app-pgi-bignumber-metrics (exportReportData)="importBigNumberMetrics($event)"></app-pgi-bignumber-metrics>
     </div>
@@ -52,4 +54,4 @@
 
 
     </mat-tab-group>
-</div>
+</div> -->

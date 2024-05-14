@@ -4,6 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { CommonService } from 'src/app/core/services/common/common.service';
 import { RbacService } from 'src/app/core/services/rbac-service.service';
 import { config } from './config/diksha_config';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 
 @Component({
     selector: 'app-diksha',
@@ -18,9 +19,12 @@ export class DikshaComponent implements OnInit, AfterViewInit {
     tabs: any = [];
     programName: any = 'diksha'
     bigNumberMetrics: any = [];
+    NVSK: boolean = true;
+    url:string = 'https://vskdev-apex.diksha.gov.in/ords/r/vskdev/diksha-etb';
+    urlSafe: SafeResourceUrl;
 	@ViewChild('target') private myTarget:ElementRef;
     
-constructor(private route: ActivatedRoute, private _rbacService: RbacService, private _commonService: CommonService) { 
+constructor(private route: ActivatedRoute, private sanitizer: DomSanitizer, private _rbacService: RbacService, private _commonService: CommonService) { 
     this.route.queryParams.subscribe((param: any) => {
         this.tabIndex = param.tab ? Number(param.tab) : 0;
     })
@@ -42,6 +46,7 @@ constructor(private route: ActivatedRoute, private _rbacService: RbacService, pr
     }
 
     ngOnInit(): void {
+        this.urlSafe = this.sanitizer.bypassSecurityTrustResourceUrl(this.url);
         this._commonService.getMetaData(this.programName).subscribe()
     }
 
