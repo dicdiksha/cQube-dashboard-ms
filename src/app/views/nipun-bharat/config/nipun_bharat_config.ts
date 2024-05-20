@@ -159,7 +159,8 @@ export const config = {
                 "valueProp": "state_id",
                 "actions": {
                     "queries": {
-                        "barChart": "select textbook_name as textbook, round(cast(avg(sum) as numeric),2) as lo_covered from datasets.nipun_bharat_perc_los_covered_textbooknipun group by textbook order by textbook",
+                        //"barChart": "select textbook_name as textbook, round(cast(avg(sum) as numeric),2) as lo_covered from datasets.nipun_bharat_perc_los_covered_textbooknipun group by textbook order by textbook",
+                        "barChart": "select concat(txtbk.textbook_name, '-', txtbk.grade) as textbook, round(cast(avg(los.sum) as numeric),2) as lo_covered from datasets.nipun_bharat_perc_los_covered_textbooknipun los join dimensions.textbooknipun txtbk on txtbk.textbook_id = los.textbook_id  group by textbook order by textbook"
                     },
                     "level": "state"
                 }
@@ -261,7 +262,7 @@ nipun_bharat_metrics: {
             "actions": {
                 "queries": {
                     "bigNumber1": "select sum(sum) as total_los_covered from datasets.nipun_bharat_los_covered_textbooknipun",
-                    "bigNumber2": "select count(*) as total_digital_books from datasets.nipun_bharat_total_los_textbooknipun",
+                    "bigNumber2": "select count(*) as total_digital_books from dimensions.textbooknipun",
                     "bigNumber3": "select dm.metric_value as total_content from dimensions.mainmetrics dm where  dm.program_id='nib' and dm.metric_name ='Total Content' and dm.metric_type ='Vanity Metric'",
                     "bigNumber4": "select dm.metric_value as total_learning_sessions from dimensions.mainmetrics dm where  dm.program_id='nib' and dm.metric_name ='Total Learning Sessions' and dm.metric_type ='Vanity Metric'",
                     },
