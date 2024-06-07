@@ -21,7 +21,7 @@ export class PmShriComponent implements OnInit, AfterViewInit {
   programName: any = 'pm_shri';
   bigNumberMetrics: any = [];
   NVSK: boolean = true;
-  url:string = 'https://vskdev-apex.diksha.gov.in/ords/r/vskdev/pm-shri112';
+  url:string = 'https://nvsk.diksha.gov.in/ords/r/vskdev/pm-shri112';
   urlSafe: SafeResourceUrl;
   @ViewChild('target') private myTarget:ElementRef;
 
