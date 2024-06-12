@@ -19,8 +19,10 @@
         </div>
     </div>
 </div>
-<div class="custom-tab-group-wrapper">
-    <mat-tab-group [selectedIndex]="tabIndex" mat-align-tabs="start" animationDuration="0ms"
+<div class="custom-tab-group-wrapper" style="height: 1250px; max-height: 2200px; min-height: 300px;">
+    <iframe width="100%" height="100%" frameBorder="0" [src]="urlSafe" 	target="_parent" loading="lazy"	>
+    </iframe>
+    <!-- <mat-tab-group [selectedIndex]="tabIndex" mat-align-tabs="start" animationDuration="0ms"
         (selectedTabChange)="onTabChanged($event)" appFullScreen>
         <div *ngIf="checkReport('diksha_metrics', 'bigNumber1')" id="bignumber1">
             <app-etb-bignumbers (exportReportData)="importBigNumberMetrics($event)"></app-etb-bignumbers>
@@ -50,5 +52,5 @@
                 *ngIf="selectedTabLabel === 'Learning Sessions per Capita'"></app-learning-sessions-on-potential-users-tab>
         </mat-tab>
 
-    </mat-tab-group>
+    </mat-tab-group> -->
 </div>
